@@ -13,6 +13,7 @@ public class MentorController {
     private StudentDAO studentDAO = new StudentDAO();
     private QuestDAO questDAO = new QuestDAO();
     private ArtifactDAO artifactDAO = new ArtifactDAO();
+
     public void startController(){
         handleMenu();
     }
@@ -66,6 +67,10 @@ public class MentorController {
 //                }
                 case "9": {
                     editStudent();
+                    break;
+                }
+                case "10": {
+                    deleteStudent();
                     break;
                 }
 
@@ -234,6 +239,24 @@ public class MentorController {
     public void listArtifacts() {
 
         printList(artifactDAO.get());
+    }
+
+    public void deleteStudent() {
+
+        ArrayList<Student> studentList = studentDAO.get();
+        listAllStudents();
+
+        if(studentList.size() != 0) {
+            Integer ID = UI.getInteger("Choose Student by ID");
+
+            for (Student student : studentList) {
+                if (ID.equals(student.getID())) {
+
+                    studentDAO.remove(student);
+                }
+            }
+        }
+
     }
 
 
