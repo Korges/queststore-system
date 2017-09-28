@@ -25,7 +25,7 @@ public class MentorDAO implements InterfaceDAO<Mentor> {
             connect.addRecord(sql);
             System.out.println(sql);
         } catch (SQLException e) {
-            System.out.println("Something get wrong");;
+            System.out.println("Something went wrong, propably database is occupied by another process, shutting down...");
             System.exit(0);
         }
 

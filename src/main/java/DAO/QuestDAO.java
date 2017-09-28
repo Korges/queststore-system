@@ -22,7 +22,7 @@ public class QuestDAO implements InterfaceDAO<Quest> {
             connect.addRecord(querry);
             System.out.println(querry);
         } catch (SQLException e) {
-            System.out.println("Something get wrong");
+            System.out.println("Something went wrong, propably database is occupied by another process, shutting down...");
             System.exit(0);
         }
 
