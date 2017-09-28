@@ -1,19 +1,22 @@
 package controller;
 
+import DAO.GroupDAO;
+import DAO.MentorDAO;
+import DAO.StudentDAO;
 import UI.StudentUI;
+import models.Mentor;
 import models.Student;
 
 public class StudentController {
 
-    Student student;
-    public StudentController(Student student)
-    {
-        this.student = student;
-    }
+
     public void startController(){
         handleMenu();
     }
+    public StudentDAO student = new StudentDAO();
+
     public void handleMenu() {
+
         String choice;
         do {
 
@@ -40,8 +43,8 @@ public class StudentController {
 
     public void checkWallet() {
 
-        Integer balance = student.wallet.getBalance();
-        System.out.println("Your balance: " + balance);
+//        Integer balance = wallet.getBalance();
+//        System.out.println("Your balance: " + balance);
     }
 
     public void buyArtifact() {

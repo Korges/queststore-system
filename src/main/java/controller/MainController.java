@@ -2,7 +2,6 @@ package controller;
 
 import UI.UI;
 import DAO.connectDB;
-import models.Student;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,13 +19,11 @@ public class MainController {
         if (result.next()) {
 
             if (result.getString("role").equals("student")) {
-            //Student student = new Student(result.getString("name",));
-            //StudentController studentController = new StudentController(student);
-//            studentController.startController();
+                StudentController studentController = new StudentController();
+                studentController.startController();
             }
 
             if (result.getString("role").equals("admin")) {
-                //connectDB.close();
                 AdminController adminController = new AdminController();
                 adminController.startController();
             }
