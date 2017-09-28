@@ -120,9 +120,7 @@ public class MentorController {
                     }
                     studentDAO.set(student);
                 }
-
             }
-
         }
     }
 
@@ -146,46 +144,20 @@ public class MentorController {
 
     public void createArtifact() {
 
-        String choice;
-        boolean toContinue = true;
-
-        while (toContinue) {
-
-            toContinue = false;
-            choice = UI.getString("(1)Basic or (2)Magic? (0)Back to menu");
-
-            if (choice.equals("1")) {
-               createBasicItem();
-
-            } else if (choice.equals("2")) {
-               createMagicItem();
-
-            } else if (choice.equals("0")) {
-                toContinue = false;
-
-            } else {
-                toContinue = true;
-            }
+        String name = UI.getString("Enter Artifact Name: ");
+        String description = UI.getString("Enter Artifact Description: ");
+        Integer price = UI.getInteger("Enter Artifact Price: ");
+        boolean isMagic = UI.getBoolean("Is item Magic? [Y/N]: ");
+        if(!isMagic) {
+            BasicItem newItem = new BasicItem(name, description, price, isMagic);
+            artifactDAO.add(newItem);
+        } else {
+            MagicItem newItem = new MagicItem(name, description, price, isMagic);
+            artifactDAO.add(newItem);
         }
     }
 
-    private void createBasicItem() {
 
-        String name = UI.getString("Enter name: ");
-        String description = UI.getString("Enter description: ");
-        Integer price = 10; // todo input integer
-        BasicItem basicItem = new BasicItem(null, name, description, price);
-        artifactDAO.add(basicItem); //todo raw type
-    }
-
-    private void createMagicItem() {
-
-        String name = UI.getString("Enter name: ");
-        String description = UI.getString("Enter description: ");
-        Integer price = 10; // todo input integer
-        MagicItem magicItem = new MagicItem(null, name, description, price);
-        artifactDAO.add(magicItem); //todo raw type
-    }
 
 
     public void editArtifact() {

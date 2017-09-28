@@ -9,13 +9,24 @@ public abstract class Artifact {
     private Integer price;
     private boolean isUsed;
     private String description;
+    private boolean isMagic;
 
-    Artifact(Integer id, String name, String description, Integer price) {
+    Artifact(String name, String description, Integer price, boolean isMagic ) {
+
+        this.price = price;
+        this.name = name;
+        this.description = description;
+        this.isMagic = isMagic;
+        isUsed = false;
+    }
+
+    Artifact(Integer id, String name, String description, Integer price, boolean isMagic ) {
 
         this.id = id;
         this.price = price;
         this.name = name;
         this.description = description;
+        this.isMagic = isMagic;
         isUsed = false;
     }
 
@@ -45,5 +56,21 @@ public abstract class Artifact {
         String joinedString = joiner.toString();
 
         return joinedString;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean getIsMagic() {
+        return isMagic;
     }
 }
