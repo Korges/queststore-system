@@ -64,5 +64,17 @@ public class MentorDAO implements InterfaceDAO<Mentor> {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
     }
+
+    public void remove(Mentor mentor) {
+        try {
+            String sql = String.format("DELETE from users WHERE id = %s", mentor.getID());
+            connect.addRecord(sql);
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+
+
+    }
 }
 

@@ -64,4 +64,16 @@ public class StudentDAO implements InterfaceDAO<Student> {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
     }
+
+    public void remove(Student student) {
+        try {
+            String sql = String.format("DELETE from users WHERE id = %s", student.getID());
+            connect.addRecord(sql);
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+
+
+    }
 }
