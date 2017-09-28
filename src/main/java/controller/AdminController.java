@@ -46,6 +46,11 @@ public class AdminController {
                     deleteMentor();
                     break;
                 }
+
+                case "6":{
+                    showGroup();
+                    break;
+                }
             }
         }while(!choice.equals("0"));
     }
