@@ -61,7 +61,8 @@ public class AdminController {
         String lastName = MentorUI.getString("Enter Last Name: ");
         String password = MentorUI.getString("Enter Password: ");
         String email = MentorUI.getEmail();
-        String klass = MentorUI.getString("Enter Klass number: ");
+        showGroup();
+        String klass = MentorUI.getString("Enter Klass id: ");
         Mentor newMentor = new Mentor(firstName, lastName, email, password, klass);
         mDAO.add(newMentor);
     }
