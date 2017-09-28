@@ -38,7 +38,6 @@ public class MentorDAO implements InterfaceDAO<Mentor> {
             ResultSet result = connect.getResult("SELECT * FROM users where role like 'mentor'");
 
             while (result.next()) {
-                System.out.println("sssasd");
                 int  id = result.getInt("id");
                 String first_name = result.getString("first_name");
                 String last_name = result.getString("last_name");
@@ -58,7 +57,8 @@ public class MentorDAO implements InterfaceDAO<Mentor> {
 
     public void set(Mentor mentor) {
         try {
-            connect.addRecord("UPDATE users SET id='%s',first_name = '%s' WHERE id = %s");
+            String sql = String.format("UPDATE users SET first_name='%s',last_name = '%s',email = '%s', password = '%s' WHERE id = %s",mentor.getFirstName(),mentor.getLastName(),mentor.getEmail(),mentor.getPassword(),mentor.getID());
+            connect.addRecord(sql);
 
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
