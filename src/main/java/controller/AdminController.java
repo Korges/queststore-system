@@ -39,7 +39,11 @@ public class AdminController {
                     break;
                 }
                 case "4":{
-                    viewMentor();
+                    listAllMentors();
+                    break;
+                }
+                case "5":{
+                    deleteMentor();
                     break;
                 }
             }
@@ -67,7 +71,7 @@ public class AdminController {
     public void editMentor() {
 
         ArrayList<Mentor> mentorList = mDAO.get();
-        viewMentor();
+        listAllMentors();
 
         if(mentorList.size() != 0){
             Integer ID = UI.UI.getInteger("Choose Mentor by ID");
@@ -100,7 +104,7 @@ public class AdminController {
 
 
 
-    public void viewMentor() {
+    public void listAllMentors() {
 
         ArrayList<Mentor> mentorList = mDAO.get();
         if(mentorList.size() == 0){
@@ -108,6 +112,23 @@ public class AdminController {
         } else {
             for(Mentor mentor: mentorList){
                 System.out.println(mentor.toString());
+            }
+        }
+    }
+
+    public void deleteMentor() {
+
+        ArrayList<Mentor> mentorList = mDAO.get();
+        listAllMentors();
+
+        if(mentorList.size() != 0) {
+            Integer ID = UI.UI.getInteger("Choose Mentor by ID");
+
+            for (Mentor mentor : mentorList) {
+                if (ID.equals(mentor.getID())) {
+
+                    mDAO.remove(mentor);
+                }
             }
         }
     }
