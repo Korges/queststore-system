@@ -9,12 +9,26 @@ public class AdminUI extends UI {
         "Create Group",
         "Edit Mentor",
         "View Mentor",
+        "Delete Mentor",
         "EXIT");
 
-    public static List<String> optionsList = Arrays.asList("1", "2", "3", "4", "0");
+    public static String[] optionsArray = new String[menuOptions.size()];
+    public static List<String> optionsList;
+
+    private static void setOptionsList() {
+        int size = optionsArray.length;
+
+        for(int i=0; i<menuOptions.size()-1; i++) {
+            optionsArray[i] = Integer.toString(i+1);
+
+        }
+        optionsArray[size-1] = "0";
+        optionsList = Arrays.asList(optionsArray);
+    }
 
 
     public static void printMenu(){
+        setOptionsList();
 
         for(int i=0; i<menuOptions.size(); i++){
             System.out.format("%s - %s\n", optionsList.get(i), menuOptions.get(i));
@@ -22,7 +36,6 @@ public class AdminUI extends UI {
     }
 
     public static String getChoice(){
-
         String choice;
         do{
             choice = getString("Choose option: ");
