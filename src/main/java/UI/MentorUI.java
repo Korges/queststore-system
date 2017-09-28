@@ -5,23 +5,36 @@ import java.util.List;
 
 public class MentorUI extends UI {
 
-    public static List<String> menuOptions = Arrays.asList(
-        "List all students",
-        "Create Student",
-        "Create Quest",
-        "Edit Quest",
-        "Create Artifact",
-        "Edit Artifact",
-        "Mark Submission",
-        "Mark Artifact",
-        "Edit Student",
-        "Delete Student",
+    public static List<String> menuMainOptions = Arrays.asList(
+        "Student Panel",
+        "Artifact Panel",
+        "Quest Panel",
         "EXIT");
 
-    public static String[] optionsArray = new String[menuOptions.size()];
+    public static List<String> menuStudentOptions = Arrays.asList(
+        "Create Student",
+        "Edit Student",
+        "Delete Student",
+        "List All Students",
+        "EXIT");
+
+    public static List<String> menuArtifactOptions = Arrays.asList(
+        "Create Artifact",
+        "Edit Artifact",
+        "Delete Artifact",
+        "List All Artifacts",
+        "EXIT");
+
+    public static List<String> menuQuestOptions = Arrays.asList(
+        "EXIT");
+
+
+
     public static List<String> optionsList;
 
-    private static void setOptionsList() {
+    private static void setOptionsList(List menuOptions) {
+
+        String[] optionsArray = new String[menuOptions.size()];
         int size = optionsArray.length;
 
         for(int i=0; i<menuOptions.size()-1; i++) {
@@ -32,8 +45,10 @@ public class MentorUI extends UI {
         optionsList = Arrays.asList(optionsArray);
     }
 
-    public static void printMenu(){
-        setOptionsList();
+
+
+    public static void printMenu(List menuOptions){
+        setOptionsList(menuOptions);
         for(int i=0; i<menuOptions.size(); i++) {
             System.out.format("%s - %s\n", optionsList.get(i), menuOptions.get(i));
         }
