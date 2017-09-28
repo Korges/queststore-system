@@ -15,7 +15,7 @@ public class AdminController {
         handleMenu();
     }
     public MentorDAO mDAO = new MentorDAO();
-    public GroupDAO<Mentor> gDAO = new GroupDAO<>();
+    public GroupDAO gDAO = new GroupDAO();
     public void handleMenu() {
 
         String choice;
@@ -46,6 +46,11 @@ public class AdminController {
                     deleteMentor();
                     break;
                 }
+
+                case "6":{
+                    showGroup();
+                    break;
+                }
             }
         }while(!choice.equals("0"));
     }
@@ -63,10 +68,23 @@ public class AdminController {
 
     public void createGroup() {
 
-//        String name = AdminUI.getString("Enter new group name: ");
-//        Group newGroup = new Group(null, name);
-//        gDAO.add(newGroup);
+        String name = AdminUI.getString("Enter new group name: ");
+        Group newGroup = new Group(name);
+        gDAO.add(newGroup);
+        UI.AdminUI.showMessage("Successfully added group");
     }
+
+    public void showGroup(){
+        ArrayList<Group> groupList = gDAO.get();
+        if(groupList.size() == 0){
+            UI.UI.showMessage("Mentor list is empty!");
+        } else {
+            for(Group group: groupList){
+                System.out.println(group.toString());
+            }
+        }
+    }
+
 
     public void editMentor() {
 
