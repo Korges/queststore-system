@@ -22,9 +22,9 @@ public class MainController {
         if (result.next()) {
 
             if (result.getString("role").equals("student")) {
-                ResultSet results = connectDB.getResult(String.format("SELECT users.id, first_name, last_name, email, password, role, klass, money, experience from users join wallets on users.id = wallets.id WHERE email like '%s' and password like '%s'",login,password));
-                results.next();
-                Student student = studentd.createStudent(results);
+                ResultSet studentResult = connectDB.getResult(String.format("SELECT users.id, first_name, last_name, email, password, role, klass, money, experience from users join wallets on users.id = wallets.id WHERE email like '%s' and password like '%s'",login,password));
+                studentResult.next();
+                Student student = studentd.createStudent(studentResult);
                 StudentController studentController = new StudentController(student);
                 studentController.startController();
             }
