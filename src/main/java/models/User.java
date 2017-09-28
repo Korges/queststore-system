@@ -6,19 +6,28 @@ public abstract class User {
     private String lastName;
     private String password;
     private String email;
-    Integer id;
+    private Integer id;
     private String klass;
 
 
 
-    User(String firstName, String lastName, String email, String password, String klass) {
+    User(Integer id ,String firstName, String lastName, String email, String password, String klass) {
 
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.klass = klass;
+        this.id = id;
 
+    }
+
+    public User(String firstName, String lastName, String email, String password, String klass) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.klass = klass;
     }
 
     public String getFirstName() {

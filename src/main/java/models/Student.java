@@ -12,9 +12,8 @@ public class Student extends User {
 
     public Student(Integer id, String firstName, String lastName, String email, String password, String klass) {
 
-        super(firstName, lastName, email, password, klass);
+        super(id,firstName, lastName, email, password, klass);
         wallet = new Wallet();
-        this.id = getID();
 
     }
 }

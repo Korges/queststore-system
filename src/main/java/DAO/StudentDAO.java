@@ -32,7 +32,7 @@ public class StudentDAO implements InterfaceDAO<Student> {
         ArrayList<Student> studentList = new ArrayList<>();
         try {
 
-            ResultSet result = connect.getResult("SELECT * FROM users where role like 'studnet'");
+            ResultSet result = connect.getResult("SELECT * FROM users where role like 'student'");
 
             while (result.next()) {
                 int  id = result.getInt("id");
