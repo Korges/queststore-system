@@ -1,0 +1,68 @@
+package DAO;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.StringJoiner;
+
+
+import  DAO.connectDB;
+import models.Mentor;
+
+
+public class MentorDAO implements InterfaceDAO<Mentor> {
+
+    connectDB connect = DAO.connectDB.getInstance();
+
+    public void add(Mentor mentor){
+
+
+
+        String sql = String.format("INSERT INTO users " +
+                "(first_name, last_name, email, password, role, klass)" +
+                " VALUES ('%s', '%s', '%s', '%s', '%s', '%s')", mentor.getFirstName(), mentor.getLastName(), mentor.getEmail(), mentor.getPassword(), "mentor", mentor.getKlass());
+        try {
+            connect.addRecord(sql);
+            System.out.println(sql);
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+    }
+
+    public ArrayList get(){
+        ArrayList<Mentor> mentorList = new ArrayList<>();
+        try {
+
+            ResultSet result = connect.getResult("SELECT * FROM users where role like 'mentor'");
+
+            while (result.next()) {
+                System.out.println("sssasd");
+                int  id = result.getInt("id");
+                String first_name = result.getString("first_name");
+                String last_name = result.getString("last_name");
+                String email = result.getString("email");
+                String password = result.getString("password");
+                String klass = result.getString("klass");
+                Mentor mentor = new Mentor(id,first_name,last_name,email,password,klass);
+                mentorList.add(mentor);
+            }
+            } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        return mentorList;
+    }
+
+    public void set(Mentor mentor) {
+        try {
+            connect.addRecord("UPDATE users SET id='%s',first_name = '%s' WHERE id = %s");
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    }
+}
+
