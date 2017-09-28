@@ -14,7 +14,8 @@ public class MentorUI extends UI {
         "Edit Artifact",
         "Mark Submission",
         "Mark Artifact",
-        "Invigilate Student",
+        "Edit Student",
+        "Delete Student",
         "EXIT");
 
     public static String[] optionsArray = new String[menuOptions.size()];
