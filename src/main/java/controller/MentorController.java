@@ -123,26 +123,34 @@ public class MentorController {
             }
         }
     }
+    private String generateCategory(Boolean isMagic) {
+        String category;
+        if (isMagic) {
+            category = "magicQuest";
+        } else {
+            category = "theQuest";
+        }
 
+        return category;
+    }
 
-
-    public void createQuest() {
+    private void createQuest() {
 
         String name = UI.getString("Enter name: ");
         String description = UI.getString("Enter description: ");
         Integer value = UI.getInteger("Enter Value: "); // todo input integer
-        String categoryName = UI.getString("Enter category name: ");
-        QuestCategory category = new QuestCategory(categoryName);
-        Quest quest = new Quest(name, description, value, category);
+        Boolean isMagic = UI.getBoolean("Is quest Extra(y) or basic(n)?");
+        String category = generateCategory(isMagic);
+        Quest quest = new Quest(name, description, value, value, category);
         questDAO.add(quest);
         System.out.println(quest.toString());
     }
 
-    public void editQuest() {
+    private void editQuest() {
 
     }
 
-    public void createArtifact() {
+    private void createArtifact() {
 
         String name = UI.getString("Enter Artifact Name: ");
         String description = UI.getString("Enter Artifact Description: ");
@@ -160,15 +168,15 @@ public class MentorController {
 
 
 
-    public void editArtifact() {
+    private void editArtifact() {
 
     }
 
-    public void markSubmission() {
+    private void markSubmission() {
 
     }
 
-    public void markArtifact() {
+    private void markArtifact() {
 
     }
 
@@ -196,7 +204,7 @@ public class MentorController {
         }
     }
 
-    public void listAllStudents() {
+    private void listAllStudents() {
 
         ArrayList<Student> studentList = studentDAO.get();
         if(studentList.size() == 0){
@@ -208,12 +216,12 @@ public class MentorController {
         }
     }
 
-    public void listArtifacts() {
+    private void listArtifacts() {
 
         printList(artifactDAO.get());
     }
 
-    public void deleteStudent() {
+    private void deleteStudent() {
 
         ArrayList<Student> studentList = studentDAO.get();
         listAllStudents();
