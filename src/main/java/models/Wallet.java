@@ -8,11 +8,16 @@ public class Wallet {
     private Integer experience;
     private ArrayList<BasicItem> artifactList;
 
-    Wallet() {
+    public Wallet() {
 
         this.money = 0;
         this.experience = 0;
         artifactList = new ArrayList<>();
+    }
+
+    public Wallet(Integer money,Integer experience){
+        this.money = money;
+        this.experience = experience;
     }
 
     void add(Integer amount) {

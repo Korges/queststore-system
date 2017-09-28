@@ -9,8 +9,15 @@ import models.Student;
 
 public class StudentController {
 
+    private Student student_me;
+
+    public StudentController(Student student){
+        student_me = student;
+    }
+
 
     public void startController(){
+
         handleMenu();
     }
     public StudentDAO student = new StudentDAO();
@@ -43,8 +50,8 @@ public class StudentController {
 
     public void checkWallet() {
 
-//        Integer balance = wallet.getBalance();
-//        System.out.println("Your balance: " + balance);
+        Integer balance = student_me.wallet.getBalance();
+        System.out.println("Your balance: " + balance);
     }
 
     public void buyArtifact() {
