@@ -1,7 +1,6 @@
 package DAO;
 
 import models.Quest;
-import models.Student;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
