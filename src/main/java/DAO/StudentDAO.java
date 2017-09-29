@@ -18,11 +18,11 @@ public class StudentDAO implements InterfaceDAO<Student> {
         String sql = String.format("INSERT INTO users " +
                 "(first_name, last_name, email, password, role, klass)" +
                 " VALUES ('%s', '%s', '%s', '%s', '%s', '%s')", student.getFirstName(), student.getLastName(), student.getEmail(), student.getPassword(), "student", student.getKlass());
-        //String wallet = String.format("INSERT INTO wallets (student_id,money, experience) VALUES (%s,0,0)",1000);
+        String wallet = "INSERT INTO wallets (student_id,money, experience) VALUES SELECT id FROM users ORDER BY id DESC LIMIT 1,0,0";
 
         try {
             connect.addRecord(sql);
-            //connect.addRecord(wallet);
+            connect.addRecord(wallet);
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
