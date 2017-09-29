@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-
 import UI.AdminUI;
 import UI.MentorUI;
 import DAO.MentorDAO;
@@ -19,7 +18,6 @@ public class AdminController {
     public void handleMenu() {
 
         String choice;
-
         do {
 
             AdminUI.printMenu();
@@ -115,13 +113,9 @@ public class AdminController {
                     }
                     mDAO.set(mentor);
                 }
-
             }
-
         }
     }
-
-
 
     public void listAllMentors() {
 
@@ -145,7 +139,6 @@ public class AdminController {
 
             for (Mentor mentor : mentorList) {
                 if (ID.equals(mentor.getID())) {
-
                     mDAO.remove(mentor);
                 }
             }
