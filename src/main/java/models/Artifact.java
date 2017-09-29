@@ -48,10 +48,10 @@ public abstract class Artifact {
     public String toString() {
 
         StringJoiner joiner = new StringJoiner(" | ");
+        joiner.add("ID : " + id);
         joiner.add("Name: " + name);
         joiner.add("Description: " + description);
         joiner.add("Price: " + price);
-        joiner.add("isUsed: " + isUsed);
         joiner.add("Item type: " + this.getClass().getSimpleName());
         String joinedString = joiner.toString();
 
@@ -73,4 +73,21 @@ public abstract class Artifact {
     public boolean getIsMagic() {
         return isMagic;
     }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+    public void setPrice(Integer price){
+        this.price = price;
+    }
+
+    public void setCategory(boolean category){
+        this.isMagic = category;
+    }
+
 }

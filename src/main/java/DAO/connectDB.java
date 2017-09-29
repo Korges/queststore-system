@@ -48,7 +48,6 @@ public class connectDB {
 
     public void addRecord(String sql) throws SQLException {
         Statement stmt = connection.createStatement();
-        System.out.println("asdas");
         stmt.executeUpdate(sql);
     }
 

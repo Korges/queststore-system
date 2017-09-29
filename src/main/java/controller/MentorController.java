@@ -15,68 +15,108 @@ public class MentorController {
     private ArtifactDAO artifactDAO = new ArtifactDAO();
 
     public void startController(){
-        handleMenu();
+        handleMainMenu();
     }
-    public void handleMenu() {
+    public void handleMainMenu() {
 
         String choice;
 
         do {
-            MentorUI.printMenu();
+            MentorUI.printMenu(MentorUI.menuMainOptions);
             choice = MentorUI.getChoice();
 
             switch (choice) {
 
                 case "1": {
-                    listAllStudents();
+                    studentPanel();
                     break;
                 }
                 case "2": {
-                    createStudent();
+                    artifactPanel();
                     break;
                 }
                 case "3": {
-                    printQuests();
-                    createQuest();
+                    questPanel();
                     break;
                 }
-                case "4": {
-                    editQuest();
-                    break;
-
-                }case "5": {
-                    listArtifacts();
-                    createArtifact();
-                    break;
-                }
-                case "6": {
-                    editArtifact();
-                    break;
-                }
-                case "7": {
-                    markSubmission();
-                    break;
-                }
-                case "8": {
-                    markArtifact();
-                    break;
-                }
-//                case "9": {
-//                    invigilate();
-//                    break;
-//                }
-                case "9": {
-                    editStudent();
-                    break;
-                }
-                case "10": {
-                    deleteStudent();
-                    break;
-                }
-
 
             }
         } while(!choice.equals("0"));
+    }
+
+    public void studentPanel() {
+        String choice;
+        do {
+
+            MentorUI.printMenu(MentorUI.menuStudentOptions);
+            choice = MentorUI.getChoice();
+
+            switch (choice) {
+
+                case "1": {
+                    createStudent();
+                    break;
+                }
+                case "2": {
+                    editStudent();
+                    break;
+                }
+                case "3": {
+                    deleteStudent();
+                    break;
+                }
+                case "4": {
+                    listAllStudents();
+                    break;
+                }
+
+            }
+        } while(!choice.equals("0"));
+
+    }
+
+    public void artifactPanel() {
+        String choice;
+        do {
+
+            MentorUI.printMenu(MentorUI.menuArtifactOptions);
+            choice = MentorUI.getChoice();
+
+            switch (choice) {
+
+                case "1": {
+                    createArtifact();
+                    break;
+                }
+                case "2": {
+                    editArtifact();
+                    break;
+                }
+                case "3": {
+                    deleteArtifact();
+                    break;
+                }
+                case "4": {
+                    listAllArtifacts();
+                }
+
+            }
+        } while(!choice.equals("0"));
+
+    }
+
+    public void questPanel() {
+        String choice;
+        do {
+
+            MentorUI.printMenu(MentorUI.menuQuestOptions);
+            choice = MentorUI.getChoice();
+
+            switch (choice) {
+
+            }
+        } while(!choice.equals("0"));
+
     }
 
     public void createStudent() {
@@ -123,6 +163,8 @@ public class MentorController {
             }
         }
     }
+
+
     private String generateCategory(Boolean isMagic) {
         String category;
         if (isMagic) {
@@ -156,11 +198,11 @@ public class MentorController {
         String description = UI.getString("Enter Artifact Description: ");
         Integer price = UI.getInteger("Enter Artifact Price: ");
         boolean isMagic = UI.getBoolean("Is item Magic? [Y/N]: ");
-        if(!isMagic) {
-            BasicItem newItem = new BasicItem(name, description, price, isMagic);
+        if(isMagic) {
+            MagicItem newItem = new MagicItem(name, description, price, isMagic);
             artifactDAO.add(newItem);
         } else {
-            MagicItem newItem = new MagicItem(name, description, price, isMagic);
+            BasicItem newItem = new BasicItem(name, description, price, isMagic);
             artifactDAO.add(newItem);
         }
     }
@@ -169,6 +211,35 @@ public class MentorController {
 
 
     private void editArtifact() {
+
+        ArrayList<Artifact> artifactList = artifactDAO.get();
+        listAllArtifacts();
+
+        if(artifactList.size() != 0){
+            Integer ID = UI.getInteger("Choose Artifact by ID");
+
+            for(Artifact artifact: artifactList) {
+                if (ID.equals(artifact.getID())) {
+
+                    if (UI.getBoolean("Do you want change Artifact's name? [Y/N]")) {
+                        artifact.setName(UI.getString("Enter new Name: "));
+                    }
+
+                    if (UI.getBoolean("Do you want change Artifact's description? [Y/N]")) {
+                        artifact.setDescription(UI.getString("Enter new Description: "));
+                    }
+
+                    if (UI.getBoolean("Do you want change Artifact's price? [Y/N]")) {
+                        artifact.setPrice(UI.getInteger("Enter new Price: "));
+                    }
+
+                    if (UI.getBoolean("Do you want change Artifact's category? [Y/N]")) {
+                        artifact.setCategory(UI.getBoolean("Is item Magic? [Y/N]: "));
+                    }
+                    artifactDAO.set(artifact);
+                }
+            }
+        }
 
     }
 
@@ -216,9 +287,16 @@ public class MentorController {
         }
     }
 
-    private void listArtifacts() {
+    private void listAllArtifacts() {
 
-        printList(artifactDAO.get());
+        ArrayList<Artifact> artifactList = artifactDAO.get();
+        if(artifactList.size() == 0){
+            UI.showMessage("Artifact list is empty!");
+        } else {
+            for(Artifact artifact: artifactList){
+                System.out.println(artifact.toString());
+            }
+        }
     }
 
     private void deleteStudent() {
@@ -231,8 +309,24 @@ public class MentorController {
 
             for (Student student : studentList) {
                 if (ID.equals(student.getID())) {
-
                     studentDAO.remove(student);
+                }
+            }
+        }
+
+    }
+
+    private void deleteArtifact() {
+
+        ArrayList<Artifact> artifactList = artifactDAO.get();
+        listAllArtifacts();
+
+        if(artifactList.size() != 0) {
+            Integer ID = UI.getInteger("Choose Artifact by ID");
+
+            for (Artifact artifact : artifactList) {
+                if (ID.equals(artifact.getID())) {
+                    artifactDAO.remove(artifact);
                 }
             }
         }
