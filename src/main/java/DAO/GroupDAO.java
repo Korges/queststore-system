@@ -11,6 +11,7 @@ public class GroupDAO implements InterfaceDAO<Group> {
     connectDB connect = DAO.connectDB.getInstance();
 
     public void add(Group group){
+
         String sql = String.format("INSERT INTO klasses " +
                 "(name)" +
                 " VALUES ('%s')",group.getName());
@@ -22,7 +23,9 @@ public class GroupDAO implements InterfaceDAO<Group> {
         }
     }
 
+
     public ArrayList get() {
+
         ArrayList<Group> groupList = new ArrayList<>();
         try {
             ResultSet result = connect.getResult("SELECT * FROM klasses");
@@ -37,7 +40,6 @@ public class GroupDAO implements InterfaceDAO<Group> {
             System.exit(0);
         }
         return groupList;
-
     }
 
 

@@ -13,17 +13,19 @@ public class Submission {
         this.quest = quest;
     }
 
+
     public boolean setMarked() {
 
         if (!isMarked) {
 
-            // todo enter grade, gib money
             System.out.println("ENTER GRADE, (CHANGE IT TO OUTSIDE CLASS");
             System.out.println("(INITIALIZE GIB MONEY TO STUDENT PLS)");
             isMarked = true;
 
             return true;
+
+        } else {
+            return false;
         }
-        else return false;
     }
 }

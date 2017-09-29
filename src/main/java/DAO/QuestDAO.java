@@ -24,10 +24,11 @@ public class QuestDAO implements InterfaceDAO<Quest> {
             System.out.println("Something went wrong, propably database is occupied by another process, shutting down...");
             System.exit(0);
         }
-
     }
 
+
     private Quest createQuest(ResultSet result) throws SQLException {
+
         Integer id = result.getInt("id");
         String name = result.getString("name");
         String description = result.getString("description");
@@ -38,7 +39,9 @@ public class QuestDAO implements InterfaceDAO<Quest> {
         return new Quest(id, name, description, value, experience, category);
     }
 
+
     public ArrayList get(){
+
         ArrayList<Quest> questList = new ArrayList<>();
         try {
 
@@ -58,6 +61,7 @@ public class QuestDAO implements InterfaceDAO<Quest> {
 
 
     public void set(Quest quest) {
+
         try {
             String querry = String.format("UPDATE quests + " +
              "SET name='%s',description = '%s',value = '%d', experience = '%d', category = '%s' " +
@@ -67,7 +71,5 @@ public class QuestDAO implements InterfaceDAO<Quest> {
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
-
     }
-
 }

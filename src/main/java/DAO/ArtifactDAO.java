@@ -29,11 +29,11 @@ public class ArtifactDAO implements InterfaceDAO<Artifact> {
             System.out.println("Something get wrong");;
             System.exit(0);
         }
-
-
     }
 
+
     public ArrayList get(){
+
         ArrayList<Artifact> artifactList = new ArrayList<>();
         try {
 
@@ -58,12 +58,12 @@ public class ArtifactDAO implements InterfaceDAO<Artifact> {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-
         return artifactList;
     }
 
 
     public void set(Artifact artifact) {
+
         try {
 
             Integer isMagic = 0;
@@ -79,6 +79,7 @@ public class ArtifactDAO implements InterfaceDAO<Artifact> {
         }
     }
 
+
     public void remove(Artifact artifact) {
         try {
             String sql = String.format("DELETE from artifacts WHERE id = %s", artifact.getID());
@@ -87,9 +88,5 @@ public class ArtifactDAO implements InterfaceDAO<Artifact> {
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
-
-
     }
-
-
 }
