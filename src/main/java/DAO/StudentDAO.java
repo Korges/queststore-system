@@ -18,7 +18,7 @@ public class StudentDAO implements InterfaceDAO<Student> {
         String sql = String.format("INSERT INTO users " +
                 "(first_name, last_name, email, password, role, klass)" +
                 " VALUES ('%s', '%s', '%s', '%s', '%s', '%s')", student.getFirstName(), student.getLastName(), student.getEmail(), student.getPassword(), "student", student.getKlass());
-        String wallet = "INSERT INTO wallets (student_id,money, experience) VALUES SELECT id FROM users ORDER BY id DESC LIMIT 1,0,0";
+        String wallet = "INSERT INTO wallets (student_id,money, experience) VALUES((SELECT id FROM users ORDER BY id DESC LIMIT 1),0,0)";
 
         try {
             connect.addRecord(sql);
@@ -35,7 +35,7 @@ public class StudentDAO implements InterfaceDAO<Student> {
         ArrayList<Student> studentList = new ArrayList<>();
         try {
 
-            ResultSet result = connect.getResult("SELECT users.id, first_name, last_name, email, password, role, klass, money, experience from users join wallets on users.id = wallets.id;");
+            ResultSet result = connect.getResult("SELECT * from users join wallets on users.id = wallets.student_id WHERE role like 'student';");
             while (result.next()) {
                 Student student = createStudent(result);
                 studentList.add(student);

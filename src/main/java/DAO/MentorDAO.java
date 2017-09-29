@@ -20,7 +20,6 @@ public class MentorDAO implements InterfaceDAO<Mentor> {
                 " VALUES ('%s', '%s', '%s', '%s', '%s', '%s')", mentor.getFirstName(), mentor.getLastName(), mentor.getEmail(), mentor.getPassword(), "mentor", mentor.getKlass());
         try {
             connect.addRecord(sql);
-            System.out.println(sql);
         } catch (SQLException e) {
             System.out.println("Something went wrong, propably database is occupied by another process, shutting down...");
             System.exit(0);

@@ -16,7 +16,6 @@ public class GroupDAO implements InterfaceDAO<Group> {
                 " VALUES ('%s')",group.getName());
         try {
             connect.addRecord(sql);
-            System.out.println(sql);
         } catch (SQLException e) {
             System.out.println("Wrong");
             System.exit(0);
