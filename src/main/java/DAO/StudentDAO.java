@@ -29,7 +29,7 @@ public class StudentDAO implements InterfaceDAO<Student> {
     }
 
 
-    public ArrayList get(){
+    public ArrayList<Student> get(){
 
         ArrayList<Student> studentList = new ArrayList<>();
         try {
