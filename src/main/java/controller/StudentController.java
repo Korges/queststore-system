@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class StudentController {
 
     private ArtifactDAO artifactDAO = new ArtifactDAO();
-    public StudentDAO student = new StudentDAO();
+    public StudentDAO studentDAO= new StudentDAO();
 
     private Student student_me;
 
@@ -78,7 +78,7 @@ public class StudentController {
                     break;
                 }
                 case "4":{
-                    checkExperience();
+                    checkWallet();
                     break;
                 }
             }
@@ -95,8 +95,32 @@ public class StudentController {
     }
 
     public void buyArtifact() {
-
+        ArrayList<Artifact> artifactList = artifactDAO.get();
+        Integer balance = student_me.wallet.getBalance();
         listAllArtifacts();
+
+
+        if(artifactList.size() != 0) {
+
+            Integer ID = UI.getInteger("Choose Artifact by ID");
+
+            for (Artifact artifact: artifactList) {
+                if (ID.equals(artifact.getID())) {
+                    if (balance >= artifact.getPrice()) {
+                        if(UI.getBoolean("Do you want to buy : " + artifact.getName())) {
+                            student_me.wallet.substract(artifact.getPrice());
+
+                            studentDAO.editWalletValue(student_me);
+                        }
+
+                    }
+                    else {
+                        UI.showMessage("Not enough money!");
+                    }
+                }
+            }
+        }
+
 
     }
 
