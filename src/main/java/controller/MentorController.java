@@ -40,7 +40,7 @@ public class MentorController {
                     break;
                 }
                 case "4":{
-                    seeStudentsWallet();
+                    checkStudentsWallet();
                     break;
 
                 }
@@ -338,7 +338,7 @@ public class MentorController {
 
     }
 
-    private void seeStudentsWallet(){
+    private void checkStudentsWallet(){
         ArrayList<Student> students = studentDAO.get();
         for(Student student : students){
             UI.showMessage(student.getFullName() + " account balance : " + student.wallet.getBalance());
