@@ -75,7 +75,7 @@ public class SubmissionDAO implements InterfaceDAO<Submission> {
     public void set(Submission submission) {
 
         try {
-            String querry = String.format("UPDATE submissions + " +
+            String querry = String.format("UPDATE submissions " +
              "SET quest_id='%d',student_id = '%d',is_marked = '%d', description = '%s'" +
              "WHERE id = %d", submission.getQuestId(),submission.getStudentId(),dbBooleanInjection(submission.isMarked()),submission.getDescription(), submission.getId());
             connect.addRecord(querry);

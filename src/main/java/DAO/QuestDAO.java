@@ -62,7 +62,7 @@ public class QuestDAO implements InterfaceDAO<Quest> {
     public void set(Quest quest) {
 
         try {
-            String querry = String.format("UPDATE quests + " +
+            String querry = String.format("UPDATE quests " +
              "SET name='%s',description = '%s',value = '%d', experience = '%d', category = '%s' " +
              "WHERE id = %d", quest.getName(),quest.getDescription(),quest.getValue(),quest.getExperience(),quest.getCategory(), quest.getId());
             connect.addRecord(querry);
