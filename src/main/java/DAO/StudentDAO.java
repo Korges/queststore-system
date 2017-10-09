@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import models.Mentor;
 import models.Student;
 import models.Wallet;
 
@@ -27,11 +26,11 @@ public class StudentDAO implements InterfaceDAO<Student> {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-
     }
 
 
     public ArrayList get(){
+
         ArrayList<Student> studentList = new ArrayList<>();
         try {
 
@@ -49,7 +48,9 @@ public class StudentDAO implements InterfaceDAO<Student> {
         return studentList;
     }
 
+
     public Student createStudent(ResultSet result) throws SQLException{
+
         int  id = result.getInt("id");
         String first_name = result.getString("first_name");
         String last_name = result.getString("last_name");
@@ -62,10 +63,11 @@ public class StudentDAO implements InterfaceDAO<Student> {
         student.setWallet(wallet);
 
         return student;
-
     }
 
+
     public void set(Student student) {
+
         try {
             String sql = String.format("UPDATE users SET first_name='%s',last_name = '%s',email = '%s', password = '%s' WHERE id = %s",student.getFirstName(),student.getLastName(),student.getEmail(),student.getPassword(),student.getID());
             connect.addRecord(sql);
@@ -75,7 +77,9 @@ public class StudentDAO implements InterfaceDAO<Student> {
         }
     }
 
+
     public void remove(Student student) {
+
         try {
             String sql = String.format("DELETE from users WHERE id = %s", student.getID());
             connect.addRecord(sql);
@@ -83,7 +87,5 @@ public class StudentDAO implements InterfaceDAO<Student> {
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
-
-
     }
 }

@@ -14,6 +14,7 @@ public class AdminUI extends UI {
         "EXIT");
 
     public static String[] optionsArray = new String[menuOptions.size()];
+
     public static List<String> optionsList;
 
     private static void setOptionsList() {
@@ -35,6 +36,7 @@ public class AdminUI extends UI {
             System.out.format("%s - %s\n", optionsList.get(i), menuOptions.get(i));
         }
     }
+
 
     public static String getChoice(){
         String choice;

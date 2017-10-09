@@ -32,6 +32,7 @@ public class MentorUI extends UI {
 
     public static List<String> optionsList;
 
+
     private static void setOptionsList(List menuOptions) {
 
         String[] optionsArray = new String[menuOptions.size()];
@@ -54,6 +55,7 @@ public class MentorUI extends UI {
         }
     }
 
+
     public static String getChoice(){
 
         String choice;
@@ -63,5 +65,4 @@ public class MentorUI extends UI {
 
         return choice;
     }
-
 }

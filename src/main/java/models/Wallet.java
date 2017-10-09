@@ -15,15 +15,18 @@ public class Wallet {
         artifactList = new ArrayList<>();
     }
 
+
     public Wallet(Integer money,Integer experience){
         this.money = money;
         this.experience = experience;
     }
 
+
     void add(Integer amount) {
 
         this.money += amount;
     }
+
 
     boolean substract(Integer amount) {
 
@@ -34,10 +37,12 @@ public class Wallet {
         return false;
     }
 
+
     public Integer getBalance() {
 
         return money;
     }
+
 
     void add(BasicItem item) {
 

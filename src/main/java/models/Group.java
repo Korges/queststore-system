@@ -28,5 +28,4 @@ public class Group {
         String view = String.format("ID: %s, Name: %s", this.getID(), this.getName());
         return view;
     }
-
 }

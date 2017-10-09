@@ -30,7 +30,7 @@ public abstract class Artifact {
         isUsed = false;
     }
 
-    public Integer getID() {
+        public Integer getID() {
         return id;
     }
 

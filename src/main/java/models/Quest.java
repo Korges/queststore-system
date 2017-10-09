@@ -1,6 +1,5 @@
 package models;
 
-
 import java.util.StringJoiner;
 
 public class Quest {
@@ -22,6 +21,7 @@ public class Quest {
         this.category = category;
     }
 
+
     public Quest(Integer id, String name, String description, int value, int experience, String category) {
         this.id = id;
         this.name = name;
@@ -29,7 +29,6 @@ public class Quest {
         this.value = value;
         this.experience = experience;
         this.category = category;
-        //todo how to DRY
     }
 
 

@@ -6,8 +6,4 @@ class Admin extends User {
 
         super(firstName, lastName, email, password, klass);
     }
-
-
-
-
 }

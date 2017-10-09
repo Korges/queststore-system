@@ -10,7 +10,6 @@ public abstract class User {
     private String klass;
 
 
-
     User(Integer id ,String firstName, String lastName, String email, String password, String klass) {
 
         this.firstName = firstName;
@@ -19,7 +18,6 @@ public abstract class User {
         this.password = password;
         this.klass = klass;
         this.id = id;
-
     }
 
     public User(String firstName, String lastName, String email, String password, String klass) {
@@ -42,6 +40,7 @@ public abstract class User {
     public String getFullName() {
         return firstName + " " + lastName;
     }
+
     public Integer getID() {
         return id;
     }
