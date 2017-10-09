@@ -17,7 +17,7 @@ public class StudentDAO implements InterfaceDAO<Student> {
         String sql = String.format("INSERT INTO users " +
                 "(first_name, last_name, email, password, role, klass)" +
                 " VALUES ('%s', '%s', '%s', '%s', '%s', '%s')", student.getFirstName(), student.getLastName(), student.getEmail(), student.getPassword(), "student", student.getKlass());
-        String wallet = "INSERT INTO wallets (student_id,money, experience,level) VALUES((SELECT id FROM users ORDER BY id DESC LIMIT 1),0,0,0)";
+        String wallet = "INSERT INTO wallets (student_id,money, experience, level) VALUES((SELECT id FROM users ORDER BY id DESC LIMIT 1),0,0,0)";
 
         try {
             connect.addRecord(sql);
@@ -93,7 +93,7 @@ public class StudentDAO implements InterfaceDAO<Student> {
     public void editWalletValue(Student student) {
 
         try {
-            String sql = String.format("UPDATE wallets SET money = '%d',level where id = %s", student.wallet.getBalance(),student.wallet.getLevel(), student.getID());
+            String sql = String.format("UPDATE wallets SET money = '%d',level = %s where id = %s", student.wallet.getBalance(),student.wallet.getLevel(), student.getID());
             connect.addRecord(sql);
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -103,7 +103,7 @@ public class StudentDAO implements InterfaceDAO<Student> {
     public Student getStudentById(Integer id) {
         Student student = null;
         try {
-            String sql = String.format("SELECT * from users WHERE id = %s", id);
+            String sql = String.format("SELECT * from users join wallets on users.id = wallets.student_id WHERE users.id = %d", id);
             ResultSet result = connect.getResult(sql);
             result.next();
             student = createStudent(result);
@@ -130,7 +130,7 @@ public class StudentDAO implements InterfaceDAO<Student> {
 
     public void setWalletDetail(Integer studentId, Integer experience){
         Student student = getStudentById(studentId);
-        student.wallet.add(experience);
+        student.wallet.add(experience); //todo
         setLevelExperience(student);
         editWalletValue(student);
     }

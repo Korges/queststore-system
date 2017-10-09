@@ -86,8 +86,8 @@ public class SubmissionDAO implements InterfaceDAO<Submission> {
     }
 
     public Integer getSubmissionValue(Integer submissionId) {
-        String querry = String.format("SELECT value FROM quests  INNER JOIN submissions" +
-                "ON quests.id = submissions.quest_id WHERE submissions.id = %d", submissionId );
+        String querry = String.format("SELECT value FROM quests INNER JOIN submissions" +
+                " ON quests.id = submissions.quest_id WHERE submissions.id = %d", submissionId );
         Integer result = null;
         try {
             ResultSet dbResult = connect.getResult(querry);

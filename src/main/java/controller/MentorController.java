@@ -314,9 +314,11 @@ public class MentorController {
 
             for (Submission submission : submissionList) {
                 if (id.equals(submission.getId())) {
+
+                    Integer studentId = submission.getStudentId();
+                    Integer experience = submissionDAO.getSubmissionValue(submission.getId());
                     submission.setMarked(true);
-                    submissionDAO.getSubmissionValue(submission.getId());
-                    //todo students experience increment
+                    studentDAO.setWalletDetail(studentId, experience);
                     submissionDAO.set(submission);
                 }
             }

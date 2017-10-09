@@ -23,6 +23,17 @@ public class Submission {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return "Submission{" +
+                "id=" + id +
+                ", studentId=" + studentId +
+                ", questId=" + questId +
+                ", isMarked=" + isMarked +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
     public int getId() {
         return id;
     }
