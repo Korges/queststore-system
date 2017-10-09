@@ -15,13 +15,16 @@ public class MentorController {
     private ArtifactDAO artifactDAO = new ArtifactDAO();
 
     public void startController(){
+
         handleMainMenu();
     }
+
     public void handleMainMenu() {
 
         String choice;
 
         do {
+            MentorUI.printLabel(MentorUI.mainMenuLabel);
             MentorUI.printMenu(MentorUI.menuMainOptions);
             choice = MentorUI.getChoice();
 
@@ -52,7 +55,7 @@ public class MentorController {
     public void studentPanel() {
         String choice;
         do {
-
+            MentorUI.printLabel(MentorUI.studentMenuLabel);
             MentorUI.printMenu(MentorUI.menuStudentOptions);
             choice = MentorUI.getChoice();
 
@@ -83,7 +86,7 @@ public class MentorController {
     public void artifactPanel() {
         String choice;
         do {
-
+            MentorUI.printLabel(MentorUI.artifactMenuLabel);
             MentorUI.printMenu(MentorUI.menuArtifactOptions);
             choice = MentorUI.getChoice();
 
@@ -113,7 +116,7 @@ public class MentorController {
     public void questPanel() {
         String choice;
         do {
-
+            MentorUI.printLabel(MentorUI.questMenuLabel);
             MentorUI.printMenu(MentorUI.menuQuestOptions);
             choice = MentorUI.getChoice();
 
@@ -318,7 +321,6 @@ public class MentorController {
                 }
             }
         }
-
     }
 
     private void deleteArtifact() {
@@ -335,7 +337,6 @@ public class MentorController {
                 }
             }
         }
-
     }
 
     private void checkStudentsWallet(){
@@ -344,6 +345,4 @@ public class MentorController {
             UI.showMessage(student.getFullName() + " account balance : " + student.wallet.getBalance());
         }
     }
-
-
 }

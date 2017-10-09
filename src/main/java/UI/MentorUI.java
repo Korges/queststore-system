@@ -5,6 +5,14 @@ import java.util.List;
 
 public class MentorUI extends UI {
 
+    public static String mainMenuLabel = "MENTOR - Main Menu";
+
+    public static String studentMenuLabel = "MENTOR - Student Menu";
+
+    public static String artifactMenuLabel = "MENTOR - Artifact Menu";
+
+    public static String questMenuLabel = "MENTOR - Quest Menu";
+
     public static List<String> menuMainOptions = Arrays.asList(
         "Student Panel",
         "Artifact Panel",
@@ -31,39 +39,4 @@ public class MentorUI extends UI {
 
 
 
-    public static List<String> optionsList;
-
-
-    private static void setOptionsList(List menuOptions) {
-
-        String[] optionsArray = new String[menuOptions.size()];
-        int size = optionsArray.length;
-
-        for(int i=0; i<menuOptions.size()-1; i++) {
-            optionsArray[i] = Integer.toString(i+1);
-
-        }
-        optionsArray[size-1] = "0";
-        optionsList = Arrays.asList(optionsArray);
-    }
-
-
-
-    public static void printMenu(List menuOptions){
-        setOptionsList(menuOptions);
-        for(int i=0; i<menuOptions.size(); i++) {
-            System.out.format("%s - %s\n", optionsList.get(i), menuOptions.get(i));
-        }
-    }
-
-
-    public static String getChoice(){
-
-        String choice;
-        do{
-            choice = getString("Choose option: ");
-        }while (!optionsList.contains(choice));
-
-        return choice;
-    }
 }
