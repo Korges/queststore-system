@@ -99,4 +99,38 @@ public class StudentDAO implements InterfaceDAO<Student> {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
     }
+
+    public Student getStudentById(Integer id) {
+        Student student = null;
+        try {
+            String sql = String.format("SELECT * from users WHERE id = %s", id);
+            ResultSet result = connect.getResult(sql);
+            result.next();
+            student = createStudent(result);
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return student;
+    }
+
+    public void setLevelExperience(Student student){
+
+        try{
+            String sql = String.format("SELECT MAX(level) from level_experience WHERE exp <=%s", student.wallet.getLevel());
+            ResultSet result = connect.getResult(sql);
+            Integer level = result.getInt("level");
+            student.wallet.setLevel(level);
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+
+    }
+
+    public void setWalletDetail(Integer studentId, Integer experience){
+        Student student = getStudentById(studentId);
+        student.wallet.add(experience);
+        editWalletValue(student);
+    }
 }
