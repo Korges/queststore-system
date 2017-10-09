@@ -9,6 +9,7 @@ public class MentorUI extends UI {
         "Student Panel",
         "Artifact Panel",
         "Quest Panel",
+        "See student wallet",
         "EXIT");
 
     public static List<String> menuStudentOptions = Arrays.asList(

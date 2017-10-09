@@ -39,6 +39,11 @@ public class MentorController {
                     questPanel();
                     break;
                 }
+                case "4":{
+                    seeStudentsWallet();
+                    break;
+
+                }
 
             }
         } while(!choice.equals("0"));
@@ -331,6 +336,13 @@ public class MentorController {
             }
         }
 
+    }
+
+    private void seeStudentsWallet(){
+        ArrayList<Student> students = studentDAO.get();
+        for(Student student : students){
+            UI.showMessage(student.getFullName() + " account balance : " + student.wallet.getBalance());
+        }
     }
 
 
