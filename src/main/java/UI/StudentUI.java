@@ -17,6 +17,7 @@ public class StudentUI extends UI {
             "List All Artifacts",
             "Buy Artifact",
             "Donate Fundraise",
+            "Check Wallet",
             "EXIT");
 
 
