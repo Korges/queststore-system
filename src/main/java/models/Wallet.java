@@ -28,13 +28,10 @@ public class Wallet {
     }
 
 
-    boolean substract(Integer amount) {
+    public void substract(Integer amount) {
 
-        if (this.money >= amount) {
             this.money -= amount;
-            return true;
-        }
-        return false;
+
     }
 
 
