@@ -4,6 +4,7 @@ import DAO.StudentDAO;
 import UI.UI;
 import DAO.connectDB;
 import models.Student;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -37,8 +38,12 @@ public class MainController {
                 MentorController mentorController = new MentorController();
                 mentorController.startController();
             }
+
+
+
         } else {
             System.out.println("User doesn't exist");
         }
+
     }
 }
