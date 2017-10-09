@@ -19,13 +19,16 @@ public class MentorController {
     private SubmissionDAO submissionDAO = new SubmissionDAO();
 
     public void startController(){
+
         handleMainMenu();
     }
+
     public void handleMainMenu() {
 
         String choice;
 
         do {
+            MentorUI.printLabel(MentorUI.mainMenuLabel);
             MentorUI.printMenu(MentorUI.menuMainOptions);
             choice = MentorUI.getChoice();
 
@@ -43,6 +46,11 @@ public class MentorController {
                     questPanel();
                     break;
                 }
+                case "4":{
+                    checkStudentsWallet();
+                    break;
+
+                }
 
             }
         } while(!choice.equals("0"));
@@ -51,7 +59,7 @@ public class MentorController {
     private void studentPanel() {
         String choice;
         do {
-
+            MentorUI.printLabel(MentorUI.studentMenuLabel);
             MentorUI.printMenu(MentorUI.menuStudentOptions);
             choice = MentorUI.getChoice();
 
@@ -82,7 +90,7 @@ public class MentorController {
     private void artifactPanel() {
         String choice;
         do {
-
+            MentorUI.printLabel(MentorUI.artifactMenuLabel);
             MentorUI.printMenu(MentorUI.menuArtifactOptions);
             choice = MentorUI.getChoice();
 
@@ -113,7 +121,7 @@ public class MentorController {
     private void questPanel() {
         String choice;
         do {
-
+            MentorUI.printLabel(MentorUI.questMenuLabel);
             MentorUI.printMenu(MentorUI.menuQuestOptions);
             choice = MentorUI.getChoice();
 
@@ -366,7 +374,6 @@ public class MentorController {
                 }
             }
         }
-
     }
 
     private void deleteArtifact() {
@@ -383,8 +390,12 @@ public class MentorController {
                 }
             }
         }
-
     }
 
-
+    private void checkStudentsWallet(){
+        ArrayList<Student> students = studentDAO.get();
+        for(Student student : students){
+            UI.showMessage(student.getFullName() + " account balance : " + student.wallet.getBalance());
+        }
+    }
 }

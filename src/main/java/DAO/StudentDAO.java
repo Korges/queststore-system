@@ -17,7 +17,7 @@ public class StudentDAO implements InterfaceDAO<Student> {
         String sql = String.format("INSERT INTO users " +
                 "(first_name, last_name, email, password, role, klass)" +
                 " VALUES ('%s', '%s', '%s', '%s', '%s', '%s')", student.getFirstName(), student.getLastName(), student.getEmail(), student.getPassword(), "student", student.getKlass());
-        String wallet = "INSERT INTO wallets (student_id,money, experience) VALUES((SELECT id FROM users ORDER BY id DESC LIMIT 1),0,0)";
+        String wallet = "INSERT INTO wallets (student_id,money, experience,level) VALUES((SELECT id FROM users ORDER BY id DESC LIMIT 1),0,0,0)";
 
         try {
             connect.addRecord(sql);
@@ -58,7 +58,8 @@ public class StudentDAO implements InterfaceDAO<Student> {
         String password = result.getString("password");
         String klass = result.getString("klass");
         Integer money = result.getInt("money");
-        Wallet wallet = new Wallet(money,money);
+        Integer level = result.getInt("level");
+        Wallet wallet = new Wallet(money,money,level);
         Student student = new Student(id,first_name,last_name,email,password,klass);
         student.setWallet(wallet);
 
@@ -87,5 +88,50 @@ public class StudentDAO implements InterfaceDAO<Student> {
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
+    }
+
+    public void editWalletValue(Student student) {
+
+        try {
+            String sql = String.format("UPDATE wallets SET money = '%d',level where id = %s", student.wallet.getBalance(),student.wallet.getLevel(), student.getID());
+            connect.addRecord(sql);
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    }
+
+    public Student getStudentById(Integer id) {
+        Student student = null;
+        try {
+            String sql = String.format("SELECT * from users WHERE id = %s", id);
+            ResultSet result = connect.getResult(sql);
+            result.next();
+            student = createStudent(result);
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return student;
+    }
+
+    public void setLevelExperience(Student student){
+
+        try{
+            String sql = String.format("SELECT MAX(level) from level_experience WHERE exp <=%s", student.wallet.getLevel());
+            ResultSet result = connect.getResult(sql);
+            Integer level = result.getInt("level");
+            student.wallet.setLevel(level);
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+
+    }
+
+    public void setWalletDetail(Integer studentId, Integer experience){
+        Student student = getStudentById(studentId);
+        student.wallet.add(experience);
+        setLevelExperience(student);
+        editWalletValue(student);
     }
 }

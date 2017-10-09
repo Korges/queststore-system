@@ -11,6 +11,7 @@ public class AdminUI extends UI {
         "View Mentor",
         "Delete Mentor",
         "Show Group",
+        "Add level of experience",
         "EXIT");
 
     public static String[] optionsArray = new String[menuOptions.size()];
