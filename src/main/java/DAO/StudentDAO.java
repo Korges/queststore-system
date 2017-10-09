@@ -119,7 +119,8 @@ public class StudentDAO implements InterfaceDAO<Student> {
         try{
             String sql = String.format("SELECT MAX(level) from level_experience WHERE exp <=%s", student.wallet.getLevel());
             ResultSet result = connect.getResult(sql);
-            Integer level = result.getInt("level");
+
+            Integer level = result.getInt("MAX(level)");
             student.wallet.setLevel(level);
 
         } catch (SQLException e) {
