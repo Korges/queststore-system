@@ -7,18 +7,22 @@ public class Wallet {
     private Integer money;
     private Integer experience;
     private ArrayList<BasicItem> artifactList;
+    private Integer level;
 
     public Wallet() {
 
         this.money = 0;
         this.experience = 0;
+        this.level = 0;
         artifactList = new ArrayList<>();
     }
 
 
-    public Wallet(Integer money,Integer experience){
+    public Wallet(Integer money,Integer experience, Integer level){
         this.money = money;
         this.experience = experience;
+        this.level = level;
+
     }
 
 

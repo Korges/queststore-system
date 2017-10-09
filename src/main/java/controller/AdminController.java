@@ -1,6 +1,8 @@
 package controller;
 
 import java.util.ArrayList;
+
+import DAO.LevelExperienceDAO;
 import UI.AdminUI;
 import UI.MentorUI;
 import DAO.MentorDAO;
@@ -47,6 +49,10 @@ public class AdminController {
 
                 case "6":{
                     showGroup();
+                    break;
+                }
+                case "7":{
+                    createLevelOfExperience();;
                     break;
                 }
             }
@@ -143,5 +149,13 @@ public class AdminController {
                 }
             }
         }
+    }
+
+    public void createLevelOfExperience(){
+        Integer level = UI.UI.getInteger("Write level: ");
+        Integer experience = UI.UI.getInteger("Write experience count");
+        LevelExperienceDAO levelDao = new LevelExperienceDAO();
+        levelDao.add(level,experience);
+
     }
 }
