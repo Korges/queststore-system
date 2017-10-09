@@ -43,6 +43,9 @@ public class Wallet {
         return money;
     }
 
+    public Integer getExperience() {
+        return experience;
+    }
 
     void add(BasicItem item) {
 

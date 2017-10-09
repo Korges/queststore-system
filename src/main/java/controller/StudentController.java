@@ -4,6 +4,7 @@ import DAO.GroupDAO;
 import DAO.MentorDAO;
 import DAO.StudentDAO;
 import UI.StudentUI;
+import UI.UI;
 import models.Mentor;
 import models.Student;
 
@@ -44,6 +45,10 @@ public class StudentController {
                     donateFundraise();
                     break;
                 }
+                case "4":{
+                    checkExperience();
+                    break;
+                }
             }
         } while(!choice.equals("0"));
     }
@@ -63,6 +68,8 @@ public class StudentController {
     }
 
     public void checkExperience() {
+        Integer experience = student_me.wallet.getExperience();
+        UI.showMessage("Your experience: " + experience);
 
     }
 }
