@@ -93,7 +93,7 @@ public class StudentDAO implements InterfaceDAO<Student> {
     public void editWalletValue(Student student) {
 
         try {
-            String sql = String.format("UPDATE wallets SET money = '%d' where id = %s", student.wallet.getBalance(), student.getID());
+            String sql = String.format("UPDATE wallets SET money = '%d',level where id = %s", student.wallet.getBalance(),student.wallet.getLevel(), student.getID());
             connect.addRecord(sql);
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
