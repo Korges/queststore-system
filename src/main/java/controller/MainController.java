@@ -4,6 +4,7 @@ import DAO.StudentDAO;
 import UI.UI;
 import DAO.connectDB;
 import models.Student;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -21,9 +22,7 @@ public class MainController {
         if (result.next()) {
 
             if (result.getString("role").equals("student")) {
-                ResultSet studentResult = connectDB.getResult(String.format("SELECT users.id, first_name, last_name, email, password," +
-                        " role, klass, money, experience from users join wallets on users.id = wallets.id"+
-                        "WHERE email like '%s' and password like '%s'",login,password));
+                ResultSet studentResult = connectDB.getResult(String.format("SELECT users.id, first_name, last_name, email, password, role, klass, money, experience from users join wallets on users.id = wallets.id WHERE email like '%s' and password like '%s'",login,password));
                 studentResult.next();
                 Student student = studentd.createStudent(studentResult);
                 StudentController studentController = new StudentController(student);
@@ -39,8 +38,12 @@ public class MainController {
                 MentorController mentorController = new MentorController();
                 mentorController.startController();
             }
+
+
+
         } else {
             System.out.println("User doesn't exist");
         }
+
     }
 }
