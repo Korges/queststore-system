@@ -61,6 +61,28 @@ public class ArtifactDAO implements InterfaceDAO<Artifact> {
         return artifactList;
     }
 
+    public ArrayList getMagicItems(){
+
+        ArrayList<Artifact> artifactList = new ArrayList<>();
+        try {
+
+            ResultSet result = connect.getResult("SELECT * FROM artifacts WHERE is_magic = 1");
+            while (result.next()) {
+
+                Integer  id = result.getInt("id");
+                String name = result.getString("name");
+                String description = result.getString("description");
+                Integer price = result.getInt("price");
+                MagicItem newItem = new MagicItem(id, name, description, price, true);
+                artifactList.add(newItem);
+                            }
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return artifactList;
+    }
+
 
     public void set(Artifact artifact) {
 

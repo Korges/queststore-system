@@ -1,6 +1,7 @@
 package controller;
 
 import DAO.ArtifactDAO;
+import DAO.FundraiseDAO;
 import DAO.QuestDAO;
 import DAO.StudentDAO;
 import DAO.SubmissionDAO;
@@ -16,6 +17,7 @@ public class MentorController {
     private StudentDAO studentDAO = new StudentDAO();
     private QuestDAO questDAO = new QuestDAO();
     private ArtifactDAO artifactDAO = new ArtifactDAO();
+    private FundraiseDAO fundraiseDAO = new FundraiseDAO();
     private SubmissionDAO submissionDAO = new SubmissionDAO();
 
     public void startController(){
@@ -50,6 +52,10 @@ public class MentorController {
                     checkStudentsWallet();
                     break;
 
+                }
+                case "5": {
+                    fundraisePanel();
+                    break;
                 }
 
             }
@@ -110,7 +116,6 @@ public class MentorController {
                 }
                 case "4": {
                     printAllArtifacts();
-                    break;
                 }
 
             }
@@ -143,6 +148,34 @@ public class MentorController {
 
     }
 
+    public void fundraisePanel() {
+        String choice;
+        do {
+            MentorUI.printLabel(MentorUI.fundraiseMenuLabel);
+            MentorUI.printMenu(MentorUI.menuFundraiseOptions);
+            choice = MentorUI.getChoice();
+
+            switch (choice) {
+                case "1": {
+                    listAllExistingFundraise();
+                    break;
+                }
+                case "2": {
+
+                    break;
+                }
+                case "3": {
+
+                    break;
+                }
+
+            }
+        } while(!choice.equals("0"));
+
+    }
+
+
+
     private void createStudent() {
 
 
@@ -159,8 +192,7 @@ public class MentorController {
     private void editStudent() {
 
         ArrayList<Student> studentList = studentDAO.get();
-        printAllStudents();
-
+        printAllArtifacts();
         if(studentList.size() != 0){
             Integer ID = UI.getInteger("Choose Student by ID");
 
@@ -209,8 +241,8 @@ public class MentorController {
         String category = generateCategory(isMagic);
         Quest quest = new Quest(name, description, value, value, category);
         questDAO.add(quest);
+        System.out.println(quest.toString());
     }
-
 
     private void editQuest() {
 
@@ -325,9 +357,6 @@ public class MentorController {
         }
     }
 
-
-
-
     private void markArtifact() {
 
     }
@@ -342,7 +371,12 @@ public class MentorController {
         UI.printList(subList);
     }
 
+    private<T> void printList(ArrayList<T> list) {
 
+        if (list.size() < 1) {
+            System.out.println("List is empty.");
+        }
+    }
 
     private void printAllStudents() {
         ArrayList<Student> studentList = studentDAO.get();
@@ -398,6 +432,18 @@ public class MentorController {
         ArrayList<Student> students = studentDAO.get();
         for(Student student : students){
             UI.showMessage(student.getFullName() + " account balance : " + student.wallet.getBalance());
+        }
+    }
+
+    private void listAllExistingFundraise() {
+
+        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
+        if(fundraiseList.size() == 0){
+            UI.showMessage("Artifact list is empty!");
+        } else {
+            for(Fundraise fundraise: fundraiseList){
+                System.out.println(fundraise.toString());
+            }
         }
     }
 }
