@@ -11,22 +11,35 @@ import models.*;
 import UI.UI;
 
 import java.lang.reflect.Array;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MentorController {
 
-    private StudentDAO studentDAO = new StudentDAO();
-    private QuestDAO questDAO = new QuestDAO();
-    private ArtifactDAO artifactDAO = new ArtifactDAO();
-    private FundraiseDAO fundraiseDAO = new FundraiseDAO();
-    private SubmissionDAO submissionDAO = new SubmissionDAO();
+    private StudentDAO studentDAO;
+    private QuestDAO questDAO;
+    private ArtifactDAO artifactDAO;
+    private FundraiseDAO fundraiseDAO;
+    private SubmissionDAO submissionDAO;
 
-    public void startController(){
+
+    public MentorController() throws SQLException{
+        studentDAO = new StudentDAO();
+        questDAO = new QuestDAO();
+        artifactDAO = new ArtifactDAO();
+        fundraiseDAO = new FundraiseDAO();
+        submissionDAO = new SubmissionDAO();
+
+    }
+
+
+    public void startController() throws SQLException,NoSuchAlgorithmException{
 
         handleMainMenu();
     }
 
-    public void handleMainMenu() {
+    public void handleMainMenu() throws SQLException,NoSuchAlgorithmException{
 
         String choice;
 
@@ -63,7 +76,7 @@ public class MentorController {
         } while(!choice.equals("0"));
     }
 
-    private void studentPanel() {
+    private void studentPanel() throws SQLException,NoSuchAlgorithmException{
         String choice;
         do {
             MentorUI.printLabel(MentorUI.studentMenuLabel);
@@ -94,7 +107,7 @@ public class MentorController {
 
     }
 
-    private void artifactPanel() {
+    private void artifactPanel() throws SQLException{
         String choice;
         do {
             MentorUI.printLabel(MentorUI.artifactMenuLabel);
@@ -124,7 +137,7 @@ public class MentorController {
 
     }
 
-    private void questPanel() {
+    private void questPanel() throws SQLException{
         String choice;
         do {
             MentorUI.printLabel(MentorUI.questMenuLabel);
@@ -181,7 +194,7 @@ public class MentorController {
 
 
 
-    private void createStudent() {
+    private void createStudent() throws SQLException,NoSuchAlgorithmException{
 
 
         String firstName = UI.getString("Enter First Name: ");
@@ -194,7 +207,7 @@ public class MentorController {
 
     }
 
-    private void editStudent() {
+    private void editStudent() throws SQLException{
 
         ArrayList<Student> studentList = studentDAO.get();
         printAllArtifacts();
@@ -237,7 +250,7 @@ public class MentorController {
         return category;
     }
 
-    private void createQuest() {
+    private void createQuest() throws SQLException{
 
         String name = UI.getString("Enter name: ");
         String description = UI.getString("Enter description: ");
@@ -249,7 +262,7 @@ public class MentorController {
         System.out.println(quest.toString());
     }
 
-    private void editQuest() {
+    private void editQuest() throws SQLException{
 
         ArrayList<Quest> questList =  questDAO.get() ;
         printAllQuests();
@@ -291,7 +304,7 @@ public class MentorController {
 
     }
 
-    private void createArtifact() {
+    private void createArtifact() throws SQLException{
 
         String name = UI.getString("Enter Artifact Name: ");
         String description = UI.getString("Enter Artifact Description: ");
@@ -309,7 +322,7 @@ public class MentorController {
 
 
 
-    private void editArtifact() {
+    private void editArtifact() throws SQLException{
 
         ArrayList<Artifact> artifactList = artifactDAO.get();
         printAllArtifacts();
@@ -342,7 +355,7 @@ public class MentorController {
 
     }
 
-    private void markSubmission() {
+    private void markSubmission() throws SQLException{
         ArrayList<Submission> submissionList = submissionDAO.get();
         printAllSubmissions();
 
@@ -370,7 +383,7 @@ public class MentorController {
 
     }
 
-    private void printAllSubmissions() {
+    private void printAllSubmissions() throws SQLException{
         ArrayList<Submission> subList = submissionDAO.get();
 
         UI.printList(subList);
@@ -383,25 +396,25 @@ public class MentorController {
         }
     }
 
-    private void printAllStudents() {
+    private void printAllStudents() throws SQLException{
         ArrayList<Student> studentList = studentDAO.get();
 
         UI.printList(studentList);
     }
 
-    private void printAllArtifacts() {
+    private void printAllArtifacts() throws SQLException {
         ArrayList<Artifact> artifactList = artifactDAO.get();
 
         UI.printList(artifactList);
     }
 
-    private void printAllQuests() {
+    private void printAllQuests() throws SQLException{
         ArrayList<Quest> questList = questDAO.get();
 
         UI.printList(questList);
     }
 
-    private void deleteStudent() {
+    private void deleteStudent() throws SQLException{
 
         ArrayList<Student> studentList = studentDAO.get();
         printAllStudents();
@@ -417,7 +430,7 @@ public class MentorController {
         }
     }
 
-    private void deleteArtifact() {
+    private void deleteArtifact() throws SQLException{
 
         ArrayList<Artifact> artifactList = artifactDAO.get();
         printAllArtifacts();
@@ -433,7 +446,7 @@ public class MentorController {
         }
     }
 
-    private void checkStudentsWallet(){
+    private void checkStudentsWallet() throws SQLException {
         ArrayList<Student> students = studentDAO.get();
         for(Student student : students){
             UI.showMessage(student.getFullName() + " account balance : " + student.wallet.getBalance());

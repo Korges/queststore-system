@@ -4,21 +4,18 @@ import java.sql.SQLException;
 
 public class LevelExperienceDAO {
 
-    connectDB connect = DAO.connectDB.getInstance();
+    private connectDB connect;
 
-    public void add(Integer level, Integer experience){
+    public LevelExperienceDAO()throws SQLException{
+        connect = DAO.connectDB.getInstance();
+    }
+
+
+    public void add(Integer level, Integer experience) throws SQLException{
         String sql = String.format("INSERT INTO level_experience " +
                 "(level, exp)" +
                 " VALUES ('%d', '%d')", level, experience);
-
-        try {
             connect.addRecord(sql);
-        } catch (SQLException e) {
-            System.out.println(e);
-            System.exit(0);
-        }
-
-
     }
 
 }

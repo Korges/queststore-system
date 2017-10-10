@@ -8,11 +8,11 @@ public class connectDB {
 
     private static Connection connection = null;
 
-    private connectDB(){
+    private connectDB() throws SQLException{
         connection = connect();
     }
 
-    public static connectDB getInstance() {
+    public static connectDB getInstance() throws SQLException{
 
         if (connectDB == null) {
             connectDB = new connectDB();
@@ -21,39 +21,28 @@ public class connectDB {
     }
 
 
-    public Connection connect(){
+    public Connection connect() throws SQLException{
 
         String url = "jdbc:sqlite:src/main/resources/db/database.db";
-        Connection conn = null;
-        try{
-            conn = DriverManager.getConnection(url);
-
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
+        Connection conn;
+        conn = DriverManager.getConnection(url);
         return conn;
     }
 
 
-    public void close() throws SQLException{
-
-        connection.close();
-    }
-
 
     public ResultSet getResult(String sql) throws SQLException{
 
+        ResultSet result;
         Statement stmt = connection.createStatement();
-        ResultSet result = stmt.executeQuery(sql);
-
+        result = stmt.executeQuery(sql);
         return result;
     }
 
 
     public void addRecord(String sql) throws SQLException {
-
         Statement stmt = connection.createStatement();
         stmt.executeUpdate(sql);
     }
+
 }
