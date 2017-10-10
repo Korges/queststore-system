@@ -19,7 +19,6 @@ public class QuestDAO implements InterfaceDAO<Quest> {
                 "VALUES ('%s', '%s', '%d', '%d', '%s')", quest.getName(), quest.getDescription(), quest.getValue(), quest.getExperience(), quest.getCategory());
         try {
             connect.addRecord(querry);
-            System.out.println(querry);
         } catch (SQLException e) {
             System.out.println("Something went wrong, propably database is occupied by another process, shutting down...");
             System.exit(0);
@@ -40,7 +39,7 @@ public class QuestDAO implements InterfaceDAO<Quest> {
     }
 
 
-    public ArrayList get(){
+    public ArrayList<Quest> get(){
 
         ArrayList<Quest> questList = new ArrayList<>();
         try {
@@ -63,7 +62,7 @@ public class QuestDAO implements InterfaceDAO<Quest> {
     public void set(Quest quest) {
 
         try {
-            String querry = String.format("UPDATE quests + " +
+            String querry = String.format("UPDATE quests " +
              "SET name='%s',description = '%s',value = '%d', experience = '%d', category = '%s' " +
              "WHERE id = %d", quest.getName(),quest.getDescription(),quest.getValue(),quest.getExperience(),quest.getCategory(), quest.getId());
             connect.addRecord(querry);

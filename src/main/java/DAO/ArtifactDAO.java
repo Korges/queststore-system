@@ -26,13 +26,13 @@ public class ArtifactDAO implements InterfaceDAO<Artifact> {
         try {
             connect.addRecord(sql);
         } catch (SQLException e) {
-            System.out.println("Something get wrong");;
+            System.out.println("Something get wrong");
             System.exit(0);
         }
     }
 
 
-    public ArrayList get(){
+    public ArrayList<Artifact> get(){
 
         ArrayList<Artifact> artifactList = new ArrayList<>();
         try {

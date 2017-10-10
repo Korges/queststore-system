@@ -25,7 +25,7 @@ public class MentorDAO implements InterfaceDAO<Mentor> {
     }
 
 
-    public ArrayList get(){
+    public ArrayList<Mentor> get(){
 
         ArrayList<Mentor> mentorList = new ArrayList<>();
 

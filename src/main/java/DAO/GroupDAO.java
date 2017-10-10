@@ -24,7 +24,7 @@ public class GroupDAO implements InterfaceDAO<Group> {
     }
 
 
-    public ArrayList get() {
+    public ArrayList<Group> get() {
 
         ArrayList<Group> groupList = new ArrayList<>();
         try {
