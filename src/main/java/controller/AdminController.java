@@ -63,7 +63,7 @@ public class AdminController {
 
         String firstName = MentorUI.getString("Enter First Name: ");
         String lastName = MentorUI.getString("Enter Last Name: ");
-        String password = MentorUI.getString("Enter Password: ");
+        String password = HashSystem.getStringFromSHA256(MentorUI.getString("Enter Password: "));
         String email = MentorUI.getEmail();
         showGroup();
         String klass = MentorUI.getString("Enter Klass id: ");
