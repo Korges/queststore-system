@@ -36,24 +36,30 @@ public class connectDB {
     }
 
 
-    public void close() throws SQLException{
 
-        connection.close();
-    }
+    public ResultSet getResult(String sql) throws DAOException{
 
-
-    public ResultSet getResult(String sql) throws SQLException{
+        ResultSet result = null;
+        try{
 
         Statement stmt = connection.createStatement();
-        ResultSet result = stmt.executeQuery(sql);
+        result = stmt.executeQuery(sql);
+        } catch (SQLException e) {
+            throw new DAOException("Problem with execute query");
+        }
 
         return result;
     }
 
 
-    public void addRecord(String sql) throws SQLException {
+    public void addRecord(String sql) throws DAOException {
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+        throw new DAOException("Problem with execute query");
+    }
 
-        Statement stmt = connection.createStatement();
-        stmt.executeUpdate(sql);
+
     }
 }
