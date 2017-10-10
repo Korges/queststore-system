@@ -27,6 +27,9 @@ public class StudentUI extends UI {
     public static List<String> menuFundraiseOptions = Arrays.asList(
             "Create Fundraise",
             "Join Existing Fundraise",
+            "Leave Fundraise",
+            "Show joined Fundraises",
+            "Show all Fundraises",
             "EXIT");
 
 

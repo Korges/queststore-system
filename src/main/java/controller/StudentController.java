@@ -52,6 +52,7 @@ public class StudentController {
         } while(!choice.equals("0"));
     }
 
+
     public void artifactPanel() {
 
         String choice;
@@ -84,8 +85,8 @@ public class StudentController {
                 }
             }
         } while(!choice.equals("0"));
-
     }
+
 
     public void fundraisePanel() {
         String choice;
@@ -103,6 +104,21 @@ public class StudentController {
 
                 case "2": {
                     joinExistingFundraise();
+                    break;
+                }
+
+                case "3": {
+                    leaveFundraise();
+                    break;
+                }
+
+                case "4": {
+                    checkJoinedFundraises();
+                    break;
+                }
+
+                case "5": {
+                    listAllExistingFundraise();
                     break;
                 }
 
@@ -196,11 +212,21 @@ public class StudentController {
         }
     }
 
-
+    public boolean isInFundraise(Student student_me) {
+        ArrayList<Fundraise> fundraiseStudentList = fundraiseDAO.getFundraisesStudents();
+        boolean bool = false;
+        for(Fundraise fundraise : fundraiseStudentList) {
+            if(student_me.getID().equals(fundraise.getStudentID())) {
+                bool = true;
+            }
+        }
+        return bool;
+    }
 
 
     public void joinExistingFundraise() {
         ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
+
         listAllExistingFundraise();
         if (fundraiseList.size() != 0) {
             boolean isTrue = true;
@@ -212,14 +238,57 @@ public class StudentController {
                 for (Fundraise fundraise : fundraiseList) {
                     if (ID.equals(fundraise.getFundraiseID())) {
                         isTrue = false;
-                        fundraiseDAO.join(fundraise, student_me);
+                        if(!isInFundraise(student_me)) {
+                            fundraiseDAO.join(fundraise, student_me);
+                        }
+                        else {
+                            UI.showMessage("You are already member of the same Fundraise!");
+                        }
                     }
-
                 }
             }
         }
     }
 
+    public void leaveFundraise() {
+        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
+        checkJoinedFundraises();
+        if (fundraiseList.size() != 0) {
+            boolean isTrue = true;
+
+            while (isTrue) {
+
+                Integer ID = UI.getInteger("Leave Fundraise by ID  :");
+
+                for (Fundraise fundraise : fundraiseList) {
+                    if (ID.equals(fundraise.getFundraiseID())) {
+                        isTrue = false;
+                        fundraiseDAO.remove(fundraise);
+                    }
+
+                }
+
+            }
+        }
+
+    }
+
+    public void checkJoinedFundraises() {
+        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
+        if(fundraiseList.size() == 0){
+            UI.showMessage("Fundraise list is empty!");
+        }
+        else {
+            for(Fundraise fundraise : fundraiseList) {
+                if(student_me.getID().equals(fundraise.getStudentID())) {
+                    System.out.println(fundraise.toStringCheck());
+                }
+                else {
+                    UI.showMessage("You are not member of any Fundraise!");
+                }
+            }
+        }
+    }
     public void experience() {
 
     }
