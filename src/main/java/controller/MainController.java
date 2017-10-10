@@ -13,7 +13,7 @@ public class MainController {
     public void loginToSystem() throws SQLException{
 
         String login = UI.getLogin();
-        String password = UI.getPassword();
+        String password = HashSystem.getStringFromSHA256(UI.getPassword());
         connectDB connectDB = DAO.connectDB.getInstance();
         StudentDAO studentd = new StudentDAO();
         String sql = String.format("SELECT * FROM users WHERE email like '%s' and password like '%s'",login,password);

@@ -115,7 +115,7 @@ public class AdminController {
                     }
 
                     if (UI.UI.getBoolean("Do you want change Mentor's password? [Y/N]")) {
-                        mentor.setPassword(UI.UI.getString("Enter new Password: "));
+                        mentor.setPassword(HashSystem.getStringFromSHA256(UI.UI.getString("Enter new Password: ")));
                     }
                     mDAO.set(mentor);
                 }

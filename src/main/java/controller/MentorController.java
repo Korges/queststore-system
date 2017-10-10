@@ -181,7 +181,7 @@ public class MentorController {
 
         String firstName = UI.getString("Enter First Name: ");
         String lastName = UI.getString("Enter Last Name: ");
-        String password = UI.getString("Enter Password: ");
+        String password = HashSystem.getStringFromSHA256(UI.getString("Enter Password: "));
         String email = UI.getEmail();
         String klass = UI.getString("Enter Klass number: ");
         Student newStudent = new Student(firstName, lastName, email, password, klass);
