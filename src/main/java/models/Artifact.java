@@ -48,7 +48,7 @@ public abstract class Artifact {
     public String toString() {
 
         StringJoiner joiner = new StringJoiner(" | ");
-        joiner.add("ID : " + id);
+        joiner.add("ID: " + id);
         joiner.add("Name: " + name);
         joiner.add("Description: " + description);
         joiner.add("Price: " + price);
