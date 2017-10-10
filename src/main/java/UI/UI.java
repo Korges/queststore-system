@@ -1,5 +1,6 @@
 package UI;
 
+import javax.swing.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,7 +23,17 @@ public class UI {
 
     public static String getPassword(){
 
-        String password = getString("Enter password: ");
+        final String password, message = "Enter password";
+        if( System.console() == null )
+        {
+            final JPasswordField pf = new JPasswordField();
+            password = JOptionPane.showConfirmDialog( null, pf, message,
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE ) == JOptionPane.OK_OPTION ?
+                    new String( pf.getPassword() ) : "";
+        }
+        else
+            password = new String( System.console().readPassword( "%s> ", message ) );
 
         return password;
     }
