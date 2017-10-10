@@ -345,7 +345,7 @@ public class StudentController {
     private void listAllExistingFundraise() {
         ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
         if(fundraiseList.size() == 0){
-            UI.showMessage("Artifact list is empty!");
+            UI.showMessage("Fundraise list is empty!");
         } else {
             for(Fundraise fundraise: fundraiseList){
                 System.out.println(fundraise.toString());
