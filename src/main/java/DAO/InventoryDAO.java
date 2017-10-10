@@ -40,7 +40,7 @@ public class InventoryDAO {
 
     }
 
-    public ArrayList getSingleStudent(Student student) throws SQLException{
+    public ArrayList<Inventory> getStudentInventory(Student student) throws SQLException {
 
         ArrayList<Inventory> inventoryList = new ArrayList<>();
             ResultSet result = connect.getResult(String.format("SELECT * FROM student_inventory JOIN artifacts on artifact_id = id WHERE student_id = %d", student.getID()));

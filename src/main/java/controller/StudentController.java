@@ -14,7 +14,7 @@ public class StudentController {
     private StudentDAO studentDAO;
     private InventoryDAO inventoryDAO;
     private FundraiseDAO fundraiseDAO;
-    private Student student_me;
+    private Student user;
 
     public StudentController(Student student) throws SQLException{
         artifactDAO = new ArtifactDAO();
@@ -22,7 +22,7 @@ public class StudentController {
         studentDAO = new StudentDAO();
         inventoryDAO = new InventoryDAO();
         fundraiseDAO = new FundraiseDAO();
-        student_me = student;
+        user = student;
     }
 
 
@@ -39,7 +39,7 @@ public class StudentController {
 
         do {
             StudentUI.printLabel(StudentUI.mainMenuLabel);
-            StudentUI.printMenu(StudentUI.menuMainOptions);
+            StudentUI.printMenu(StudentUI.mainMenuOptions);
             choice = StudentUI.getChoice();
 
             switch (choice){
@@ -49,7 +49,7 @@ public class StudentController {
                     break;
                 }
                 case "2": {
-                    experience();
+                    walletPanel();
                     break;
                 }
             }
@@ -62,7 +62,7 @@ public class StudentController {
         String choice;
         do {
             StudentUI.printLabel(StudentUI.artifactMenuLabel);
-            StudentUI.printMenu(StudentUI.menuArtifactOptions);
+            StudentUI.printMenu(StudentUI.artifactMenuOptions);
             choice = StudentUI.getChoice();
 
             switch (choice) {
@@ -96,7 +96,7 @@ public class StudentController {
         String choice;
         do {
             StudentUI.printLabel(StudentUI.fundraiseMenuLabel);
-            StudentUI.printMenu(StudentUI.menuFundraiseOptions);
+            StudentUI.printMenu(StudentUI.fundraiseMenuOptions);
             choice = StudentUI.getChoice();
 
             switch (choice) {
@@ -133,17 +133,17 @@ public class StudentController {
 
 
 
-    public void checkBalance() {
+    private void checkBalance() {
 
-        Integer balance = student_me.wallet.getBalance();
+        Integer balance = user.getWallet().getBalance();
         System.out.println("Your balance: " + balance);
     }
 
-    public boolean checkEnoughBalance(Artifact artifact) {
+    private boolean checkEnoughBalance(Artifact artifact) {
 
         boolean bool = false;
 
-        Integer balance = student_me.wallet.getBalance();
+        Integer balance = user.getWallet().getBalance();
         if (balance >= artifact.getPrice()) {
             bool = true;
         }
@@ -176,9 +176,9 @@ public class StudentController {
                         if (checkEnoughBalance(artifact)) {
 
                             if (UI.getBoolean("Do you want to buy : " + artifact.getName() + " ?")) {
-                                student_me.wallet.substract(artifact.getPrice());
-                                studentDAO.editWalletValue(student_me);
-                                Inventory inventory = new Inventory(student_me.getID(), artifact.getID(), UI.getCurrentDate());
+                                user.getWallet().substract(artifact.getPrice());
+                                studentDAO.editWalletValue(user);
+                                Inventory inventory = new Inventory(user.getID(), artifact.getID(), UI.getCurrentDate());
                                 inventoryDAO.add(inventory);
                             }
                         }
@@ -216,7 +216,7 @@ public class StudentController {
         }
     }
 
-    public boolean isInFundraise(Student student_me) {
+    private boolean isInFundraise(Student student_me) {
         ArrayList<Fundraise> fundraiseStudentList = fundraiseDAO.getFundraisesStudents();
         boolean bool = false;
         for(Fundraise fundraise : fundraiseStudentList) {
@@ -242,8 +242,8 @@ public class StudentController {
                 for (Fundraise fundraise : fundraiseList) {
                     if (ID.equals(fundraise.getFundraiseID())) {
                         isTrue = false;
-                        if(!isInFundraise(student_me)) {
-                            fundraiseDAO.join(fundraise, student_me);
+                        if(!isInFundraise(user)) {
+                            fundraiseDAO.join(fundraise, user);
                         }
                         else {
                             UI.showMessage("You are already member of the same Fundraise!");
@@ -277,14 +277,14 @@ public class StudentController {
 
     }
 
-    public void checkJoinedFundraises() {
+    private void checkJoinedFundraises() {
         ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
         if(fundraiseList.size() == 0){
             UI.showMessage("Fundraise list is empty!");
         }
         else {
             for(Fundraise fundraise : fundraiseList) {
-                if(student_me.getID().equals(fundraise.getStudentID())) {
+                if(user.getID().equals(fundraise.getStudentID())) {
                     System.out.println(fundraise.toStringCheck());
                 }
                 else {
@@ -293,14 +293,29 @@ public class StudentController {
             }
         }
     }
-    public void experience() {
+    private void walletPanel() {
+        String choice;
+        do {
+            StudentUI.printLabel(StudentUI.walletMenuLabel);
+            StudentUI.printMenu(StudentUI.walletMenuOptions);
+            choice = StudentUI.getChoice();
+
+            switch (choice) {
+
+                case "1": {
+                    printWalletStatus();
+                    break;
+                }
+
+
+            }
+        } while(!choice.equals("0"));
+
 
     }
 
-    public void checkExperience() {
-        Integer experience = student_me.wallet.getExperience();
-        UI.showMessage("Your experience: " + experience);
-
+    private void printWalletStatus() {
+        System.out.println(user.getWallet().toString());
     }
 
     private void listAllArtifacts() throws SQLException{
@@ -343,7 +358,7 @@ public class StudentController {
 
     public void checkStudentArtifacts() throws SQLException{
 
-        ArrayList<Inventory> inventoryList = inventoryDAO.getSingleStudent(student_me);
+        ArrayList<Inventory> inventoryList = inventoryDAO.getStudentInventory(user);
         int no = 0;
         if(inventoryList.size() == 0){
             UI.showMessage("Purchase list is empty!");

@@ -56,7 +56,7 @@ public class ArtifactDAO implements InterfaceDAO<Artifact> {
         return artifactList;
     }
 
-    public ArrayList getMagicItems() throws SQLException{
+    public ArrayList<Artifact> getMagicItems() throws SQLException{
 
         ArrayList<Artifact> artifactList = new ArrayList<>();
         ResultSet result = connect.getResult("SELECT * FROM artifacts WHERE is_magic = 1");

@@ -62,7 +62,7 @@ public class FundraiseDAO {
          }
     }
 
-    public ArrayList get() {
+    public ArrayList<Fundraise> get() {
 
         ArrayList<Fundraise> fundraiseList = new ArrayList<>();
         try {
@@ -86,7 +86,7 @@ public class FundraiseDAO {
 
     }
 
-    public ArrayList getFundraisesStudents() {
+    public ArrayList<Fundraise> getFundraisesStudents() {
         ArrayList<Fundraise> fundraiseStudentList = new ArrayList<>();
         try {
 
