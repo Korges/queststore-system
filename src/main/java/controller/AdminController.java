@@ -1,5 +1,6 @@
 package controller;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -21,11 +22,11 @@ public class AdminController {
         gDAO = new GroupDAO();
     }
 
-    public void startController() throws SQLException{
+    public void startController() throws SQLException,NoSuchAlgorithmException{
         handleMenu();
     }
 
-    private void handleMenu() throws SQLException{
+    private void handleMenu() throws SQLException,NoSuchAlgorithmException{
 
         String choice;
         do {
@@ -67,7 +68,7 @@ public class AdminController {
         }while(!choice.equals("0"));
     }
 
-    public void createMentor() throws SQLException{
+    public void createMentor() throws SQLException,NoSuchAlgorithmException{
 
         String firstName = MentorUI.getString("Enter First Name: ");
         String lastName = MentorUI.getString("Enter Last Name: ");
@@ -99,7 +100,7 @@ public class AdminController {
     }
 
 
-    public void editMentor() throws SQLException{
+    public void editMentor() throws SQLException,NoSuchAlgorithmException{
 
         ArrayList<Mentor> mentorList = mDAO.get();
         listAllMentors();

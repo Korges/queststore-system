@@ -11,6 +11,7 @@ import models.*;
 import UI.UI;
 
 import java.lang.reflect.Array;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -33,12 +34,12 @@ public class MentorController {
     }
 
 
-    public void startController() throws SQLException{
+    public void startController() throws SQLException,NoSuchAlgorithmException{
 
         handleMainMenu();
     }
 
-    public void handleMainMenu() throws SQLException{
+    public void handleMainMenu() throws SQLException,NoSuchAlgorithmException{
 
         String choice;
 
@@ -75,7 +76,7 @@ public class MentorController {
         } while(!choice.equals("0"));
     }
 
-    private void studentPanel() throws SQLException{
+    private void studentPanel() throws SQLException,NoSuchAlgorithmException{
         String choice;
         do {
             MentorUI.printLabel(MentorUI.studentMenuLabel);
@@ -193,7 +194,7 @@ public class MentorController {
 
 
 
-    private void createStudent() throws SQLException{
+    private void createStudent() throws SQLException,NoSuchAlgorithmException{
 
 
         String firstName = UI.getString("Enter First Name: ");
