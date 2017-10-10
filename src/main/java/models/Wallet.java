@@ -26,7 +26,7 @@ public class Wallet {
     }
 
 
-    void add(Integer amount) {
+    public void add(Integer amount) {
 
         this.money += amount;
     }
@@ -51,5 +51,17 @@ public class Wallet {
     void add(BasicItem item) {
 
         this.artifactList.add(item);
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public void setExperience(Integer experience) {
+        this.experience = experience;
     }
 }

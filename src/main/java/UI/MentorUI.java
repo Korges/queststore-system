@@ -38,6 +38,9 @@ public class MentorUI extends UI {
         "EXIT");
 
     public static List<String> menuQuestOptions = Arrays.asList(
+        "Create Quest",
+        "Edit Quest",
+        "Mark Quest",
         "EXIT");
 
     public static List<String> menuFundraiseOptions = Arrays.asList(

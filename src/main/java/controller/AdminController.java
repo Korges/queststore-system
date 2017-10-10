@@ -52,7 +52,7 @@ public class AdminController {
                     break;
                 }
                 case "7":{
-                    createLevelOfExperience();;
+                    createLevelOfExperience();
                     break;
                 }
             }

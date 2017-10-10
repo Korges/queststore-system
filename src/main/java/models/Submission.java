@@ -2,30 +2,75 @@ package models;
 
 public class Submission {
 
+    private int id;
+    private int studentId;
+    private int questId;
     private boolean isMarked;
-    private Student student;
-    private Quest quest;
+    private String description;
 
-    public Submission(Student student, Quest quest) {
-
-        this.isMarked = false;
-        this.student = student;
-        this.quest = quest;
+    public Submission(int id, int studentId, int questId, boolean isMarked, String description) {
+        this.id = id;
+        this.studentId = studentId;
+        this.questId = questId;
+        this.isMarked = isMarked;
+        this.description = description;
     }
 
+    public Submission(int studentId, int questId, boolean isMarked, String description) {
+        this.studentId = studentId;
+        this.questId = questId;
+        this.isMarked = isMarked;
+        this.description = description;
+    }
 
-    public boolean setMarked() {
+    @Override
+    public String toString() {
+        return "Submission{" +
+                "id=" + id +
+                ", studentId=" + studentId +
+                ", questId=" + questId +
+                ", isMarked=" + isMarked +
+                ", description='" + description + '\'' +
+                '}';
+    }
 
-        if (!isMarked) {
+    public int getId() {
+        return id;
+    }
 
-            System.out.println("ENTER GRADE, (CHANGE IT TO OUTSIDE CLASS");
-            System.out.println("(INITIALIZE GIB MONEY TO STUDENT PLS)");
-            isMarked = true;
+    public void setId(int id) {
+        this.id = id;
+    }
 
-            return true;
+    public int getStudentId() {
+        return studentId;
+    }
 
-        } else {
-            return false;
-        }
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
+
+    public int getQuestId() {
+        return questId;
+    }
+
+    public void setQuestId(int questId) {
+        this.questId = questId;
+    }
+
+    public boolean isMarked() {
+        return isMarked;
+    }
+
+    public void setMarked(boolean marked) {
+        isMarked = marked;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

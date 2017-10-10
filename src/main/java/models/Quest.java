@@ -8,6 +8,7 @@ public class Quest {
     private String description;
     private int value;
     private int experience;
+
     private String category;
 
 
@@ -64,5 +65,33 @@ public class Quest {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public void switchCategory() {
+        if (category.toLowerCase().equals("thequest")) {
+            category = "magicQuest";
+        }else {
+            category = "theQuest";
+        }
     }
 }

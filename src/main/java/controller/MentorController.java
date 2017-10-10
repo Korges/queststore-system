@@ -4,9 +4,12 @@ import DAO.ArtifactDAO;
 import DAO.FundraiseDAO;
 import DAO.QuestDAO;
 import DAO.StudentDAO;
+import DAO.SubmissionDAO;
 import UI.MentorUI;
 import models.*;
 import UI.UI;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MentorController {
@@ -15,6 +18,7 @@ public class MentorController {
     private QuestDAO questDAO = new QuestDAO();
     private ArtifactDAO artifactDAO = new ArtifactDAO();
     private FundraiseDAO fundraiseDAO = new FundraiseDAO();
+    private SubmissionDAO submissionDAO = new SubmissionDAO();
 
     public void startController(){
 
@@ -58,7 +62,7 @@ public class MentorController {
         } while(!choice.equals("0"));
     }
 
-    public void studentPanel() {
+    private void studentPanel() {
         String choice;
         do {
             MentorUI.printLabel(MentorUI.studentMenuLabel);
@@ -80,7 +84,7 @@ public class MentorController {
                     break;
                 }
                 case "4": {
-                    listAllStudents();
+                    printAllStudents();
                     break;
                 }
 
@@ -89,7 +93,7 @@ public class MentorController {
 
     }
 
-    public void artifactPanel() {
+    private void artifactPanel() {
         String choice;
         do {
             MentorUI.printLabel(MentorUI.artifactMenuLabel);
@@ -111,7 +115,7 @@ public class MentorController {
                     break;
                 }
                 case "4": {
-                    listAllArtifacts();
+                    printAllArtifacts();
                 }
 
             }
@@ -119,7 +123,7 @@ public class MentorController {
 
     }
 
-    public void questPanel() {
+    private void questPanel() {
         String choice;
         do {
             MentorUI.printLabel(MentorUI.questMenuLabel);
@@ -127,7 +131,18 @@ public class MentorController {
             choice = MentorUI.getChoice();
 
             switch (choice) {
-
+                case "1": {
+                    createQuest();
+                    break;
+                }
+                case "2": {
+                    editQuest();
+                    break;
+                }
+                case "3": {
+                    markSubmission();
+                    break;
+                }
             }
         } while(!choice.equals("0"));
 
@@ -161,7 +176,7 @@ public class MentorController {
 
 
 
-    public void createStudent() {
+    private void createStudent() {
 
 
         String firstName = UI.getString("Enter First Name: ");
@@ -174,11 +189,10 @@ public class MentorController {
 
     }
 
-    public void editStudent() {
+    private void editStudent() {
 
         ArrayList<Student> studentList = studentDAO.get();
-        listAllStudents();
-
+        printAllArtifacts();
         if(studentList.size() != 0){
             Integer ID = UI.getInteger("Choose Student by ID");
 
@@ -222,7 +236,7 @@ public class MentorController {
 
         String name = UI.getString("Enter name: ");
         String description = UI.getString("Enter description: ");
-        Integer value = UI.getInteger("Enter Value: "); // todo input integer
+        Integer value = UI.getInteger("Enter Value: ");
         Boolean isMagic = UI.getBoolean("Is quest Extra(y) or basic(n)?");
         String category = generateCategory(isMagic);
         Quest quest = new Quest(name, description, value, value, category);
@@ -231,6 +245,44 @@ public class MentorController {
     }
 
     private void editQuest() {
+
+        ArrayList<Quest> questList =  questDAO.get() ;
+        printAllQuests();
+
+
+        if(questList.size() != 0){
+            Integer id = UI.getInteger("Choose quest by ID");
+
+            for(Quest quest: questList) {
+                if (id.equals(quest.getId())) {
+
+                    if (UI.getBoolean("Do you want change Quests name? [Y/N]")) {
+                        quest.setName(UI.getString("Enter new Name: "));
+                    }
+
+                    if (UI.getBoolean("Do you want change Quests description? [Y/N]")) {
+                        quest.setDescription(UI.getString("Enter new description: "));
+                    }
+
+                    if (UI.getBoolean("Do you want change Quests value? [Y/N]")) {
+                        quest.setValue(UI.getInteger("Enter new value: "));
+                    }
+
+                    if (UI.getBoolean("Do you want change Quests experience? [Y/N]")) {
+                        quest.setExperience(UI.getInteger("Enter new experience: "));
+                    }
+
+                    if (UI.getBoolean("Do you want change Quests category? " +
+                            "Currently:" + quest.getCategory() + " [Y/N]")) {
+                        quest.switchCategory();
+                    }
+
+                    questDAO.set(quest);
+                }
+            }
+        }
+
+
 
     }
 
@@ -255,7 +307,7 @@ public class MentorController {
     private void editArtifact() {
 
         ArrayList<Artifact> artifactList = artifactDAO.get();
-        listAllArtifacts();
+        printAllArtifacts();
 
         if(artifactList.size() != 0){
             Integer ID = UI.getInteger("Choose Artifact by ID");
@@ -286,7 +338,23 @@ public class MentorController {
     }
 
     private void markSubmission() {
+        ArrayList<Submission> submissionList = submissionDAO.get();
+        printAllSubmissions();
 
+        if (submissionList.size() != 0) {
+            Integer id = UI.getInteger("Choose submission by submission ID");
+
+            for (Submission submission : submissionList) {
+                if (id.equals(submission.getId())) {
+
+                    Integer studentId = submission.getStudentId();
+                    Integer experience = submissionDAO.getSubmissionValue(submission.getId());
+                    submission.setMarked(true);
+                    studentDAO.setWalletDetail(studentId, experience);
+                    submissionDAO.set(submission);
+                }
+            }
+        }
     }
 
     private void markArtifact() {
@@ -297,9 +365,10 @@ public class MentorController {
 
     }
 
-    private void printQuests() {
+    private void printAllSubmissions() {
+        ArrayList<Submission> subList = submissionDAO.get();
 
-        printList(questDAO.get());
+        UI.printList(subList);
     }
 
     private<T> void printList(ArrayList<T> list) {
@@ -308,43 +377,28 @@ public class MentorController {
             System.out.println("List is empty.");
         }
 
-        int i = 1;
-
-        for (T t:  list ) {
-
-            System.out.println(Integer.toString(i) + ". " + t);
-            i++;
-        }
-    }
-
-    private void listAllStudents() {
-
+    private void printAllStudents() {
         ArrayList<Student> studentList = studentDAO.get();
-        if(studentList.size() == 0){
-            UI.showMessage("Student list is empty!");
-        } else {
-            for(Student student: studentList){
-                System.out.println(student.toString());
-            }
-        }
+
+        UI.printList(studentList);
     }
 
-    private void listAllArtifacts() {
-
+    private void printAllArtifacts() {
         ArrayList<Artifact> artifactList = artifactDAO.get();
-        if(artifactList.size() == 0){
-            UI.showMessage("Artifact list is empty!");
-        } else {
-            for(Artifact artifact: artifactList){
-                System.out.println(artifact.toString());
-            }
-        }
+
+        UI.printList(artifactList);
+    }
+
+    private void printAllQuests() {
+        ArrayList<Quest> questList = questDAO.get();
+
+        UI.printList(questList);
     }
 
     private void deleteStudent() {
 
         ArrayList<Student> studentList = studentDAO.get();
-        listAllStudents();
+        printAllStudents();
 
         if(studentList.size() != 0) {
             Integer ID = UI.getInteger("Choose Student by ID");
@@ -360,7 +414,7 @@ public class MentorController {
     private void deleteArtifact() {
 
         ArrayList<Artifact> artifactList = artifactDAO.get();
-        listAllArtifacts();
+        printAllArtifacts();
 
         if(artifactList.size() != 0) {
             Integer ID = UI.getInteger("Choose Artifact by ID");

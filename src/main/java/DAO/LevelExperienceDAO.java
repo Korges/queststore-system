@@ -9,7 +9,7 @@ public class LevelExperienceDAO {
     public void add(Integer level, Integer experience){
         String sql = String.format("INSERT INTO level_experience " +
                 "(level, exp)" +
-                "VALUES ('%d', '%d')", level, experience);
+                " VALUES ('%d', '%d')", level, experience);
 
         try {
             connect.addRecord(sql);
@@ -20,4 +20,5 @@ public class LevelExperienceDAO {
 
 
     }
+
 }

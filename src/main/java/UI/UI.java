@@ -2,6 +2,7 @@ package UI;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -60,10 +61,24 @@ public class UI {
         List<String> messages = Arrays.asList("Y", "YES");
         sc = new Scanner(System.in);
         showMessage(message);
+
         if(messages.contains(sc.nextLine().toUpperCase())){
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static<T> void printList(ArrayList<T> list) {
+
+        if (list.size() < 1) {
+            System.out.println("List is empty.");
+        }
+
+
+        for (T object : list ) {
+
+            System.out.println(object.toString());
         }
     }
 
