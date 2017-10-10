@@ -32,15 +32,16 @@ public class Quest {
         this.category = category;
     }
 
-
+    @Override
     public String toString() {
-
-        StringJoiner joiner = new StringJoiner("|");
-        joiner.add("Name: " + name);
-        joiner.add("Description: " + description);
-        joiner.add("Value: " + value);
-
-        return joiner.toString();
+        return "Quest{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", value=" + value +
+                ", experience=" + experience +
+                ", category='" + category + '\'' +
+                '}';
     }
 
     public String getName() {

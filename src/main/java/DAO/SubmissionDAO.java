@@ -31,9 +31,7 @@ public class SubmissionDAO implements InterfaceDAO<Submission> {
     }
 
     private Boolean dbBooleanWithdraw(Integer isMarked) {
-        if(isMarked.equals(1)) {
-            return true;
-        }else return false;
+        return isMarked.equals(1);
     }
 
 
@@ -74,9 +72,15 @@ public class SubmissionDAO implements InterfaceDAO<Submission> {
     public Integer getSubmissionValue(Integer submissionId) throws SQLException{
         String querry = String.format("SELECT value FROM quests INNER JOIN submissions" +
                 " ON quests.id = submissions.quest_id WHERE submissions.id = %d", submissionId );
-        Integer result = null;
         ResultSet dbResult = connect.getResult(querry);
-        result = dbResult.getInt("value");
-        return result;
+
+        return dbResult.getInt("value");
+    }
+
+    public Boolean checkAlreadySubmitted(Integer questId, Integer studentId) throws SQLException{
+
+        String query = String.format("SELECT id FROM submissions WHERE quest_id = '%d' AND student_id = '%d';", questId, studentId);
+        ResultSet result = connect.getResult(query);
+        return result.next();
     }
 }

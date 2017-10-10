@@ -12,10 +12,13 @@ public class StudentUI extends UI {
 
     public static String walletMenuLabel = "STUDENT - Wallet Menu";
 
+    public static String submissionMenuLabel = "STUDENT - Submission Menu";
+
 
     public static List<String> mainMenuOptions = Arrays.asList(
     "Artifact Panel",
     "Wallet Panel",
+    "Submission Panel",
     "EXIT");
 
     public static List<String> walletMenuOptions = Arrays.asList(
@@ -36,6 +39,12 @@ public class StudentUI extends UI {
             "Leave Fundraise",
             "Show joined Fundraises",
             "Show all Fundraises",
+            "EXIT");
+
+    public static List<String> submitMenuOptions = Arrays.asList(
+            "Show all Quests",
+            "Show your Submissions",
+            "Submit Quest",
             "EXIT");
 
 
