@@ -10,33 +10,26 @@ import java.util.ArrayList;
 
 public class FundraiseDAO {
 
-    connectDB connect = DAO.connectDB.getInstance();
-
-    public void add(Fundraise fundraise) {
-
-        String sqlCreate = String.format("INSERT INTO fundraises" +
-                "(artifact_id, title)" +
-                "VALUES ('%d', '%s')", fundraise.getArtifactID(), fundraise.getTitle());
-
-        try {
-            connect.addRecord(sqlCreate);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
+    connectDB connect;
+    public FundraiseDAO() throws SQLException {
+        connect = DAO.connectDB.getInstance();
     }
 
-    public void join(Fundraise fundraise, Student student) {
+
+    public void add(Fundraise fundraise) throws SQLException {
+
+        String sql = String.format("INSERT INTO fundraises" +
+                "(artifact_id, title)" +
+                "VALUES ('%d', '%s')", fundraise.getArtifactID(), fundraise.getTitle());
+        connect.addRecord(sql);
+    }
+
+    public void join(Fundraise fundraise, Student student) throws SQLException{
 
         String sql = String.format("INSERT INTO fundraises_students" +
                 "(fundraise_id, student_id)" +
                 "VALUES ('%d', '%d')", fundraise.getFundraiseID(), student.getID());
-        try {
-            connect.addRecord(sql);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
+        connect.addRecord(sql);
     }
     public void remove(Fundraise fundraise) {
 
@@ -69,7 +62,7 @@ public class FundraiseDAO {
          }
     }
 
-    public ArrayList get() {
+    public ArrayList<Fundraise> get() {
 
         ArrayList<Fundraise> fundraiseList = new ArrayList<>();
         try {
@@ -93,7 +86,7 @@ public class FundraiseDAO {
 
     }
 
-    public ArrayList getFundraisesStudents() {
+    public ArrayList<Fundraise> getFundraisesStudents() {
         ArrayList<Fundraise> fundraiseStudentList = new ArrayList<>();
         try {
 

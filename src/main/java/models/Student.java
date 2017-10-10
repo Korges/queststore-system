@@ -18,4 +18,8 @@ public class Student extends User {
     public void setWallet(Wallet wallet) {
         this.wallet = wallet;
     }
+
+    public Wallet getWallet() {
+        return wallet;
+    }
 }

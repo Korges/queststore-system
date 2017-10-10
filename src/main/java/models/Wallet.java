@@ -64,4 +64,14 @@ public class Wallet {
     public void setExperience(Integer experience) {
         this.experience = experience;
     }
+
+    @Override
+    public String toString() {
+        return "Wallet{" +
+                "money=" + money +
+                ", experience=" + experience +
+                ", artifactList=" + artifactList +
+                ", level=" + level +
+                '}';
+    }
 }
