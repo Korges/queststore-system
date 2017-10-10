@@ -166,7 +166,7 @@ public class MentorController {
 
     }
 
-    public void fundraisePanel() {
+    public void fundraisePanel() throws SQLException{
         String choice;
         do {
             MentorUI.printLabel(MentorUI.fundraiseMenuLabel);
@@ -515,7 +515,7 @@ public class MentorController {
 
 
 
-    private void executeExistingMembers() {
+    private void executeExistingMembers() throws SQLException{
         ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
 
         listAllExistingFundraise();
@@ -538,7 +538,7 @@ public class MentorController {
         }
     }
 
-    private void buyMagicItem(Fundraise fundraise, Integer pricePerSinglePerson) {
+    private void buyMagicItem(Fundraise fundraise, Integer pricePerSinglePerson) throws SQLException{
         ArrayList<Student> studentList = studentDAO.get();
 
         for (Student student : studentList) {
