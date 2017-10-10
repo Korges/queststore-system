@@ -1,6 +1,7 @@
 package controller;
 
 import DAO.ArtifactDAO;
+import DAO.FundraiseDAO;
 import DAO.QuestDAO;
 import DAO.StudentDAO;
 import UI.MentorUI;
@@ -13,6 +14,7 @@ public class MentorController {
     private StudentDAO studentDAO = new StudentDAO();
     private QuestDAO questDAO = new QuestDAO();
     private ArtifactDAO artifactDAO = new ArtifactDAO();
+    private FundraiseDAO fundraiseDAO = new FundraiseDAO();
 
     public void startController(){
 
@@ -46,6 +48,10 @@ public class MentorController {
                     checkStudentsWallet();
                     break;
 
+                }
+                case "5": {
+                    fundraisePanel();
+                    break;
                 }
 
             }
@@ -126,6 +132,34 @@ public class MentorController {
         } while(!choice.equals("0"));
 
     }
+
+    public void fundraisePanel() {
+        String choice;
+        do {
+            MentorUI.printLabel(MentorUI.fundraiseMenuLabel);
+            MentorUI.printMenu(MentorUI.menuFundraiseOptions);
+            choice = MentorUI.getChoice();
+
+            switch (choice) {
+                case "1": {
+                    listAllExistingFundraise();
+                    break;
+                }
+                case "2": {
+
+                    break;
+                }
+                case "3": {
+
+                    break;
+                }
+
+            }
+        } while(!choice.equals("0"));
+
+    }
+
+
 
     public void createStudent() {
 
@@ -343,6 +377,18 @@ public class MentorController {
         ArrayList<Student> students = studentDAO.get();
         for(Student student : students){
             UI.showMessage(student.getFullName() + " account balance : " + student.wallet.getBalance());
+        }
+    }
+
+    private void listAllExistingFundraise() {
+
+        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
+        if(fundraiseList.size() == 0){
+            UI.showMessage("Artifact list is empty!");
+        } else {
+            for(Fundraise fundraise: fundraiseList){
+                System.out.println(fundraise.toString());
+            }
         }
     }
 }
