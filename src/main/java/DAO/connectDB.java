@@ -8,11 +8,11 @@ public class connectDB {
 
     private static Connection connection = null;
 
-    private connectDB(){
+    private connectDB() throws SQLException{
         connection = connect();
     }
 
-    public static connectDB getInstance() {
+    public static connectDB getInstance() throws SQLException{
 
         if (connectDB == null) {
             connectDB = new connectDB();
