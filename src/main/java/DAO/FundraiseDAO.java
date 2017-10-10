@@ -14,11 +14,12 @@ public class FundraiseDAO {
 
     public void add(Fundraise fundraise) {
 
-        String sql = String.format("INSERT INTO fundraises" +
+        String sqlCreate = String.format("INSERT INTO fundraises" +
                 "(artifact_id, title)" +
                 "VALUES ('%d', '%s')", fundraise.getArtifactID(), fundraise.getTitle());
+
         try {
-            connect.addRecord(sql);
+            connect.addRecord(sqlCreate);
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);

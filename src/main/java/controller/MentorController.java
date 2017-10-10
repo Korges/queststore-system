@@ -471,7 +471,7 @@ public class MentorController {
     }
 
     private void deleteFundraise() {
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
+        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
         listAllExistingFundraise();
 
         if (fundraiseList.size() != 0) {
