@@ -8,36 +8,30 @@ import java.util.ArrayList;
 
 public class GroupDAO implements InterfaceDAO<Group> {
 
-    connectDB connect = DAO.connectDB.getInstance();
+    private connectDB connect;
 
-    public void add(Group group){
+    public GroupDAO() throws SQLException{
+        connect = DAO.connectDB.getInstance();
+    }
+
+    public void add(Group group) throws SQLException{
 
         String sql = String.format("INSERT INTO klasses " +
                 "(name)" +
                 " VALUES ('%s')",group.getName());
-        try {
-            connect.addRecord(sql);
-        } catch (SQLException e) {
-            System.out.println("Wrong");
-            System.exit(0);
-        }
+        connect.addRecord(sql);
     }
 
 
-    public ArrayList<Group> get() {
+    public ArrayList<Group> get() throws SQLException{
 
         ArrayList<Group> groupList = new ArrayList<>();
-        try {
-            ResultSet result = connect.getResult("SELECT * FROM klasses");
-            while (result.next()) {
-                int id = result.getInt("id");
-                String name = result.getString("name");
-                Group group = new Group(id,name);
-                groupList.add(group);
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+        ResultSet result = connect.getResult("SELECT * FROM klasses");
+        while (result.next()) {
+            int id = result.getInt("id");
+            String name = result.getString("name");
+            Group group = new Group(id,name);
+            groupList.add(group);
         }
         return groupList;
     }

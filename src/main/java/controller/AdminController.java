@@ -1,5 +1,7 @@
 package controller;
 
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DAO.LevelExperienceDAO;
@@ -12,12 +14,19 @@ import models.Group;
 
 public class AdminController {
 
-    public void startController(){
+    private MentorDAO mDAO = new MentorDAO();
+    private GroupDAO gDAO = new GroupDAO();
+
+    public AdminController() throws SQLException{
+        mDAO = new MentorDAO();
+        gDAO = new GroupDAO();
+    }
+
+    public void startController() throws SQLException,NoSuchAlgorithmException{
         handleMenu();
     }
-    public MentorDAO mDAO = new MentorDAO();
-    public GroupDAO gDAO = new GroupDAO();
-    public void handleMenu() {
+
+    private void handleMenu() throws SQLException,NoSuchAlgorithmException{
 
         String choice;
         do {
@@ -59,7 +68,7 @@ public class AdminController {
         }while(!choice.equals("0"));
     }
 
-    public void createMentor() {
+    public void createMentor() throws SQLException,NoSuchAlgorithmException{
 
         String firstName = MentorUI.getString("Enter First Name: ");
         String lastName = MentorUI.getString("Enter Last Name: ");
@@ -71,7 +80,7 @@ public class AdminController {
         mDAO.add(newMentor);
     }
 
-    public void createGroup() {
+    public void createGroup() throws SQLException{
 
         String name = AdminUI.getString("Enter new group name: ");
         Group newGroup = new Group(name);
@@ -79,7 +88,7 @@ public class AdminController {
         UI.AdminUI.showMessage("Successfully added group");
     }
 
-    public void showGroup(){
+    public void showGroup() throws SQLException{
         ArrayList<Group> groupList = gDAO.get();
         if(groupList.size() == 0){
             UI.UI.showMessage("Mentor list is empty!");
@@ -91,7 +100,7 @@ public class AdminController {
     }
 
 
-    public void editMentor() {
+    public void editMentor() throws SQLException,NoSuchAlgorithmException{
 
         ArrayList<Mentor> mentorList = mDAO.get();
         listAllMentors();
@@ -123,7 +132,7 @@ public class AdminController {
         }
     }
 
-    public void listAllMentors() {
+    public void listAllMentors() throws SQLException{
 
         ArrayList<Mentor> mentorList = mDAO.get();
         if(mentorList.size() == 0){
@@ -135,7 +144,7 @@ public class AdminController {
         }
     }
 
-    public void deleteMentor() {
+    public void deleteMentor() throws SQLException{
 
         ArrayList<Mentor> mentorList = mDAO.get();
         listAllMentors();
@@ -151,9 +160,9 @@ public class AdminController {
         }
     }
 
-    public void createLevelOfExperience(){
-        Integer level = UI.UI.getInteger("Enter level: ");
-        Integer experience = UI.UI.getInteger("Enter experience count");
+    public void createLevelOfExperience() throws SQLException{
+        Integer level = UI.UI.getInteger("Write level: ");
+        Integer experience = UI.UI.getInteger("Write experience count");
         LevelExperienceDAO levelDao = new LevelExperienceDAO();
         levelDao.add(level,experience);
 

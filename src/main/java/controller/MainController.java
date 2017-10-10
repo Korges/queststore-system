@@ -5,12 +5,23 @@ import UI.UI;
 import DAO.connectDB;
 import models.Student;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MainController {
 
-    public void loginToSystem() throws SQLException{
+    public void setUp(){
+        try{
+            loginToSystem();
+        } catch (SQLException e){
+
+        }catch (NoSuchAlgorithmException e){
+
+    }
+    }
+
+    public void loginToSystem() throws SQLException,NoSuchAlgorithmException{
 
         String login = UI.getLogin();
         String password = HashSystem.getStringFromSHA256(UI.getPassword());

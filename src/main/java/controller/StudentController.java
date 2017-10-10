@@ -5,31 +5,35 @@ import UI.StudentUI;
 import UI.UI;
 import models.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class StudentController {
 
-    private ArtifactDAO artifactDAO = new ArtifactDAO();
-    private StudentDAO studentDAO= new StudentDAO();
-    private InventoryDAO inventoryDAO = new InventoryDAO();
-    private FundraiseDAO fundraiseDAO = new FundraiseDAO();
-
+    private ArtifactDAO artifactDAO;
+    private StudentDAO studentDAO;
+    private InventoryDAO inventoryDAO;
+    private FundraiseDAO fundraiseDAO;
     private Student user;
 
-    public StudentController(Student student){
-
+    public StudentController(Student student) throws SQLException{
+        artifactDAO = new ArtifactDAO();
+        studentDAO = new StudentDAO();
+        studentDAO = new StudentDAO();
+        inventoryDAO = new InventoryDAO();
+        fundraiseDAO = new FundraiseDAO();
         user = student;
     }
 
 
-    public void startController(){
+    public void startController() throws SQLException{
 
         handleMainMenu();
 
     }
 
 
-    private void handleMainMenu() {
+    public void handleMainMenu() throws SQLException{
 
         String choice;
 
@@ -53,7 +57,7 @@ public class StudentController {
     }
 
 
-    private void artifactPanel() {
+    public void artifactPanel() throws SQLException{
 
         String choice;
         do {
@@ -88,7 +92,7 @@ public class StudentController {
     }
 
 
-    private void fundraisePanel() {
+    public void fundraisePanel() throws SQLException{
         String choice;
         do {
             StudentUI.printLabel(StudentUI.fundraiseMenuLabel);
@@ -149,7 +153,7 @@ public class StudentController {
         return bool;
     }
 
-    private void buyArtifact() {
+    public void buyArtifact() throws SQLException{
 
         ArrayList<Artifact> artifactList = artifactDAO.get();
         listAllArtifacts();
@@ -184,7 +188,7 @@ public class StudentController {
         }
     }
 
-    private void createFundraise() {
+    public void createFundraise() throws SQLException{
         ArrayList<Artifact> artifactList = artifactDAO.getMagicItems();
         listAllMagicArtifacts();
 
@@ -224,7 +228,7 @@ public class StudentController {
     }
 
 
-    private void joinExistingFundraise() {
+    public void joinExistingFundraise() throws SQLException{
         ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
 
         listAllExistingFundraise();
@@ -250,7 +254,7 @@ public class StudentController {
         }
     }
 
-    private void leaveFundraise() {
+    public void leaveFundraise() throws SQLException{
         ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
         checkJoinedFundraises();
         if (fundraiseList.size() != 0) {
@@ -314,7 +318,7 @@ public class StudentController {
         System.out.println(user.getWallet().toString());
     }
 
-    private void listAllArtifacts() {
+    private void listAllArtifacts() throws SQLException{
 
         ArrayList<Artifact> artifactList = artifactDAO.get();
         if(artifactList.size() == 0){
@@ -326,7 +330,7 @@ public class StudentController {
         }
     }
 
-    private void listAllMagicArtifacts() {
+    private void listAllMagicArtifacts() throws SQLException{
 
         ArrayList<Artifact> artifactList = artifactDAO.getMagicItems();
         if(artifactList.size() == 0){
@@ -352,7 +356,7 @@ public class StudentController {
 
 
 
-    private void checkStudentArtifacts() {
+    public void checkStudentArtifacts() throws SQLException{
 
         ArrayList<Inventory> inventoryList = inventoryDAO.getStudentInventory(user);
         int no = 0;
