@@ -376,6 +376,7 @@ public class MentorController {
         if (list.size() < 1) {
             System.out.println("List is empty.");
         }
+    }
 
     private void printAllStudents() {
         ArrayList<Student> studentList = studentDAO.get();
