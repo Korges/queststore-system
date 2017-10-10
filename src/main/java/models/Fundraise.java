@@ -25,9 +25,10 @@ public class Fundraise {
         this.name = name;
     }
 
-    public Fundraise(Integer studentID, Integer fundraiseID, String title, String name, Integer price ) {
+    public Fundraise(Integer studentID, Integer fundraiseID, Integer artifactID, String title, String name, Integer price ) {
         this.studentID = studentID;
         this.fundraiseID = fundraiseID;
+        this.artifactID = artifactID;
         this.title = title;
         this.name = name;
         this.price = price;
@@ -62,7 +63,7 @@ public class Fundraise {
         joiner.add("ID: " + fundraiseID);
         joiner.add("Title: " + title);
         joiner.add("Name: " + name);
-        joiner.add("Name: " + price);
+        joiner.add("Price: " + price);
         String joinedString = joiner.toString();
 
         return joinedString;
@@ -70,5 +71,9 @@ public class Fundraise {
 
     public Integer getStudentID() {
         return studentID;
+    }
+
+    public Integer getPrice() {
+        return price;
     }
 }

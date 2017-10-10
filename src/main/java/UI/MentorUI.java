@@ -44,7 +44,7 @@ public class MentorUI extends UI {
         "EXIT");
 
     public static List<String> menuFundraiseOptions = Arrays.asList(
-        "Check Existing Fundraise",
+        "Check Existing Fundraises",
         "List Fundraise Members",
         "Execute Existing Fundraise",
         "Delete Existing Fundraise",

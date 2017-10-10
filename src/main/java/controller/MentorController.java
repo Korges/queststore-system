@@ -1,10 +1,6 @@
 package controller;
 
-import DAO.ArtifactDAO;
-import DAO.FundraiseDAO;
-import DAO.QuestDAO;
-import DAO.StudentDAO;
-import DAO.SubmissionDAO;
+import DAO.*;
 import UI.MentorUI;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import models.*;
@@ -20,6 +16,7 @@ public class MentorController {
     private ArtifactDAO artifactDAO = new ArtifactDAO();
     private FundraiseDAO fundraiseDAO = new FundraiseDAO();
     private SubmissionDAO submissionDAO = new SubmissionDAO();
+    private InventoryDAO inventoryDAO = new InventoryDAO();
 
     public void startController(){
 
@@ -166,7 +163,7 @@ public class MentorController {
                     break;
                 }
                 case "3": {
-//                    executeExistingMembers();
+                    executeExistingMembers();
                     break;
                 }
                 case "4": {
@@ -442,12 +439,12 @@ public class MentorController {
 
     private void listAllExistingFundraise() {
 
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
+        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
         if(fundraiseList.size() == 0){
             UI.showMessage("Fundraise list is empty!");
         } else {
             for(Fundraise fundraise: fundraiseList){
-                System.out.println(fundraise.toString());
+                System.out.println(fundraise.toStringCheck());
             }
         }
     }
@@ -493,7 +490,70 @@ public class MentorController {
 
             }
         }
+    }
 
+
+
+
+    private void executeExistingMembers() {
+        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
+
+        listAllExistingFundraise();
+
+
+        if(fundraiseList.size() != 0) {
+            boolean toContinue = true;
+
+            while(toContinue) {
+                Integer fundraiseID = UI.getInteger("Choose Fundraise by ID to execute");
+                for(Fundraise fundraise: fundraiseList) {
+                    if(fundraiseID.equals(fundraise.getFundraiseID())) {
+                        toContinue = false;
+                        Integer amountStudents = countMembers(fundraiseID);
+                        Integer pricePerSinglePerson = pricePerOneStudent(amountStudents, fundraise.getPrice());
+                        buyMagicItem(fundraise, pricePerSinglePerson);
+                    }
+                }
+            }
+        }
+    }
+
+    private void buyMagicItem(Fundraise fundraise, Integer pricePerSinglePerson) {
+        ArrayList<Student> studentList = studentDAO.get();
+
+        for (Student student : studentList) {
+            if (student.getID().equals(fundraise.getStudentID())) {
+                if (student.wallet.getBalance() >= pricePerSinglePerson) {
+                    student.wallet.substract(pricePerSinglePerson);
+                    studentDAO.editWalletValue(student);
+                    Inventory inventory = new Inventory(student.getID(), fundraise.getArtifactID(), UI.getCurrentDate());
+                    inventoryDAO.add(inventory);
+                    fundraiseDAO.remove(fundraise);
+                } else {
+                    UI.showMessage(student.getFullName() + " doesnt have enough money!");
+                    System.out.println(student.wallet.getBalance());
+                }
+            }
+
+        }
+    }
+
+
+    private Integer countMembers(Integer fundraiseID) {
+        Integer amountStudents = 0;
+        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
+        for(Fundraise student : fundraiseList) {
+            if(student.getFundraiseID().equals(fundraiseID)) {
+                amountStudents++;
+            }
+        }
+        return amountStudents;
+    }
+
+    private Integer pricePerOneStudent(Integer amountStudents, Integer price) {
+        Integer pricePerSinglePerson = price/amountStudents;
+
+        return pricePerSinglePerson;
 
     }
 }
