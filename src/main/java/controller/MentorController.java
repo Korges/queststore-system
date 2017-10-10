@@ -6,6 +6,7 @@ import DAO.QuestDAO;
 import DAO.StudentDAO;
 import DAO.SubmissionDAO;
 import UI.MentorUI;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import models.*;
 import UI.UI;
 
@@ -161,11 +162,15 @@ public class MentorController {
                     break;
                 }
                 case "2": {
-
+                    listFundraiseMembers();
                     break;
                 }
                 case "3": {
-
+//                    executeExistingMembers();
+                    break;
+                }
+                case "4": {
+                    deleteFundraise();
                     break;
                 }
 
@@ -439,11 +444,56 @@ public class MentorController {
 
         ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
         if(fundraiseList.size() == 0){
-            UI.showMessage("Artifact list is empty!");
+            UI.showMessage("Fundraise list is empty!");
         } else {
             for(Fundraise fundraise: fundraiseList){
                 System.out.println(fundraise.toString());
             }
         }
+    }
+
+    private void listFundraiseMembers() {
+        listAllExistingFundraise();
+
+        ArrayList<Fundraise> fundraiseStudentList = fundraiseDAO.getFundraisesStudents();
+        if (fundraiseStudentList.size() == 0) {
+            UI.showMessage("Fundraise Student list is empty!");
+        }
+        else {
+            Integer fundraiseID = UI.getInteger("Choose fundraise by ID");
+            for(Fundraise fundraise : fundraiseStudentList) {
+                System.out.println(fundraise.getTitle() + " members:");
+                if(fundraiseID.equals(fundraise.getFundraiseID())) {
+                    System.out.println(studentDAO.getStudentById(fundraise.getStudentID()).toString());
+                }
+                else {
+                    UI.showMessage("No members!");
+                }
+            }
+        }
+    }
+
+    private void deleteFundraise() {
+        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
+        listAllExistingFundraise();
+
+        if (fundraiseList.size() != 0) {
+            boolean isTrue = true;
+
+            while(isTrue) {
+                Integer fundraiseID = UI.getInteger("Choose Fundraise by ID to remove");
+                for(Fundraise fundraise: fundraiseList){
+                   if(fundraiseID.equals(fundraise.getFundraiseID())) {
+                       isTrue = false;
+                       fundraiseDAO.removeFundraise(fundraise);
+                       fundraiseDAO.removeFundriseByFundraiseID(fundraise);
+
+                       }
+                }
+
+            }
+        }
+
+
     }
 }

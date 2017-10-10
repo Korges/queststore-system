@@ -7,6 +7,8 @@ public class Fundraise {
 
     private Integer fundraiseID;
     private Integer artifactID;
+    private Integer studentID;
+    private Integer price;
     private String title;
     private String name;
 
@@ -23,6 +25,14 @@ public class Fundraise {
         this.name = name;
     }
 
+    public Fundraise(Integer studentID, Integer fundraiseID, String title, String name, Integer price ) {
+        this.studentID = studentID;
+        this.fundraiseID = fundraiseID;
+        this.title = title;
+        this.name = name;
+        this.price = price;
+    }
+
     public Integer getFundraiseID() {
         return fundraiseID;
     }
@@ -35,6 +45,8 @@ public class Fundraise {
         return title;
     }
 
+    public String getName() { return name; }
+
     public String toString() {
         StringJoiner joiner = new StringJoiner(" | ");
         joiner.add("ID: " + fundraiseID);
@@ -43,5 +55,20 @@ public class Fundraise {
         String joinedString = joiner.toString();
 
         return joinedString;
+    }
+
+    public String toStringCheck() {
+        StringJoiner joiner = new StringJoiner(" | ");
+        joiner.add("ID: " + fundraiseID);
+        joiner.add("Title: " + title);
+        joiner.add("Name: " + name);
+        joiner.add("Name: " + price);
+        String joinedString = joiner.toString();
+
+        return joinedString;
+    }
+
+    public Integer getStudentID() {
+        return studentID;
     }
 }
