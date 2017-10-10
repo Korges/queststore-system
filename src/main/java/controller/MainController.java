@@ -10,6 +10,14 @@ import java.sql.SQLException;
 
 public class MainController {
 
+    public void setUp(){
+        try{
+            loginToSystem();
+        } catch (SQLException e){
+
+        }
+    }
+
     public void loginToSystem() throws SQLException{
 
         String login = UI.getLogin();
