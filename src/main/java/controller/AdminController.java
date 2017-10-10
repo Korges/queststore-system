@@ -152,8 +152,8 @@ public class AdminController {
     }
 
     public void createLevelOfExperience(){
-        Integer level = UI.UI.getInteger("Write level: ");
-        Integer experience = UI.UI.getInteger("Write experience count");
+        Integer level = UI.UI.getInteger("Enter level: ");
+        Integer experience = UI.UI.getInteger("Enter experience count");
         LevelExperienceDAO levelDao = new LevelExperienceDAO();
         levelDao.add(level,experience);
 

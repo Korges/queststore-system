@@ -61,7 +61,7 @@ public class ArtifactDAO implements InterfaceDAO<Artifact> {
         return artifactList;
     }
 
-    public ArrayList getMagicItems(){
+    public ArrayList<Artifact> getMagicItems(){
 
         ArrayList<Artifact> artifactList = new ArrayList<>();
         try {

@@ -10,13 +10,19 @@ public class StudentUI extends UI {
 
     public static String fundraiseMenuLabel = "STUDENT - Fundraise Menu";
 
+    public static String walletMenuLabel = "STUDENT - Wallet Menu";
 
-    public static List<String> menuMainOptions = Arrays.asList(
-        "Artifact Panel",
-        "Experience",
-        "EXIT");
 
-    public static List<String> menuArtifactOptions = Arrays.asList(
+    public static List<String> mainMenuOptions = Arrays.asList(
+    "Artifact Panel",
+    "Wallet Panel",
+    "EXIT");
+
+    public static List<String> walletMenuOptions = Arrays.asList(
+    "Show wallet status",
+    "EXIT");
+
+    public static List<String> artifactMenuOptions = Arrays.asList(
             "List All Artifacts",
             "Buy Artifact",
             "Fundraise",
@@ -24,13 +30,14 @@ public class StudentUI extends UI {
             "Check Purchase History",
             "EXIT");
 
-    public static List<String> menuFundraiseOptions = Arrays.asList(
+    public static List<String> fundraiseMenuOptions = Arrays.asList(
             "Create Fundraise",
             "Join Existing Fundraise",
             "Leave Fundraise",
             "Show joined Fundraises",
             "Show all Fundraises",
             "EXIT");
+
 
 
 }

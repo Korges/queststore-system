@@ -48,7 +48,7 @@ public class InventoryDAO {
 
     }
 
-    public ArrayList getSingleStudent(Student student) {
+    public ArrayList<Inventory> getStudentInventory(Student student) {
 
         ArrayList<Inventory> inventoryList = new ArrayList<>();
         try {
