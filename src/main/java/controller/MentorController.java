@@ -464,7 +464,7 @@ public class MentorController {
             UI.showMessage("Fundraise list is empty!");
         } else {
             for(Fundraise fundraise: fundraiseList){
-                System.out.println(fundraise.toStringCheck());
+                System.out.println(fundraise.toString());
             }
         }
     }
@@ -549,6 +549,7 @@ public class MentorController {
                     Inventory inventory = new Inventory(student.getID(), fundraise.getArtifactID(), UI.getCurrentDate());
                     inventoryDAO.add(inventory);
                     fundraiseDAO.remove(fundraise);
+                    fundraiseDAO.removeFundriseByFundraiseID(fundraise);
                 } else {
                     UI.showMessage(student.getFullName() + " doesnt have enough money!");
                     System.out.println(student.wallet.getBalance());

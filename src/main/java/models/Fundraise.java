@@ -53,21 +53,12 @@ public class Fundraise {
         joiner.add("ID: " + fundraiseID);
         joiner.add("Title: " + title);
         joiner.add("Name: " + name);
-        String joinedString = joiner.toString();
-
-        return joinedString;
-    }
-
-    public String toStringCheck() {
-        StringJoiner joiner = new StringJoiner(" | ");
-        joiner.add("ID: " + fundraiseID);
-        joiner.add("Title: " + title);
-        joiner.add("Name: " + name);
         joiner.add("Price: " + price);
         String joinedString = joiner.toString();
 
         return joinedString;
     }
+
 
     public Integer getStudentID() {
         return studentID;

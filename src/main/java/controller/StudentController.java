@@ -208,12 +208,25 @@ public class StudentController {
                         String title = UI.getString("Enter Fundraise Title :");
                         Fundraise fundraise = new Fundraise(artifact.getID(), title);
                         fundraiseDAO.add(fundraise);
+                        fundraiseDAO.join(getFundraise(artifact), user);
+
 
 
                     }
                 }
             }
         }
+    }
+
+    private Fundraise getFundraise(Artifact artifact) {
+        Fundraise foundFundraise = null;
+        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
+        for(Fundraise fundraise : fundraiseList) {
+            if(artifact.getID().equals(fundraise.getArtifactID())) {
+                foundFundraise = fundraise;
+            }
+        }
+    return foundFundraise;
     }
 
     private boolean isInFundraise(Student student_me) {
@@ -285,7 +298,7 @@ public class StudentController {
         else {
             for(Fundraise fundraise : fundraiseList) {
                 if(user.getID().equals(fundraise.getStudentID())) {
-                    System.out.println(fundraise.toStringCheck());
+                    System.out.println(fundraise.toString());
                 }
                 else {
                     UI.showMessage("You are not member of any Fundraise!");
