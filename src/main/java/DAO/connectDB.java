@@ -24,7 +24,7 @@ public class connectDB {
     public Connection connect() throws SQLException{
 
         String url = "jdbc:sqlite:src/main/resources/db/database.db";
-        Connection conn = null;
+        Connection conn;
         conn = DriverManager.getConnection(url);
         return conn;
     }
@@ -33,7 +33,7 @@ public class connectDB {
 
     public ResultSet getResult(String sql) throws SQLException{
 
-        ResultSet result = null;
+        ResultSet result;
         Statement stmt = connection.createStatement();
         result = stmt.executeQuery(sql);
         return result;

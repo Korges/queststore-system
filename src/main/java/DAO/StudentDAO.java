@@ -9,40 +9,34 @@ import models.Wallet;
 
 public class StudentDAO implements InterfaceDAO<Student> {
 
-    connectDB connect = DAO.connectDB.getInstance();
+    connectDB connect;
+
+    public StudentDAO() throws SQLException{
+
+        connect = DAO.connectDB.getInstance();
+    }
 
 
-    public void add(Student student) {
+    public void add(Student student) throws SQLException{
 
         String sql = String.format("INSERT INTO users " +
                 "(first_name, last_name, email, password, role, klass)" +
                 " VALUES ('%s', '%s', '%s', '%s', '%s', '%s')", student.getFirstName(), student.getLastName(), student.getEmail(), student.getPassword(), "student", student.getKlass());
         String wallet = "INSERT INTO wallets (student_id,money, experience, level) VALUES((SELECT id FROM users ORDER BY id DESC LIMIT 1),0,0,0)";
 
-        try {
-            connect.addRecord(sql);
-            connect.addRecord(wallet);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
+        connect.addRecord(sql);
+        connect.addRecord(wallet);
     }
 
 
-    public ArrayList<Student> get(){
+    public ArrayList<Student> get() throws SQLException{
 
         ArrayList<Student> studentList = new ArrayList<>();
-        try {
 
-            ResultSet result = connect.getResult("SELECT * from users join wallets on users.id = wallets.student_id WHERE role like 'student';");
-            while (result.next()) {
-                Student student = createStudent(result);
-                studentList.add(student);
-
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+        ResultSet result = connect.getResult("SELECT * from users join wallets on users.id = wallets.student_id WHERE role like 'student';");
+        while (result.next()) {
+            Student student = createStudent(result);
+            studentList.add(student);
         }
 
         return studentList;
@@ -114,7 +108,7 @@ public class StudentDAO implements InterfaceDAO<Student> {
         return student;
     }
 
-    public void setLevelExperience(Student student){
+    private void setLevelExperience(Student student){
 
         try{
             String sql = String.format("SELECT MAX(level) from level_experience WHERE exp <=%s", student.wallet.getLevel());

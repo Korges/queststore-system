@@ -8,21 +8,18 @@ import java.util.ArrayList;
 
 public class QuestDAO implements InterfaceDAO<Quest> {
 
-    private connectDB connect = DAO.connectDB.getInstance();
+    private connectDB connect;
 
-    private ArrayList<Quest> questList = new ArrayList<>();
+    public QuestDAO() throws SQLException{
+        connect = DAO.connectDB.getInstance();
+    }
 
-    public void add(Quest quest) {
+    public void add(Quest quest) throws SQLException{
 
         String querry = String.format("INSERT INTO quests "+
                 "(name, description, value, experience, quest_category ) " +
                 "VALUES ('%s', '%s', '%d', '%d', '%s')", quest.getName(), quest.getDescription(), quest.getValue(), quest.getExperience(), quest.getCategory());
-        try {
-            connect.addRecord(querry);
-        } catch (SQLException e) {
-            System.out.println("Something went wrong, propably database is occupied by another process, shutting down...");
-            System.exit(0);
-        }
+        connect.addRecord(querry);
     }
 
 
@@ -39,36 +36,23 @@ public class QuestDAO implements InterfaceDAO<Quest> {
     }
 
 
-    public ArrayList<Quest> get(){
+    public ArrayList<Quest> get() throws SQLException{
 
         ArrayList<Quest> questList = new ArrayList<>();
-        try {
+        ResultSet result = connect.getResult("SELECT * from quests;");
+        while (result.next()) {
+            Quest quest = createQuest(result);
+            questList.add(quest);
 
-            ResultSet result = connect.getResult("SELECT * from quests;");
-            while (result.next()) {
-                Quest quest = createQuest(result);
-                questList.add(quest);
-
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
         }
-
         return questList;
     }
 
 
-    public void set(Quest quest) {
-
-        try {
-            String querry = String.format("UPDATE quests " +
-             "SET name='%s',description = '%s',value = '%d', experience = '%d', category = '%s' " +
-             "WHERE id = %d", quest.getName(),quest.getDescription(),quest.getValue(),quest.getExperience(),quest.getCategory(), quest.getId());
-            connect.addRecord(querry);
-
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+    public void set(Quest quest) throws SQLException{
+        String querry = String.format("UPDATE quests " +
+         "SET name='%s',description = '%s',value = '%d', experience = '%d', category = '%s' " +
+         "WHERE id = %d", quest.getName(),quest.getDescription(),quest.getValue(),quest.getExperience(),quest.getCategory(), quest.getId());
+        connect.addRecord(querry);
     }
 }
