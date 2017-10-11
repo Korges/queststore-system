@@ -7,13 +7,9 @@ import DAO.StudentDAO;
 import DAO.SubmissionDAO;
 import DAO.InventoryDAO;
 import UI.MentorUI;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import models.*;
 import UI.UI;
 
-import java.lang.reflect.Array;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
