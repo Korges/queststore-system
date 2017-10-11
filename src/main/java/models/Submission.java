@@ -16,10 +16,10 @@ public class Submission {
         this.description = description;
     }
 
-    public Submission(int studentId, int questId, boolean isMarked, String description) {
+    public Submission(int studentId, int questId, String description) {
         this.studentId = studentId;
         this.questId = questId;
-        this.isMarked = isMarked;
+        this.isMarked = false;
         this.description = description;
     }
 

@@ -1,5 +1,6 @@
 package DAO;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import models.Quest;
 
 import java.sql.ResultSet;
@@ -54,5 +55,12 @@ public class QuestDAO implements InterfaceDAO<Quest> {
          "SET name='%s',description = '%s',value = '%d', experience = '%d', category = '%s' " +
          "WHERE id = %d", quest.getName(),quest.getDescription(),quest.getValue(),quest.getExperience(),quest.getCategory(), quest.getId());
         connect.addRecord(querry);
+    }
+
+    public Boolean checkQuestExist(Integer questID) throws SQLException {
+
+        String query = String.format("SELECT id FROM quests WHERE id = '%d';", questID);
+        ResultSet result = connect.getResult(query);
+        return result.next();
     }
 }
