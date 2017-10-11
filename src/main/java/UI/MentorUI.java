@@ -15,7 +15,7 @@ public class MentorUI extends UI {
 
     public static String fundraiseMenuLabel = "MENTOR - Fundraise Menu";
 
-    public static List<String> menuMainOptions = Arrays.asList(
+    public static List<String> mainMenuOptions = Arrays.asList(
         "Student Panel",
         "Artifact Panel",
         "Quest Panel",
@@ -23,27 +23,27 @@ public class MentorUI extends UI {
         "Fundraise Panel",
         "EXIT");
 
-    public static List<String> menuStudentOptions = Arrays.asList(
+    public static List<String> studentMenuOptions = Arrays.asList(
         "Create Student",
         "Edit Student",
         "Delete Student",
         "List All Students",
         "EXIT");
 
-    public static List<String> menuArtifactOptions = Arrays.asList(
+    public static List<String> artifactMenuOptions = Arrays.asList(
         "Create Artifact",
         "Edit Artifact",
         "Delete Artifact",
         "List All Artifacts",
         "EXIT");
 
-    public static List<String> menuQuestOptions = Arrays.asList(
+    public static List<String> questMenuOptions = Arrays.asList(
         "Create Quest",
         "Edit Quest",
         "Mark Quest",
         "EXIT");
 
-    public static List<String> menuFundraiseOptions = Arrays.asList(
+    public static List<String> fundraiseMenuOptions = Arrays.asList(
         "Check Existing Fundraises",
         "List Fundraise Members",
         "Execute Existing Fundraise",

@@ -9,10 +9,10 @@ import models.Mentor;
 
 public class MentorDAO implements InterfaceDAO<Mentor> {
 
-    private connectDB connect;
+    private ConnectDB connect;
 
     public MentorDAO() throws SQLException{
-        connect = DAO.connectDB.getInstance();
+        connect = DAO.ConnectDB.getInstance();
     }
 
     public void add(Mentor mentor) throws SQLException{

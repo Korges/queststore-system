@@ -9,6 +9,7 @@ public class Submission {
     private String description;
 
     public Submission(int id, int studentId, int questId, boolean isMarked, String description) {
+
         this.id = id;
         this.studentId = studentId;
         this.questId = questId;
@@ -17,6 +18,7 @@ public class Submission {
     }
 
     public Submission(int studentId, int questId, String description) {
+
         this.studentId = studentId;
         this.questId = questId;
         this.isMarked = false;
@@ -25,6 +27,7 @@ public class Submission {
 
     @Override
     public String toString() {
+
         return "Submission{" +
                 "id=" + id +
                 ", studentId=" + studentId +

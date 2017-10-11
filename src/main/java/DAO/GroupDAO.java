@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public class GroupDAO implements InterfaceDAO<Group> {
 
-    private connectDB connect;
+    private ConnectDB connect;
 
     public GroupDAO() throws SQLException{
-        connect = DAO.connectDB.getInstance();
+        connect = DAO.ConnectDB.getInstance();
     }
 
     public void add(Group group) throws SQLException{

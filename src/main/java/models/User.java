@@ -20,6 +20,7 @@ public abstract class User {
         this.id = id;
     }
 
+
     public User(String firstName, String lastName, String email, String password, String klass) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,6 +28,7 @@ public abstract class User {
         this.email = email;
         this.klass = klass;
     }
+
 
     public String getFirstName() {
 

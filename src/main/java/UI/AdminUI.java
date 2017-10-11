@@ -19,6 +19,7 @@ public class AdminUI extends UI {
     public static List<String> optionsList;
 
     private static void setOptionsList() {
+
         int size = optionsArray.length;
 
         for(int i=0; i<menuOptions.size()-1; i++) {

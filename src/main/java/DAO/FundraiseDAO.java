@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public class FundraiseDAO {
 
-    connectDB connect;
+    ConnectDB connect;
     public FundraiseDAO() throws SQLException {
-        connect = DAO.connectDB.getInstance();
+        connect = DAO.ConnectDB.getInstance();
     }
 
 
@@ -42,15 +42,6 @@ public class FundraiseDAO {
          }
     }
 
-    public void removeFundriseByFundraiseID(Fundraise fundraise) {
-        String sql = String.format("DELETE FROM fundraises WHERE fundraise_id = '%d'", fundraise.getFundraiseID());
-        try {
-            connect.addRecord(sql);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-    }
 
     public void removeFundraise(Fundraise fundraise) {
         String sql = String.format("DELETE FROM fundraises WHERE fundraise_id = '%d'", fundraise.getFundraiseID());

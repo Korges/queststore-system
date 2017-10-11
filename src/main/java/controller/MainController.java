@@ -2,7 +2,7 @@ package controller;
 
 import DAO.StudentDAO;
 import UI.UI;
-import DAO.connectDB;
+import DAO.ConnectDB;
 import models.Student;
 
 import java.security.NoSuchAlgorithmException;
@@ -25,7 +25,7 @@ public class MainController {
 
         String login = UI.getLogin();
         String password = HashSystem.getStringFromSHA256(UI.getPassword());
-        connectDB connectDB = DAO.connectDB.getInstance();
+        ConnectDB connectDB = DAO.ConnectDB.getInstance();
         StudentDAO studentd = new StudentDAO();
         String sql = String.format("SELECT * FROM users WHERE email like '%s' and password like '%s'",login,password);
         ResultSet result = connectDB.getResult(sql);

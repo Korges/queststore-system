@@ -9,11 +9,11 @@ import models.MagicItem;
 
 public class ArtifactDAO implements InterfaceDAO<Artifact> {
 
-    private connectDB connect;
+    private ConnectDB connect;
 
     public ArtifactDAO() throws SQLException{
 
-        connect = DAO.connectDB.getInstance();
+        connect = DAO.ConnectDB.getInstance();
     }
 
 

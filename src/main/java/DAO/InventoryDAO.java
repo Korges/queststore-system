@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class InventoryDAO {
 
-    private connectDB connect;
+    private ConnectDB connect;
 
     public InventoryDAO() throws SQLException{
-        connect = DAO.connectDB.getInstance();
+        connect = DAO.ConnectDB.getInstance();
     }
 
     public void add(Inventory inventory) throws SQLException{

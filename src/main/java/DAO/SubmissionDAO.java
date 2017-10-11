@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public class SubmissionDAO implements InterfaceDAO<Submission> {
 
-    private connectDB connect;
+    private ConnectDB connect;
 
     public SubmissionDAO() throws SQLException{
-        connect = connectDB.getInstance();
+        connect = ConnectDB.getInstance();
     }
 
     public void add(Submission submission) throws SQLException{

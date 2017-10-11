@@ -2,20 +2,20 @@ package DAO;
 
 import java.sql.*;
 
-public class connectDB {
+public class ConnectDB {
 
-    private static connectDB connectDB = null;
+    private static ConnectDB connectDB = null;
 
     private static Connection connection = null;
 
-    private connectDB() throws SQLException{
+    private ConnectDB() throws SQLException{
         connection = connect();
     }
 
-    public static connectDB getInstance() throws SQLException{
+    public static ConnectDB getInstance() throws SQLException{
 
         if (connectDB == null) {
-            connectDB = new connectDB();
+            connectDB = new ConnectDB();
         }
         return connectDB;
     }

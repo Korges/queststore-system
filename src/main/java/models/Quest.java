@@ -3,6 +3,7 @@ package models;
 import java.util.StringJoiner;
 
 public class Quest {
+
     private int id;
     private String name;
     private String description;
@@ -24,6 +25,7 @@ public class Quest {
 
 
     public Quest(Integer id, String name, String description, int value, int experience, String category) {
+
         this.id = id;
         this.name = name;
         this.description = description;
@@ -34,6 +36,7 @@ public class Quest {
 
     @Override
     public String toString() {
+
         return "Quest{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
@@ -89,6 +92,7 @@ public class Quest {
     }
 
     public void switchCategory() {
+
         if (category.toLowerCase().equals("thequest")) {
             category = "magicQuest";
         }else {

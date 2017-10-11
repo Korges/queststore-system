@@ -89,6 +89,7 @@ public class AdminController {
     }
 
     public void showGroup() throws SQLException{
+
         ArrayList<Group> groupList = gDAO.get();
         if(groupList.size() == 0){
             UI.UI.showMessage("Mentor list is empty!");
@@ -161,6 +162,7 @@ public class AdminController {
     }
 
     public void createLevelOfExperience() throws SQLException{
+
         Integer level = UI.UI.getInteger("Write level: ");
         Integer experience = UI.UI.getInteger("Write experience count");
         LevelExperienceDAO levelDao = new LevelExperienceDAO();

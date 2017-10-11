@@ -34,16 +34,6 @@ public abstract class Artifact {
         return id;
     }
 
-    public boolean useArtefact() {
-
-        if (!isUsed) {
-
-            isUsed = true;
-            return true;
-
-        }
-        return false;
-    }
 
     public String toString() {
 

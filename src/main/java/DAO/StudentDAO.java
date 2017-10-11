@@ -9,11 +9,11 @@ import models.Wallet;
 
 public class StudentDAO implements InterfaceDAO<Student> {
 
-    connectDB connect;
+    ConnectDB connect;
 
     public StudentDAO() throws SQLException{
 
-        connect = DAO.connectDB.getInstance();
+        connect = DAO.ConnectDB.getInstance();
     }
 
 

@@ -4,10 +4,10 @@ import java.sql.SQLException;
 
 public class LevelExperienceDAO {
 
-    private connectDB connect;
+    private ConnectDB connect;
 
     public LevelExperienceDAO()throws SQLException{
-        connect = DAO.connectDB.getInstance();
+        connect = DAO.ConnectDB.getInstance();
     }
 
 

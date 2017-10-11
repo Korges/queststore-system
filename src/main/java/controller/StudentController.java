@@ -5,7 +5,6 @@ import UI.StudentUI;
 import UI.UI;
 import models.*;
 
-import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.StringJoiner;
@@ -142,12 +141,12 @@ public class StudentController {
     }
 
 
-
     private void checkBalance() {
 
         Integer balance = user.getWallet().getBalance();
         System.out.println("Your balance: " + balance);
     }
+
 
     private boolean checkEnoughBalance(Artifact artifact) {
 
@@ -161,6 +160,7 @@ public class StudentController {
         }
         return bool;
     }
+
 
     public void buyArtifact() throws SQLException {
 
@@ -197,6 +197,7 @@ public class StudentController {
         }
     }
 
+
     public void createFundraise() throws SQLException {
         ArrayList<Artifact> artifactList = artifactDAO.getMagicItems();
         listAllMagicArtifacts();
@@ -218,14 +219,12 @@ public class StudentController {
                         Fundraise fundraise = new Fundraise(artifact.getID(), title);
                         fundraiseDAO.add(fundraise);
                         fundraiseDAO.join(getFundraise(artifact), user);
-
-
-
                     }
                 }
             }
         }
     }
+
 
     private Fundraise getFundraise(Artifact artifact) {
         Fundraise foundFundraise = null;
@@ -420,10 +419,12 @@ public class StudentController {
 
     }
 
+
     private ArrayList<Submission> getUserSubmits() throws SQLException {
 
         return submissionDAO.get();
     }
+
 
     private void submitQuest() throws SQLException {
 
@@ -452,5 +453,4 @@ public class StudentController {
             UI.showMessage(errorMessage.toString());
         }
     }
-
 }

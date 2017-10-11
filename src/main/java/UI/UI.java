@@ -24,8 +24,8 @@ public class UI {
     public static String getPassword(){
 
         final String password, message = "Enter password";
-        if( System.console() == null )
-        {
+
+        if( System.console() == null ) {
             final JPasswordField pf = new JPasswordField();
             password = JOptionPane.showConfirmDialog( null, pf, message,
                     JOptionPane.OK_CANCEL_OPTION,
@@ -109,6 +109,7 @@ public class UI {
     }
 
     public static void printMenu(List menuOptions){
+
         setOptionsList(menuOptions);
         for(int i=0; i<menuOptions.size(); i++) {
             System.out.format("%s - %s\n", optionsList.get(i), menuOptions.get(i));
@@ -127,10 +128,12 @@ public class UI {
     }
 
     public static void printLabel(String label) {
+
         System.out.println("*** " + label + " ***");
     }
 
     public static String getCurrentDate() {
+
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
 

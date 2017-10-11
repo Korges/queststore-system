@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class QuestDAO implements InterfaceDAO<Quest> {
 
-    private connectDB connect;
+    private ConnectDB connect;
 
     public QuestDAO() throws SQLException{
-        connect = DAO.connectDB.getInstance();
+        connect = DAO.ConnectDB.getInstance();
     }
 
     public void add(Quest quest) throws SQLException{

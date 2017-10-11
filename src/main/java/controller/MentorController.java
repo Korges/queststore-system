@@ -49,7 +49,7 @@ public class MentorController {
 
         do {
             MentorUI.printLabel(MentorUI.mainMenuLabel);
-            MentorUI.printMenu(MentorUI.menuMainOptions);
+            MentorUI.printMenu(MentorUI.mainMenuOptions);
             choice = MentorUI.getChoice();
 
             switch (choice) {
@@ -84,7 +84,7 @@ public class MentorController {
         String choice;
         do {
             MentorUI.printLabel(MentorUI.studentMenuLabel);
-            MentorUI.printMenu(MentorUI.menuStudentOptions);
+            MentorUI.printMenu(MentorUI.studentMenuOptions);
             choice = MentorUI.getChoice();
 
             switch (choice) {
@@ -115,7 +115,7 @@ public class MentorController {
         String choice;
         do {
             MentorUI.printLabel(MentorUI.artifactMenuLabel);
-            MentorUI.printMenu(MentorUI.menuArtifactOptions);
+            MentorUI.printMenu(MentorUI.artifactMenuOptions);
             choice = MentorUI.getChoice();
 
             switch (choice) {
@@ -145,7 +145,7 @@ public class MentorController {
         String choice;
         do {
             MentorUI.printLabel(MentorUI.questMenuLabel);
-            MentorUI.printMenu(MentorUI.menuQuestOptions);
+            MentorUI.printMenu(MentorUI.questMenuOptions);
             choice = MentorUI.getChoice();
 
             switch (choice) {
@@ -170,7 +170,7 @@ public class MentorController {
         String choice;
         do {
             MentorUI.printLabel(MentorUI.fundraiseMenuLabel);
-            MentorUI.printMenu(MentorUI.menuFundraiseOptions);
+            MentorUI.printMenu(MentorUI.fundraiseMenuOptions);
             choice = MentorUI.getChoice();
 
             switch (choice) {
@@ -379,13 +379,6 @@ public class MentorController {
         }
     }
 
-    private void markArtifact() {
-
-    }
-
-    public void invigilate() {
-
-    }
 
     private void printAllSubmissions() throws SQLException{
         ArrayList<Submission> subList = submissionDAO.get();
@@ -451,7 +444,9 @@ public class MentorController {
     }
 
     private void checkStudentsWallet() throws SQLException {
+
         ArrayList<Student> students = studentDAO.get();
+
         for(Student student : students){
             UI.showMessage(student.getFullName() + " account balance : " + student.wallet.getBalance());
         }
@@ -460,6 +455,7 @@ public class MentorController {
     private void listAllExistingFundraise() {
 
         ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
+
         if(fundraiseList.size() == 0){
             UI.showMessage("Fundraise list is empty!");
         } else {
@@ -470,9 +466,10 @@ public class MentorController {
     }
 
     private void listFundraiseMembers() {
-        listAllExistingFundraise();
 
+        listAllExistingFundraise();
         ArrayList<Fundraise> fundraiseStudentList = fundraiseDAO.getFundraisesStudents();
+
         if (fundraiseStudentList.size() == 0) {
             UI.showMessage("Fundraise Student list is empty!");
         }
@@ -491,6 +488,7 @@ public class MentorController {
     }
 
     private void deleteFundraise() {
+
         ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
         listAllExistingFundraise();
 
@@ -500,12 +498,11 @@ public class MentorController {
             while(isTrue) {
                 Integer fundraiseID = UI.getInteger("Choose Fundraise by ID to remove");
                 for(Fundraise fundraise: fundraiseList){
-                   if(fundraiseID.equals(fundraise.getFundraiseID())) {
-                       isTrue = false;
-                       fundraiseDAO.removeFundraise(fundraise);
-                       fundraiseDAO.removeFundriseByFundraiseID(fundraise);
+                    if(fundraiseID.equals(fundraise.getFundraiseID())) {
+                        isTrue = false;
+                        fundraiseDAO.removeFundraise(fundraise);
 
-                       }
+                    }
                 }
 
             }
@@ -513,13 +510,10 @@ public class MentorController {
     }
 
 
-
-
     private void executeExistingMembers() throws SQLException{
+
         ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
-
         listAllExistingFundraise();
-
 
         if(fundraiseList.size() != 0) {
             boolean toContinue = true;
@@ -549,7 +543,7 @@ public class MentorController {
                     Inventory inventory = new Inventory(student.getID(), fundraise.getArtifactID(), UI.getCurrentDate());
                     inventoryDAO.add(inventory);
                     fundraiseDAO.remove(fundraise);
-                    fundraiseDAO.removeFundriseByFundraiseID(fundraise);
+                    fundraiseDAO.removeFundraise(fundraise);
                 } else {
                     UI.showMessage(student.getFullName() + " doesnt have enough money!");
                     System.out.println(student.wallet.getBalance());

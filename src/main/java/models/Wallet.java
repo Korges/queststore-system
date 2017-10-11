@@ -48,12 +48,8 @@ public class Wallet {
         return experience;
     }
 
-    void add(BasicItem item) {
-
-        this.artifactList.add(item);
-    }
-
     public Integer getLevel() {
+
         return level;
     }
 
