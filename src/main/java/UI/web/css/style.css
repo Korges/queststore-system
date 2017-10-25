@@ -3,15 +3,18 @@ body,html{
   margin: 0;
   padding: 0;
   height: 100vh;
+    font-family: 'Oswald', sans-serif;
+
+
 }
 
 .main-panel {
   flex-basis: auto;
-  width: 100%;
+  width: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: 7%;
+  height: 45px;
   background: black;color:white;
   align-items: center;
 }
@@ -45,17 +48,44 @@ body,html{
 
 }
 
-.nav-panel {
-  display: flex;
-  width: 15%;
-  align-content: flex-start;
-  background-color: yellow;
-  height: 89%;
+.nav-panel li{
+    text-decoration: none;
+
+    font-size: 20px;
+    line-height: 40px;
 }
 
-footer {
-  width: 100%;
-  height: 4%;
-  background-color: royalblue;
-  color: royalblue;
+
+.nav-panel {
+
+  display: flex;
+  width: 300px;
+  align-content: flex-start;
+  background-color: black;
+  height: 100%;
 }
+.nav-panel a:hover {
+    background-color: #005f5f;
+}
+li.list-header{
+    list-style: none;
+    background-color: #444;
+    text-align: left;
+    /*padding: 7px;*/
+    /*margin: 10;*/
+    color:black;
+}
+.nav-panel a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    transition: .3s background-color;
+}
+
+
+/*footer {*/
+  /*width: 100%;*/
+  /*height: 7%;*/
+  /*background-color: royalblue;*/
+  /*color: royalblue;*/
+/*}*/
