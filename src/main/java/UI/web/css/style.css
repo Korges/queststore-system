@@ -24,10 +24,52 @@ form {
   text-align: center;
 }
 
-header {
+/*header {*/
+  /*align-content: space-between;*/
+  /*background: black;color:white;*/
+/*}*/
+.main-panel {
+    position: fixed;
+    flex-basis: auto;
+    width: 96%;
+    /*todo fix width*/
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  /*align-content: space-between;*/
   background: black;color:white;
+
+}
+.logo-main{
+    width: 20%;
 }
 
+.logo-bb {
+    text-align: left;
+    width: 20%;
+    color: #d77d16;
+    font-size: larger;
+    font-weight: bold;
+
+    /*todo allign to left*/
+}
+
+.status-page {
+    width: 20%;
+
+    color: coral;
+    font-size: x-large;
+    font-weight: bolder;
+}
+
+.status-user{
+    color: orange;
+    width: 20%;
+
+}
+
+.
 footer {
   background: #aaa;color:white;
   position: fixed;
