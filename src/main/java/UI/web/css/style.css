@@ -1,47 +1,24 @@
-body {
-  font-family: 'Oswald', sans-serif;
+body,html{
+  border: 0;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
 }
 
-.flex-container {
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-flow: row wrap;
-  flex-flow: row wrap;
-  text-align: center;
-}
-
-.flex-container > * {
-  padding: 15px;
-  -webkit-flex: 1 100%;
-  flex: 1 100%;
-}
-
-article {
-  text-align: left;
-}
-
-form {
-  text-align: center;
-}
-
-/*header {*/
-  /*align-content: space-between;*/
-  /*background: black;color:white;*/
-/*}*/
 .main-panel {
-    position: fixed;
-    flex-basis: auto;
-    width: 96%;
-    /*todo fix width*/
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  /*align-content: space-between;*/
+  position: fixed;
+  flex-basis: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 7%;
   background: black;color:white;
-
+  align-items: center;
 }
+
 .logo-main{
+  display: flex;
     width: 20%;
 }
 
@@ -69,16 +46,23 @@ form {
 
 }
 
+.nav-panel {
+  display: flex;
+  width: 7%;
+  align-content: flex-start;
+  background-color: yellow;
+  height: 500px;
+}
+
+
+
 .
 footer {
   background: #aaa;color:white;
   position: fixed;
   bottom: 0px;
 }
-nav {
-  background:black;
-  height: 500px;
-}
+
 
 h1 {
   text-align: center;
@@ -101,6 +85,7 @@ nav a {
   display: block;
 }
 nav ul {
+  width: 100%;
   list-style: none;
   background-color: #444;
   text-align: center;
