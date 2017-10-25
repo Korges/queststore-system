@@ -6,7 +6,6 @@ body,html{
 }
 
 .main-panel {
-  position: fixed;
   flex-basis: auto;
   width: 100%;
   display: flex;
@@ -48,93 +47,15 @@ body,html{
 
 .nav-panel {
   display: flex;
-  width: 7%;
+  width: 15%;
   align-content: flex-start;
   background-color: yellow;
-  height: 500px;
+  height: 89%;
 }
 
-
-
-.
 footer {
-  background: #aaa;color:white;
-  position: fixed;
-  bottom: 0px;
-}
-
-
-h1 {
-  text-align: center;
-}
-nav li {
-
-  font-size: 20px;
-  line-height: 40px;
-  height: 40px;
-
-}
-
-article ol {
-  font-size: 40px;
-  line-height: 80px;
-}
-
-nav a {
-  text-decoration: none;
-  display: block;
-}
-nav ul {
   width: 100%;
-  list-style: none;
-  background-color: #444;
-  text-align: center;
-  padding: 0;
-  margin: 0;
-}
-.nav a {
-  text-decoration: none;
-  color: #fff;
-  display: block;
-  transition: .3s background-color;
-}
-
-.nav a:hover {
-  background-color: #005f5f;
-}
-
-.nav a.active {
-  background-color: #fff;
-  color: #444;
-  cursor: default;
-}
-
-
-@media all and (min-width: 768px) {
-  .nav {text-align:left;-webkit-flex: 1 auto;flex:1 auto;-webkit-order:1;order:1;}
-  .article {-webkit-flex:5 0px;flex:5 0px;-webkit-order:2;order:2;}
-  footer {-webkit-order:3;order:3;}
-}
-
-div.gallery {
-  margin: 15px;
-  border: 1px solid #ccc;
-  float: left;
-  width: 180px;
-}
-
-div.gallery:hover {
-  border: 1px solid #777;
-  border-color: red;
-  width: 185px;
-}
-
-div.gallery img {
-  width: 100%;
-  height: auto;
-}
-
-div.desc {
-  padding: 15px;
-  text-align: center;
+  height: 4%;
+  background-color: royalblue;
+  color: royalblue;
 }
