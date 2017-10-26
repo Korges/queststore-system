@@ -9,6 +9,7 @@ h1{
 body{
     background: url("http://www.planwallpaper.com/static/images/6909249-black-hd-background.jpg") no-repeat fixed center;
     color: white;
+    margin: 0;
 }
 
 .table-container{
