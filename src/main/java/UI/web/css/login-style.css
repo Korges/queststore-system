@@ -45,6 +45,8 @@ h4 {
 }
 
 .wrapper {
+    display: flex;
+    flex-direction: row;
     text-align: center;
 }
 
