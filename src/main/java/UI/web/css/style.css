@@ -92,13 +92,13 @@ li.list-header{
 
 
 .home-container{
+    height: 100%;
 display: flex;  flex-direction: row;
 }
 
 .content{
     background: url("http://www.planwallpaper.com/static/images/6909249-black-hd-background.jpg") no-repeat fixed center;
     width: 100%;
-    height: 100%;
     margin: 0;
     border: 0;
 }
