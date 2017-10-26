@@ -2,27 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View Student b.B</title>
+    <title>Edit Student b.B</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link rel="stylesheet" type="text/css" href="../css/view.css">
+    <link rel="stylesheet" type="text/css" href="../css/edit.css">
 </head>
 <body>
 <div class="main-container">
     <div class="header-container">
-        <h1>Create Student</h1>
+        <h1>Edit Group</h1>
     </div>
     <div class="container">
         <form>
             <fieldset>
                 <legend>Legend:</legend>
-                First name:<br>
-                <input type="text" placeholder="enter first name"><br>
-                Last name:<br>
-                <input type="text" placeholder="enter last name"><br>
-                password:<br>
-                <input type="text" placeholder="enter password"><br>
-                email:<br>
-                <input type="text" placeholder="enter email"><br>
+                Mentors Id:<br>
+                <input type="number" name="id" autofocus="autofocus"><br>
+                Mentors Name:<br>
+                <input type="text" name="name"><br>
+                Mentors Last Name:<br>
+                <input type="text" name="last-name" ><br>
+                Mentors email:<br>
+                <input type="email" name="email"><br>
+                Mentors password:<br>
+                <input type="password" name="password"><br>
                 Class:
                 <label>
                     <select>
@@ -32,6 +34,7 @@
                     </select>
                 </label>
                 <input type="submit" value="Submit">
+                <input type="reset">
             </fieldset>
         </form>
     </div>
