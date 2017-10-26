@@ -142,19 +142,6 @@ footer{
     /*alig*/
 }
 
-/*.edit-container {*/
-    /*size: x;*/
-    /*padding-top: 10%;*/
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*flex-wrap: nowrap;*/
-    /*!*align-content: space-between;*!*/
-    /*align-items: center;*/
-    /*!*align-self: baseline;*!*/
-    /*align-content: center;*/
-    /*!*alig*!*/
-/*}*/
-
 input[type="text"], input[type="number"], input[type="submit"],
 input[type="reset"],
 input[type="email"], input[type="password"], select {
