@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>View Student b.B</title>
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">-->
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
-    <link rel="stylesheet" type="text/css" href="./css/view.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/view.css">
 </head>
 <body>
 <div class="main-container">
@@ -14,20 +14,24 @@
     </div>
     <div class="container">
         <form>
-            Artifact name:<br>
-            <input type="text" placeholder="enter artifact name"><br>
-            Artifact description<br>
-            <input type="text" placeholder="enter artifact description"><br>
-            price<br>
-            <input type="text" placeholder="enter price"><br>
-            magical<br>
-            <label>
-                <select>
-                    <option value="yes">yes</option>
-                    <option value="no">no</option>
-                </select>
-            </label>
-            <input type="submit" value="Submit">
+            <fieldset>
+                <legend>Legend:</legend>
+
+                    Artifact name:<br>
+                    <input type="text" placeholder="enter artifact name"><br>
+                    Artifact description<br>
+                    <input type="text" placeholder="enter artifact description"><br>
+                    price<br>
+                    <input type="text" placeholder="enter price"><br>
+                    magical<br>
+                    <label>
+                        <select>
+                            <option value="yes">yes</option>
+                            <option value="no">no</option>
+                        </select>
+                    </label>
+                    <input type="submit" value="Submit">
+            </fieldset>
         </form>
     </div>
 </div>

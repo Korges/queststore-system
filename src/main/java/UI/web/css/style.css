@@ -2,7 +2,7 @@ body,html{
   border: 0;
   margin: 0;
   padding: 0;
-  height: 100vh;
+  height: 100%;
     font-family: 'Oswald', sans-serif;
 
 
@@ -98,6 +98,7 @@ display: flex;  flex-direction: row;
 .content{
     background: url("http://www.planwallpaper.com/static/images/6909249-black-hd-background.jpg") no-repeat fixed center;
     width: 100%;
+    height: 100%;
     margin: 0;
     border: 0;
 }
@@ -154,11 +155,13 @@ footer{
     /*!*alig*!*/
 /*}*/
 
-input[type="text"], input[type="number"],
+input[type="text"], input[type="number"], input[type="submit"],
+input[type="reset"],
 input[type="email"], input[type="password"], select {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
+    align-content: center;
 }
 
