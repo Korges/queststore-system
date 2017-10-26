@@ -121,9 +121,10 @@ footer{
     justify-content: center;
 }
 
-.create-container {
+.container {
     size: x;
-    padding-top: 10%;
+    /*padding-top: 5%;*/
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -132,10 +133,23 @@ footer{
     /*align-self: baseline;*/
     align-content: center;
     /*alig*/
-
 }
 
-input[type="text"], input[type="submit"], select {
+/*.edit-container {*/
+    /*size: x;*/
+    /*padding-top: 10%;*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*flex-wrap: nowrap;*/
+    /*!*align-content: space-between;*!*/
+    /*align-items: center;*/
+    /*!*align-self: baseline;*!*/
+    /*align-content: center;*/
+    /*!*alig*!*/
+/*}*/
+
+input[type="text"], input[type="number"],
+input[type="email"], input[type="password"], select {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;

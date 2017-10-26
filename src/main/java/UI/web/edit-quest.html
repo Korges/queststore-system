@@ -3,33 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Student b.B</title>
-    <!--<link rel="stylesheet" type="text/css" href="./css/style.css">-->
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
     <link rel="stylesheet" type="text/css" href="./css/edit.css">
 </head>
 <body>
-<h1>Quest Artifact</h1>
-<div class="edit-container">
-    <form>
-        <p>Quest Id:</p>
+<div class="main-container">
+    <div class="header-container">
+        <h1>Quest Artifact</h1>
+    </div>
+    <div class="container">
+        <form>
+        Quest Id:<br>
         <input type="number" name="id" value="" autofocus="autofocus"><br>
-        <p>Quest Name:</p>
+        Quest Name:<br>
         <input type="text" name="name" value=""><br>
-        <p>Quest Description:</p>
+        Quest Description:<br>
         <input type="text" name="description" value=""><br>
-        <p>Quest Value:</p>
+        Quest Value:<br>
         <input type="number" name="value" value=""><br>
-        <p>Quest Experience:</p>
+        Quest Experience:<br>
         <input type="number" name="exp" value=""><br>
-        <p>Quest Category:</p>
+        Quest Category:<br>
         <select name="category">
             <option value="basic">Basic Quest</option>
             <option value="magic">Extra Quest</option>
         </select><br>
-        <p>
-            <input type="submit" value="Submit">
-            <input type="reset">
-        </p>
+        <input type="submit" value="Submit">
+        <input type="reset">
     </form>
+</div>
 </div>
 </body>
 </html>
