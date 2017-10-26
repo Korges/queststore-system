@@ -4,55 +4,40 @@
     <meta charset="UTF-8">
     <title>View Student b.B</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
-    <link rel="stylesheet" type="text/css" href="./css/view.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/view.css">
 </head>
 <body>
-<h1>Artfiact list</h1>
-    <div class="table-container">
+<div class="main-container">
+    <div class="header-container">
+        <h1>Create fundraise</h1>
+    </div>
+    <div class="container">
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>ItemType</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>1</td>
-                <td>Bers,o</td>
-                <td>eloelo123</td>
-                <td>100dolanow</td>
-                <td>Magic</td>
 
-            </tr>
-            <tr>
-                <th scope="row">1</th>
-                <td>1</td>
-                <td>Bers,o</td>
-                <td>eloelo123</td>
-                <td>100dolanow</td>
-                <td>Magic</td>
-            </tr>
-            <tr>
-                <th scope="row">1</th>
-                <td>1</td>
-                <td>Bers,o</td>
-                <td>eloelo123</td>
-                <td>100dolanow</td>
-                <td>Magic</td>
-            </tr>
-            </tbody>
-        </table>
-        view-artifact.html
+        <form>
+            Fundraise name:<br>
+            <input type="text" placeholder="enter fundraise name"><br>
+            Select item to fundraise<br>
+            <label>
+                <select>
+
+                    <option value="item1">item1</option>
+                    <option value="item2">item2</option>
+                    <option value="item3">item3</option>
+                    <option value="item4">item4</option>
+                </select>
+            </label>
+            <br>
+            <input type="submit" value="Submit">
+
+        </form>
+
+
+
 
     </div>
+</div>
 
 
 
