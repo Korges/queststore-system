@@ -1,0 +1,68 @@
+body,html{
+    border: 0;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url("../resources/art-2536651_1920.jpg");
+}
+
+h1{
+    padding-bottom: 50px;
+    margin: 0;
+    text-align: center;
+    padding-top: 30px;
+    color: #000000;
+    font-family: georgia;
+    font-size: 80px;
+    text-shadow: 0px 0px 6px #808080;
+}
+
+.login-card{
+    height: 350px;
+    width: 30%;
+    margin: auto auto 0px auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, .4);
+    border-radius: 8px;
+}
+
+h4 {
+    border:0 solid #fff;
+    border-bottom-width:1px;
+    margin: 50px;
+    text-align: center;
+}
+
+.form-control {
+    width: 60%;
+    height: 30px;
+    border-radius: 10px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+
+footer{
+    position:fixed;
+    left:0px;
+    bottom:0px;
+    min-height: 40px;
+    max-height: 80px;
+    width:100%;
+    background:#41547f;
+    display: flex;
+    text-align: center;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 6px #808080;
+}
