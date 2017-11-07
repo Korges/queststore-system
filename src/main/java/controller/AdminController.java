@@ -1,18 +1,22 @@
 package controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import DAO.LevelExperienceDAO;
+import DAO.*;
 import UI.AdminUI;
 import UI.MentorUI;
-import DAO.MentorDAO;
-import DAO.GroupDAO;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 import models.Mentor;
 import models.Group;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
 
-public class AdminController {
+public class AdminController  implements HttpHandler {
 
     private MentorDAO mDAO = new MentorDAO();
     private GroupDAO gDAO = new GroupDAO();
@@ -22,52 +26,30 @@ public class AdminController {
         gDAO = new GroupDAO();
     }
 
-    public void startController() throws SQLException,NoSuchAlgorithmException{
-        handleMenu();
-    }
+    public void handle(HttpExchange httpExchange) throws IOException {
 
-    private void handleMenu() throws SQLException,NoSuchAlgorithmException{
+        try {
+            WebTemplateDao webTemplateDao = new WebTemplateDao();
+            String response = "";
+            String method = httpExchange.getRequestMethod();
 
-        String choice;
-        do {
+            if (method.equals("GET")) {
+                JtwigTemplate template = JtwigTemplate.classpathTemplate("static/admin-page.html");
+                ArrayList<ArrayList<String>> data = listAllMentors();
+                JtwigModel model = JtwigModel.newModel();
 
-            AdminUI.printMenu();
-            choice = AdminUI.getChoice();
-
-            switch (choice){
-                case "1":{
-                    createMentor();
-                    break;
-                }
-                case "2":{
-                    createGroup();
-                    break;
-                }
-                case "3":{
-                    editMentor();
-                    break;
-                }
-                case "4":{
-                    listAllMentors();
-                    break;
-                }
-                case "5":{
-                    deleteMentor();
-                    break;
-                }
-
-                case "6":{
-                    showGroup();
-                    break;
-                }
-                case "7":{
-                    createLevelOfExperience();
-                    break;
-                }
+                model.with("data", data);
+                response = template.render(model);
             }
-        }while(!choice.equals("0"));
-    }
 
+            httpExchange.sendResponseHeaders(200, response.length());
+            OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        }catch (SQLException e ){
+
+        }
+    }
     public void createMentor() throws SQLException,NoSuchAlgorithmException{
 
         String firstName = MentorUI.getString("Enter First Name: ");
@@ -133,16 +115,24 @@ public class AdminController {
         }
     }
 
-    public void listAllMentors() throws SQLException{
+    public ArrayList<ArrayList<String>> listAllMentors() throws SQLException{
 
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+
+        ArrayList<String> record = new ArrayList<>();
         ArrayList<Mentor> mentorList = mDAO.get();
         if(mentorList.size() == 0){
             UI.UI.showMessage("Mentor list is empty!");
         } else {
             for(Mentor mentor: mentorList){
-                System.out.println(mentor.toString());
+                record.add(mentor.getFirstName());
+                record.add(mentor.getLastName());
+                record.add(mentor.getEmail());
+                data.add(record);
+                record = new ArrayList<>();
             }
         }
+        return data;
     }
 
     public void deleteMentor() throws SQLException{
