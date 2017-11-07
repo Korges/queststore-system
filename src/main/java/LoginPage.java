@@ -1,3 +1,4 @@
+import DAO.WebTemplate;
 import DAO.WebTemplateDao;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -17,14 +18,10 @@ public class LoginPage implements HttpHandler{
 
         if (method.equals("GET")) {
             response = webTemplateDao.getSiteTemplate("static/login-page.html");
-
         }
 
         if (method.equals("POST")) {
-            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
-                    "utf-8");
-            BufferedReader br = new BufferedReader(isr);
-            String formData = br.readLine();
+            response = webTemplateDao.getSiteTemplate("static/admin-page.html");
         }
 
         httpExchange.sendResponseHeaders(200, response.length());
