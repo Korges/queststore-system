@@ -22,12 +22,9 @@ public class MentorListWeb implements HttpHandler{
             String method = httpExchange.getRequestMethod();
 
             if (method.equals("GET")) {
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/view-mentor.twig");
-                ArrayList<ArrayList<String>> data = listAllMentors();
-                JtwigModel model = JtwigModel.newModel();
 
-                model.with("data", data);
-                response = template.render(model);
+                response = listAllMentors();
+
             }
 
             httpExchange.sendResponseHeaders(200, response.length());
@@ -39,25 +36,28 @@ public class MentorListWeb implements HttpHandler{
         }
     }
 
-    public ArrayList<ArrayList<String>> listAllMentors() throws SQLException{
+    public String listAllMentors() throws SQLException{
 
         MentorDAO mDAO = new MentorDAO();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
 
         ArrayList<String> record = new ArrayList<>();
         ArrayList<Mentor> mentorList = mDAO.get();
-        if(mentorList.size() == 0){
-            UI.UI.showMessage("Mentor list is empty!");
-        } else {
-            for(Mentor mentor: mentorList){
-                record.add(mentor.getFirstName());
-                record.add(mentor.getLastName());
-                record.add(mentor.getEmail());
-                data.add(record);
-                record = new ArrayList<>();
-            }
+        for(Mentor mentor: mentorList){
+            record.add(mentor.getFirstName());
+            record.add(mentor.getLastName());
+            record.add(mentor.getEmail());
+            data.add(record);
+            record = new ArrayList<>();
         }
-        return data;
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/view-mentor.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        model.with("data", data);
+        String response = template.render(model);
+
+        return response;
     }
 
 }

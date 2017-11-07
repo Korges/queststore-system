@@ -129,7 +129,6 @@ public class AdminController  implements HttpHandler {
                 record.add(mentor.getLastName());
                 record.add(mentor.getEmail());
                 data.add(record);
-                record = new ArrayList<>();
             }
         }
         return data;
