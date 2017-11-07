@@ -1,30 +1,68 @@
 package controller;
 
 import DAO.StudentDAO;
+import DAO.WebTemplateDao;
 import UI.UI;
 import DAO.ConnectDB;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 import models.Student;
 
+import java.io.*;
+import java.net.URLDecoder;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
-public class MainController {
+public class MainController implements HttpHandler {
 
-    public void setUp(){
+    public void handle(HttpExchange httpExchange) throws IOException {
+        WebTemplateDao webTemplateDao = new WebTemplateDao();
+        String response = "";
+        String method = httpExchange.getRequestMethod();
+
+        if (method.equals("GET")) {
+            response = webTemplateDao.getSiteTemplate("static/login-page.html");
+
+        }
+
+        if (method.equals("POST")) {
+            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
+                    "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            String formData = br.readLine();
+            Map<String,String> inputs = parseFormData(formData);
+            String login = inputs.get("login");
+            String password = inputs.get("password");
+            String user = setUp(login,password);
+            System.out.println(user);
+            if(user.equals("Admin")){
+                response = webTemplateDao.getSiteTemplate("static/admin-page.html");
+            }
+        }
+
+        httpExchange.sendResponseHeaders(200, response.length());
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+    }
+
+    public String setUp(String login,String password){
         try{
-            loginToSystem();
+
+            return loginToSystem(login,password);
         } catch (SQLException e){
 
         }catch (NoSuchAlgorithmException e){
 
-    }
+        }
+        return "a;";
     }
 
-    public void loginToSystem() throws SQLException,NoSuchAlgorithmException{
-
-        String login = UI.getLogin();
-        String password = HashSystem.getStringFromSHA256(UI.getPassword());
+    public String loginToSystem(String login,String passwordGet) throws SQLException,NoSuchAlgorithmException{
+        String password = HashSystem.getStringFromSHA256(passwordGet);
         ConnectDB connectDB = DAO.ConnectDB.getInstance();
         StudentDAO studentd = new StudentDAO();
         String sql = String.format("SELECT * FROM users WHERE email like '%s' and password like '%s'",login,password);
@@ -38,16 +76,17 @@ public class MainController {
                 Student student = studentd.createStudent(studentResult);
                 StudentController studentController = new StudentController(student);
                 studentController.startController();
+                return "Student";
             }
 
             if (result.getString("role").equals("admin")) {
-                AdminController adminController = new AdminController();
-                adminController.startController();
+                return "Admin";
             }
 
             if (result.getString("role").equals("mentor")) {
                 MentorController mentorController = new MentorController();
                 mentorController.startController();
+                return "Mentor";
             }
 
 
@@ -56,5 +95,18 @@ public class MainController {
             System.out.println("User doesn't exist");
         }
 
+    return "dupa";
+    }
+
+    private Map<String,String> parseFormData(String formData) throws UnsupportedEncodingException {
+
+        Map<String, String> map = new HashMap<>();
+        String[] pairs = formData.split("&");
+        for(String pair : pairs){
+            String[] keyValue = pair.split("=");
+            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
+            map.put(keyValue[0], value);
+        }
+        return map;
     }
 }

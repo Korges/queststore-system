@@ -12,7 +12,8 @@ public class Main {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 
         // set routes
-        server.createContext("/login-page", new LoginPage());
+        server.createContext("/login-page", new MainController());
+        server.createContext("/mentor", new MainController());
         server.createContext("/static", new Static());
 
         server.setExecutor(null); // creates a default executor
