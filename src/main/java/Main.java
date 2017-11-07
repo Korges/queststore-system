@@ -1,12 +1,26 @@
 import controller.MainController;
+import com.sun.net.httpserver.HttpServer;
 
-import java.sql.SQLException;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+
 
 public class Main {
 
-    public static void main(String[] args){
-        MainController controller = new MainController();
-        controller.setUp();
+    public static void main(String[] args) throws IOException{
+        // create a server on port 8000
+        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+
+        // set routes
+        server.createContext("/login-page", new LoginPage());
+        server.createContext("/static", new Static());
+
+        server.setExecutor(null); // creates a default executor
+
+        // start listening
+        server.start();
+       // MainController controller = new MainController();
+        //controller.setUp();
 
 
     }
