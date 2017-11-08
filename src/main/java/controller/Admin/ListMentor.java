@@ -1,4 +1,4 @@
-package controller;
+package controller.Admin;
 
 import DAO.MentorDAO;
 import DAO.WebTemplateDao;
@@ -13,7 +13,7 @@ import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class MentorListWeb implements HttpHandler{
+public class ListMentor implements HttpHandler{
     public void handle(HttpExchange httpExchange) throws IOException {
 
         try {
@@ -51,7 +51,7 @@ public class MentorListWeb implements HttpHandler{
             record = new ArrayList<>();
         }
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin/view-mentor.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin/create-mentor.twig");
         JtwigModel model = JtwigModel.newModel();
 
         String response = "";

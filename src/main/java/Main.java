@@ -1,8 +1,9 @@
+import controller.Admin.CreateGroup;
 import controller.AdminController;
 import controller.MainController;
 import com.sun.net.httpserver.HttpServer;
-import controller.MentorCreateController;
-import controller.MentorListWeb;
+import controller.Admin.CreateMentor;
+import controller.Admin.ListMentor;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -19,8 +20,9 @@ public class Main {
         server.createContext("/login-page", new MainController());
         server.createContext("/admin", new AdminController());
         server.createContext("/static", new Static());
-        server.createContext("/admin/mentor-list", new MentorListWeb());
-        server.createContext("/admin/create-mentor", new MentorCreateController());
+        server.createContext("/admin/mentor-list", new ListMentor());
+        server.createContext("/admin/create-mentor", new CreateMentor());
+        server.createContext("/admin/create-group", new CreateGroup());
 
 
 

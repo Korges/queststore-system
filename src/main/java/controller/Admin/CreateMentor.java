@@ -1,9 +1,10 @@
-package controller;
+package controller.Admin;
 
 import DAO.WebTemplate;
 import DAO.WebTemplateDao;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import controller.AdminController;
 
 import java.io.*;
 import java.net.URLDecoder;
@@ -12,7 +13,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MentorCreateController implements HttpHandler {
+public class CreateMentor implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "";
         String method = httpExchange.getRequestMethod();

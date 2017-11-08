@@ -46,12 +46,13 @@ public class AdminController  implements HttpHandler {
         mDAO.add(newMentor);
     }
 
-    public void createGroup() throws SQLException{
-
-        String name = AdminUI.getString("Enter new group name: ");
+    public void createGroup(String name){
         Group newGroup = new Group(name);
-        gDAO.add(newGroup);
-        UI.AdminUI.showMessage("Successfully added group");
+        try {
+            gDAO.add(newGroup);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void showGroup() throws SQLException{
