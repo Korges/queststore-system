@@ -27,7 +27,7 @@ public class MentorListWeb implements HttpHandler{
 
             }
 
-            httpExchange.sendResponseHeaders(200, response.length());
+            httpExchange.sendResponseHeaders(200, 0);
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
@@ -51,11 +51,16 @@ public class MentorListWeb implements HttpHandler{
             record = new ArrayList<>();
         }
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/view-mentor.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/view-mentor-full.twig");
         JtwigModel model = JtwigModel.newModel();
 
+        String response = "";
         model.with("data", data);
-        String response = template.render(model);
+        try {
+            response = template.render(model);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         return response;
     }

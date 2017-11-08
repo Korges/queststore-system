@@ -25,6 +25,10 @@ public class MainController implements HttpHandler {
 
         if (method.equals("GET")) {
             response = webTemplateDao.getSiteTemplate("static/login-page.html");
+            httpExchange.sendResponseHeaders(200, response.length());
+            OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
 
         }
 
@@ -39,14 +43,10 @@ public class MainController implements HttpHandler {
             String user = setUp(login,password);
             System.out.println(user);
             if(user.equals("Admin")){
-                response = webTemplateDao.getSiteTemplate("static/admin-page.html");
+                httpExchange.getResponseHeaders().set("Location", "/admin");
+                httpExchange.sendResponseHeaders(302, -1);
             }
         }
-
-        httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
     }
 
     public String setUp(String login,String password){

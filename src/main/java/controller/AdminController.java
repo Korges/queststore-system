@@ -27,38 +27,22 @@ public class AdminController  implements HttpHandler {
     }
 
     public void handle(HttpExchange httpExchange) throws IOException {
-
-        try {
-            WebTemplateDao webTemplateDao = new WebTemplateDao();
             String response = "";
             String method = httpExchange.getRequestMethod();
 
             if (method.equals("GET")) {
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("static/admin-page.html");
-                ArrayList<ArrayList<String>> data = listAllMentors();
-                JtwigModel model = JtwigModel.newModel();
-
-                model.with("data", data);
-                response = template.render(model);
+                response = WebTemplate.getSiteContent("template/index-admin.html");
             }
 
-            httpExchange.sendResponseHeaders(200, response.length());
+            httpExchange.sendResponseHeaders(200, 0);
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
-        }catch (SQLException e ){
-
-        }
     }
-    public void createMentor() throws SQLException,NoSuchAlgorithmException{
-
-        String firstName = MentorUI.getString("Enter First Name: ");
-        String lastName = MentorUI.getString("Enter Last Name: ");
-        String password = HashSystem.getStringFromSHA256(MentorUI.getString("Enter Password: "));
-        String email = MentorUI.getEmail();
-        showGroup();
-        String klass = MentorUI.getString("Enter Klass id: ");
-        Mentor newMentor = new Mentor(firstName, lastName, email, password, klass);
+    public void createMentor(String firstName,String lastName,String password, String email) throws SQLException,NoSuchAlgorithmException{
+        String passwordHash = HashSystem.getStringFromSHA256(password);
+        String klass = "2016";
+        Mentor newMentor = new Mentor(firstName, lastName, email, passwordHash, klass);
         mDAO.add(newMentor);
     }
 

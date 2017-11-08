@@ -1,6 +1,7 @@
 import controller.AdminController;
 import controller.MainController;
 import com.sun.net.httpserver.HttpServer;
+import controller.MentorCreateController;
 import controller.MentorListWeb;
 
 import java.io.IOException;
@@ -19,6 +20,8 @@ public class Main {
         server.createContext("/admin", new AdminController());
         server.createContext("/static", new Static());
         server.createContext("/admin/mentor-list", new MentorListWeb());
+        server.createContext("/admin/create-mentor", new MentorCreateController());
+
 
 
         server.setExecutor(null); // creates a default executor
