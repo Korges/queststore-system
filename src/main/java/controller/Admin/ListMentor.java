@@ -51,7 +51,7 @@ public class ListMentor implements HttpHandler{
             record = new ArrayList<>();
         }
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin/create-mentor.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin/view-mentor.twig");
         JtwigModel model = JtwigModel.newModel();
 
         String response = "";

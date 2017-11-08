@@ -19,7 +19,7 @@ public class CreateMentor implements HttpHandler {
         String method = httpExchange.getRequestMethod();
 
         if (method.equals("GET")) {
-            response = WebTemplate.getSiteContent("/static/admin/create-mentor.html");
+            response = WebTemplate.getSiteContent("templates/admin/create-mentor.twig");
         }
 
         if (method.equals("POST")) {
