@@ -31,7 +31,7 @@ public class AdminController  implements HttpHandler {
             String method = httpExchange.getRequestMethod();
 
             if (method.equals("GET")) {
-                response = WebTemplate.getSiteContent("template/index-admin.html");
+                response = WebTemplate.getSiteContent("templates/admin/admin-menu.twig");
             }
 
             httpExchange.sendResponseHeaders(200, 0);
