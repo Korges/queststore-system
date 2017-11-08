@@ -51,7 +51,7 @@ public class MentorListWeb implements HttpHandler{
             record = new ArrayList<>();
         }
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/view-mentor-full.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin/view-mentor.twig");
         JtwigModel model = JtwigModel.newModel();
 
         String response = "";

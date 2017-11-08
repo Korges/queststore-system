@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>View Student b.B</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/view.css">
-</head>
-<body>
-<h1>Student List</h1>
+{% extends "classpath:/templates/admin/admin-menu.twig" %}
+
+{% block content %}
     <div class="table-container">
         <table class="table">
             <thead>
@@ -33,5 +25,4 @@
             </tbody>
         </table>
     </div>
-</body>
-</html>
+{% endblock %}
