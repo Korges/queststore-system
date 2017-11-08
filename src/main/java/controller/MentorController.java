@@ -7,6 +7,7 @@ import DAO.StudentDAO;
 import DAO.SubmissionDAO;
 import DAO.InventoryDAO;
 import UI.MentorUI;
+import controller.helpers.HashSystem;
 import models.*;
 import UI.UI;
 

@@ -6,6 +6,8 @@ import UI.UI;
 import DAO.ConnectDB;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import controller.helpers.HashSystem;
+import controller.helpers.ParseForm;
 import models.Student;
 
 import java.io.*;
@@ -37,7 +39,7 @@ public class MainController implements HttpHandler {
                     "utf-8");
             BufferedReader br = new BufferedReader(isr);
             String formData = br.readLine();
-            Map<String,String> inputs = parseFormData(formData);
+            Map<String,String> inputs = ParseForm.parseFormData(formData);
             String login = inputs.get("login");
             String password = inputs.get("password");
             String user = setUp(login,password);
@@ -96,17 +98,5 @@ public class MainController implements HttpHandler {
         }
 
     return "dupa";
-    }
-
-    private Map<String,String> parseFormData(String formData) throws UnsupportedEncodingException {
-
-        Map<String, String> map = new HashMap<>();
-        String[] pairs = formData.split("&");
-        for(String pair : pairs){
-            String[] keyValue = pair.split("=");
-            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
-            map.put(keyValue[0], value);
-        }
-        return map;
     }
 }
