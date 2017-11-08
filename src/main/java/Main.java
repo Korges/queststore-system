@@ -4,6 +4,10 @@ import controller.MainController;
 import com.sun.net.httpserver.HttpServer;
 import controller.Admin.CreateMentor;
 import controller.Admin.ListMentor;
+import controller.Mentor.CreateStudent;
+import controller.Mentor.EditStudent;
+import controller.Mentor.ViewStudent;
+import controller.MentorController;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -23,6 +27,10 @@ public class Main {
         server.createContext("/admin/mentor-list", new ListMentor());
         server.createContext("/admin/create-mentor", new CreateMentor());
         server.createContext("/admin/create-group", new CreateGroup());
+        server.createContext("/mentor", new MentorController());
+        server.createContext("/mentor/create-student", new CreateStudent());
+        server.createContext("/mentor/edit-student", new EditStudent());
+        server.createContext("/mentor/view-student", new ViewStudent());
 
 
 

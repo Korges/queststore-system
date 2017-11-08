@@ -1,6 +1,5 @@
 package DAO;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import models.Quest;
 
 import java.sql.ResultSet;

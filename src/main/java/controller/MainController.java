@@ -47,6 +47,10 @@ public class MainController implements HttpHandler {
             if(user.equals("Admin")){
                 httpExchange.getResponseHeaders().set("Location", "/admin");
                 httpExchange.sendResponseHeaders(302, -1);
+            } else if (user.equals("Mentor")) {
+                httpExchange.getResponseHeaders().set("Location", "/mentor");
+                httpExchange.sendResponseHeaders(302, -1);
+
             }
         }
     }
@@ -86,8 +90,8 @@ public class MainController implements HttpHandler {
             }
 
             if (result.getString("role").equals("mentor")) {
-                MentorController mentorController = new MentorController();
-                mentorController.startController();
+//                MentorController mentorController = new MentorController();
+//                mentorController.startController();
                 return "Mentor";
             }
 
