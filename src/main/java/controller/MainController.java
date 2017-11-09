@@ -31,7 +31,6 @@ public class MainController implements HttpHandler {
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
-
         }
 
         if (method.equals("POST")) {
@@ -77,7 +76,7 @@ public class MainController implements HttpHandler {
         if (result.next()) {
 
             if (result.getString("role").equals("student")) {
-                ResultSet studentResult = connectDB.getResult(String.format("SELECT users.id, first_name, last_name, email, password, role, klass, money, experience, level from users join wallets on users.id = wallets.id WHERE email like '%s' and password like '%s'",login,password));
+                ResultSet studentResult = connectDB.getResult(String.format("SELECT users.id, first_name, last_name, email, password, role, klass, money, experience, level from users join wallets on users.id = wallets.id WHERE email like '%s' and password like '%s'", login, password));
                 studentResult.next();
                 Student student = studentd.createStudent(studentResult);
                 StudentController studentController = new StudentController(student);
@@ -94,13 +93,7 @@ public class MainController implements HttpHandler {
 //                mentorController.startController();
                 return "Mentor";
             }
-
-
-
-        } else {
-            System.out.println("User doesn't exist");
         }
-
     return "dupa";
     }
 }
