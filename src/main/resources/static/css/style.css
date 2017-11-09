@@ -67,10 +67,10 @@ body,html{
 
 
   display: flex;
-  width: 300px;
+  width: 250px;
   align-content: flex-start;
   background-color: grey;
-  height: auto;
+  height: 90vh;
 }
 .nav-panel a:hover {
     background-color: #005f5f;

@@ -1,24 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>View Student b.B</title>
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">-->
-    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/view.css">
-</head>
-<body>
+{% extends "classpath:/templates/admin/admin-menu.twig" %}
+
+{% block content %}
 <div class="main-container">
     <div class="header-container">
         <h1>Create Mentor</h1>
     </div>
     <div class="container">
-
-
         <form method="POST">
             <fieldset>
                 <legend>Legend:</legend>
-
                 First name:<br>
                 <input type="text" placeholder="enter first name" name = "first-name"><br>
                 Last name:<br>
@@ -38,16 +28,7 @@
                 </label>
                 <input type="submit" value="Submit">
             </fieldset>
-
         </form>
-
-
-
-
     </div>
 </div>
-
-
-
-</body>
-</html>
+{% endblock %}

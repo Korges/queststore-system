@@ -11,6 +11,7 @@ import UI.AdminUI;
 import UI.MentorUI;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import controller.helpers.HashSystem;
 import models.Mentor;
 import models.Group;
 import org.jtwig.JtwigModel;
@@ -27,47 +28,32 @@ public class AdminController  implements HttpHandler {
     }
 
     public void handle(HttpExchange httpExchange) throws IOException {
-
-        try {
-            WebTemplateDao webTemplateDao = new WebTemplateDao();
             String response = "";
             String method = httpExchange.getRequestMethod();
 
             if (method.equals("GET")) {
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("static/admin-page.html");
-                ArrayList<ArrayList<String>> data = listAllMentors();
-                JtwigModel model = JtwigModel.newModel();
-
-                model.with("data", data);
-                response = template.render(model);
+                response = WebTemplate.getSiteContent("templates/admin/admin-menu.twig");
             }
 
-            httpExchange.sendResponseHeaders(200, response.length());
+            httpExchange.sendResponseHeaders(200, 0);
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
-        }catch (SQLException e ){
-
-        }
     }
-    public void createMentor() throws SQLException,NoSuchAlgorithmException{
-
-        String firstName = MentorUI.getString("Enter First Name: ");
-        String lastName = MentorUI.getString("Enter Last Name: ");
-        String password = HashSystem.getStringFromSHA256(MentorUI.getString("Enter Password: "));
-        String email = MentorUI.getEmail();
-        showGroup();
-        String klass = MentorUI.getString("Enter Klass id: ");
-        Mentor newMentor = new Mentor(firstName, lastName, email, password, klass);
+    public void createMentor(String firstName,String lastName,String password, String email) throws SQLException,NoSuchAlgorithmException{
+        String passwordHash = HashSystem.getStringFromSHA256(password);
+        String klass = "2016";
+        Mentor newMentor = new Mentor(firstName, lastName, email, passwordHash, klass);
         mDAO.add(newMentor);
     }
 
-    public void createGroup() throws SQLException{
-
-        String name = AdminUI.getString("Enter new group name: ");
+    public void createGroup(String name){
         Group newGroup = new Group(name);
-        gDAO.add(newGroup);
-        UI.AdminUI.showMessage("Successfully added group");
+        try {
+            gDAO.add(newGroup);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void showGroup() throws SQLException{

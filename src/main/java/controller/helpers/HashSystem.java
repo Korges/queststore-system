@@ -1,4 +1,4 @@
-package controller;
+package controller.helpers;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -15,10 +15,16 @@ public class HashSystem {
         return sb.toString();
     }
 
-    public static String getStringFromSHA256(String stringToEncrypt) throws NoSuchAlgorithmException{
+    public static String getStringFromSHA256(String stringToEncrypt){
         MessageDigest messageDigest = null;
-        messageDigest = MessageDigest.getInstance("SHA-256");
-        messageDigest.update(stringToEncrypt.getBytes());
-        return byteArray2Hex(messageDigest.digest());
+        try {
+            messageDigest = MessageDigest.getInstance("SHA-256");
+            messageDigest.update(stringToEncrypt.getBytes());
+            return byteArray2Hex(messageDigest.digest());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "a";
+
     }
 }
