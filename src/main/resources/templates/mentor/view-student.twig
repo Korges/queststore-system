@@ -1,0 +1,30 @@
+{% extends "classpath:/templates/mentor/nav.twig" %}
+
+{% block content %}
+    <div class="table-container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>LP</th>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>e-mail</th>
+                <th>Class</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set ID = 1 %}
+            {% for student in students %}
+            <tr>
+                <td>{{ID}}</td>
+                {% for field in student %}
+                    <td>{{ field }}</td>
+                {% endfor %}
+            <tr>
+                {% set ID = ID + 1 %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

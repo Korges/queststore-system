@@ -1,0 +1,33 @@
+{% extends "classpath:/templates/mentor/nav.twig" %}
+
+{% block content %}
+    <div class="main-container">
+    <div class="header-container">
+        <h1>Create Student</h1>
+    </div>
+    <div class="container">
+        <form>
+            <fieldset>
+                <legend>Student:</legend>
+                First name:<br>
+                <input type="text" placeholder="enter first name"><br>
+                Last name:<br>
+                <input type="text" placeholder="enter last name"><br>
+                password:<br>
+                <input type="text" placeholder="enter password"><br>
+                email:<br>
+                <input type="text" placeholder="enter email"><br>
+                Class:
+                <label>
+                    <select>
+                        <option value="2016.1">2016.1</option>
+                        <option value="2017.1">2017.1</option>
+                        <option value="2017.2">2017.2</option>
+                    </select>
+                </label>
+                <input type="submit" value="Submit">
+            </fieldset>
+        </form>
+    </div>
+    </div>
+{% endblock %}

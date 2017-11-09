@@ -1,21 +1,20 @@
 package controller;
 
-import DAO.ArtifactDAO;
-import DAO.FundraiseDAO;
-import DAO.QuestDAO;
-import DAO.StudentDAO;
-import DAO.SubmissionDAO;
-import DAO.InventoryDAO;
+import DAO.*;
 import UI.MentorUI;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 import controller.helpers.HashSystem;
 import models.*;
 import UI.UI;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class MentorController {
+public class MentorController implements HttpHandler{
 
     private InventoryDAO inventoryDAO = new InventoryDAO();
     private StudentDAO studentDAO;
@@ -32,6 +31,19 @@ public class MentorController {
         fundraiseDAO = new FundraiseDAO();
         submissionDAO = new SubmissionDAO();
 
+    }
+    public void handle(HttpExchange httpExchange) throws IOException {
+        String response = "";
+        String method = httpExchange.getRequestMethod();
+
+        if (method.equals("GET")) {
+            response = WebTemplate.getSiteContent("templates/mentor/nav.twig");
+        }
+//todo distinct to external method due to DRY
+        httpExchange.sendResponseHeaders(200, 0);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
 
 

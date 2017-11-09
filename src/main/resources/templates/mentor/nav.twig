@@ -1,0 +1,22 @@
+{% extends "classpath:/templates/index.twig" %}
+
+{% block menu %}
+    <ul>
+        <li class="list-header">Student Panel</li>
+        <li><a href="/mentor/create-student">Create new Student</a></li>
+        <li><a href="/mentor/edit-student">Edit Student</a></li>
+        <li><a href="/mentor/view-student">View Student</a></li>
+        <li class="list-header">Artifact Panel</li>
+        <li><a href="/mentor/create-artifact">Create new Artifact</a></li>
+        <li><a href="/mentor/edit-artifact">Edit Artifact</a></li>
+        <li><a href="/mentor/view-artifact">View Artifact</a></li>
+        <li class="list-header">Quest Panel</li>
+        <li><a href="/mentor/create-quest">Create new Quest</a></li>
+        <li><a href="/mentor/edit-quest">Edit Quest</a></li>
+        <li><a href="/mentor/view-quest">View Quest</a></li>
+        <li class="list-header">Fundraising Panel</li>
+        <li><a href="/mentor/view-fundraising">View Fundraising</a></li>
+        <li><a href="/mentor/finalize-fundraising">Finalize Fundraising</a></li>
+        <li><a href="/mentor/delete-fundraising">Delete Fundraising</a></li>
+    </ul>
+{% endblock %}
