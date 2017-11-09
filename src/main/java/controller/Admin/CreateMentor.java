@@ -1,17 +1,16 @@
 package controller.Admin;
 
 import DAO.WebTemplate;
-import DAO.WebTemplateDao;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.AdminController;
 import controller.helpers.ParseForm;
-
-import java.io.*;
-import java.net.URLDecoder;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class CreateMentor implements HttpHandler {
@@ -35,12 +34,14 @@ public class CreateMentor implements HttpHandler {
                 String email = inputs.get("email");
                 String password = inputs.get("password");
                 adminController.createMentor(firstName,lastName,password,email);
+                response =  WebTemplate.getSiteContent("templates/success.twig");
+
             }catch (SQLException e){
+                response =  WebTemplate.getSiteContent("templates/error.twig");
 
             }catch (NoSuchAlgorithmException e){
-
+                response =  WebTemplate.getSiteContent("templates/error.twig");
             }
-            response =  WebTemplate.getSiteContent("templates/success.twig");
         }
 
         httpExchange.sendResponseHeaders(200, response.length());
