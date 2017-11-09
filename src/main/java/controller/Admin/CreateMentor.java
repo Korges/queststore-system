@@ -35,7 +35,7 @@ public class CreateMentor implements HttpHandler {
                 String email = inputs.get("email");
                 String password = inputs.get("password");
                 adminController.createMentor(firstName,lastName,password,email);
-
+                response =  WebTemplate.getSiteContent("templates/success.twig");
             }catch (SQLException e){
 
             }catch (NoSuchAlgorithmException e){
