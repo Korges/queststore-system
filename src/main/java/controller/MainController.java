@@ -11,12 +11,14 @@ import controller.helpers.ParseForm;
 import models.Student;
 
 import java.io.*;
+import java.net.HttpCookie;
 import java.net.URLDecoder;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class MainController implements HttpHandler {
 
@@ -42,7 +44,21 @@ public class MainController implements HttpHandler {
             String login = inputs.get("login");
             String password = inputs.get("password");
             String user = setUp(login,password);
-            System.out.println(user);
+            String sessionID = generateSessionID();
+            HttpCookie cookie = new HttpCookie("sessionId", sessionID);
+            httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
+            String getId = null;
+            try {
+                getId = String.format("SELECT id FROM users WHERE email like '%s' and password like '%s'",login, HashSystem.getStringFromSHA256(password));
+                String sql = String.format("INSERT INTO sessions values('%s','%s',(%s))",sessionID,user,getId);
+                ConnectDB connectDB = ConnectDB.getInstance();
+                connectDB.addRecord(sql);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+
             if(user.equals("Admin")){
                 httpExchange.getResponseHeaders().set("Location", "/admin");
                 httpExchange.sendResponseHeaders(302, -1);
@@ -67,20 +83,14 @@ public class MainController implements HttpHandler {
     }
 
     public String loginToSystem(String login,String passwordGet) throws SQLException,NoSuchAlgorithmException{
+
         String password = HashSystem.getStringFromSHA256(passwordGet);
         ConnectDB connectDB = DAO.ConnectDB.getInstance();
-        StudentDAO studentd = new StudentDAO();
         String sql = String.format("SELECT * FROM users WHERE email like '%s' and password like '%s'",login,password);
         ResultSet result = connectDB.getResult(sql);
 
         if (result.next()) {
-
             if (result.getString("role").equals("student")) {
-                ResultSet studentResult = connectDB.getResult(String.format("SELECT users.id, first_name, last_name, email, password, role, klass, money, experience, level from users join wallets on users.id = wallets.id WHERE email like '%s' and password like '%s'", login, password));
-                studentResult.next();
-                Student student = studentd.createStudent(studentResult);
-                StudentController studentController = new StudentController(student);
-                studentController.startController();
                 return "Student";
             }
 
@@ -89,11 +99,15 @@ public class MainController implements HttpHandler {
             }
 
             if (result.getString("role").equals("mentor")) {
-//                MentorController mentorController = new MentorController();
-//                mentorController.startController();
                 return "Mentor";
             }
         }
-    return "dupa";
+
+    return "backToLogin";
+    }
+
+    private String generateSessionID(){
+        UUID SessionID = UUID.randomUUID();
+        return String.valueOf(SessionID);
     }
 }

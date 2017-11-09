@@ -37,7 +37,7 @@ public class CreateMentor implements HttpHandler {
                 response =  WebTemplate.getSiteContent("templates/success.twig");
 
             }catch (SQLException e){
-                response =  WebTemplate.getSiteContent("templates/error.twig");
+                response =  WebTemplate.getSiteContent("templates/error-sq.twig");
 
             }catch (NoSuchAlgorithmException e){
                 response =  WebTemplate.getSiteContent("templates/error.twig");

@@ -2,16 +2,22 @@ package controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.HttpCookie;
 import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import DAO.*;
 import UI.AdminUI;
 import UI.MentorUI;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.helpers.HashSystem;
+import controller.helpers.ParseForm;
 import models.Mentor;
 import models.Group;
 import org.jtwig.JtwigModel;
@@ -30,14 +36,30 @@ public class AdminController  implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
             String response = "";
             String method = httpExchange.getRequestMethod();
+        String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");// TODO: 09.11.17 create map to cookie
 
-            if (method.equals("GET")) {
+        try {
+            String[] sessionID = cookieStr.split("sessionId=");
+            String sessionIDFull = sessionID[1].replace("\"", "");
+            if (method.equals("GET") || checkSession(sessionIDFull)) {
                 response = WebTemplate.getSiteContent("templates/admin/admin-menu.twig");
             }
+            else{
+                redirect(httpExchange);
 
-            httpExchange.sendResponseHeaders(200, 0);
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(response.getBytes());
+            }
+        }catch (NullPointerException e){
+            redirect(httpExchange);
+        }
+
+
+
+
+            //response = WebTemplate.getSiteContent("static/login-page.html");
+
+        httpExchange.sendResponseHeaders(200, 0);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
             os.close();
     }
     public void createMentor(String firstName,String lastName,String password, String email) throws SQLException,NoSuchAlgorithmException{
@@ -143,5 +165,28 @@ public class AdminController  implements HttpHandler {
         LevelExperienceDAO levelDao = new LevelExperienceDAO();
         levelDao.add(level,experience);
 
+    }
+
+    public boolean checkSession(String session) {
+
+        String sqlQuery = String.format("SELECT * FROM sessions WHERE session_id like '%s' and role like 'Admin'",session);
+        ResultSet resultSet = null;
+        try {
+            ConnectDB  connectDB = ConnectDB.getInstance();
+            resultSet = connectDB.getResult(sqlQuery);
+            resultSet.next();
+            System.out.println(resultSet.getString("role"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    public void redirect(HttpExchange httpExchange) throws IOException {
+        httpExchange.getResponseHeaders().set("Location", "/login-page");
+        httpExchange.sendResponseHeaders(302, -1);
     }
 }
