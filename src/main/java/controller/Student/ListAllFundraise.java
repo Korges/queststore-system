@@ -1,19 +1,25 @@
-package controller.Admin;
+package controller.Student;
 
+import DAO.ArtifactDAO;
+import DAO.FundraiseDAO;
 import DAO.MentorDAO;
 import DAO.WebTemplateDao;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import models.Artifact;
+import models.Fundraise;
 import models.Mentor;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ListMentor implements HttpHandler{
+public class ListAllFundraise implements HttpHandler {
+
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
@@ -39,20 +45,21 @@ public class ListMentor implements HttpHandler{
 
     public String listAllMentors() throws SQLException{
 
-        MentorDAO mDAO = new MentorDAO();
+        FundraiseDAO fundraiseDAO = new FundraiseDAO();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
 
         ArrayList<String> record = new ArrayList<>();
-        ArrayList<Mentor> mentorList = mDAO.get();
-        for(Mentor mentor: mentorList){
-            record.add(mentor.getFirstName());
-            record.add(mentor.getLastName());
-            record.add(mentor.getEmail());
+        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
+        for(Fundraise fundraise: fundraiseList){
+            record.add(fundraise.getFundraiseID().toString());
+            record.add(fundraise.getTitle());
+            record.add(fundraise.getName());
+            record.add(fundraise.getPrice().toString());
             data.add(record);
             record = new ArrayList<>();
         }
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin/view-mentor.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/view-all-fundraise.twig");
         JtwigModel model = JtwigModel.newModel();
 
         String response = "";
@@ -64,5 +71,5 @@ public class ListMentor implements HttpHandler{
         }
         return response;
     }
-
 }
+

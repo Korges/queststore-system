@@ -50,8 +50,12 @@ public class MainController implements HttpHandler {
             } else if (user.equals("Mentor")) {
                 httpExchange.getResponseHeaders().set("Location", "/mentor");
                 httpExchange.sendResponseHeaders(302, -1);
-
             }
+                else if (user.equals("Student")) {
+                httpExchange.getResponseHeaders().set("Location", "/student");
+                httpExchange.sendResponseHeaders(302, -1);
+            }
+          
         }
     }
 
@@ -108,3 +112,4 @@ public class MainController implements HttpHandler {
         connectDB.addRecord(sql);
     }
 }
+

@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.URL;
 
 public class Static implements HttpHandler {
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 

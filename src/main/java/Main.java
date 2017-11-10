@@ -1,3 +1,4 @@
+import DAO.StudentDAO;
 import controller.Admin.CreateGroup;
 import controller.AdminController;
 import controller.MainController;
@@ -8,6 +9,12 @@ import controller.Mentor.CreateStudent;
 import controller.Mentor.EditStudent;
 import controller.Mentor.ViewStudent;
 import controller.MentorController;
+import controller.Student.CreateFundraise;
+import controller.Student.JoinFundraise;
+import controller.Student.LeaveFundraise;
+import controller.Student.ListAllFundraise;
+import controller.StudentController;
+import models.Student;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -20,6 +27,8 @@ public class Main {
         // create a server on port 8000
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 
+
+
         // set routes
         server.createContext("/login-page", new MainController());
         server.createContext("/admin", new AdminController());
@@ -31,6 +40,11 @@ public class Main {
         server.createContext("/mentor/create-student", new CreateStudent());
         server.createContext("/mentor/edit-student", new EditStudent());
         server.createContext("/mentor/view-student", new ViewStudent());
+        server.createContext("/student", new StudentController());
+        server.createContext("/student/fundraise-list", new ListAllFundraise());
+        server.createContext("/student/create-fundraise", new CreateFundraise());
+        server.createContext("/student/join-fundraise", new JoinFundraise());
+        server.createContext("/student/leave-fundraise", new LeaveFundraise());
 
 
 

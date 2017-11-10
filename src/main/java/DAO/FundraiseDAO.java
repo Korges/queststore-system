@@ -58,14 +58,15 @@ public class FundraiseDAO {
         ArrayList<Fundraise> fundraiseList = new ArrayList<>();
         try {
 
-            ResultSet result = connect.getResult(String.format("SELECT * FROM fundraises JOIN artifacts on artifact_id = id"));
+            ResultSet result = connect.getResult(String.format("SELECT * FROM fundraises JOIN artifacts on fundraises.artifact_id = artifacts.id"));
 
             while (result.next()) {
-                Integer fundraiseID = result.getInt("fundraise_id");
+                Integer fundraiseID = result.getInt("id");
                 Integer artifactID = result.getInt("artifact_id");
                 String title = result.getString("title");
                 String name = result.getString("name");
-                Fundraise fundraise = new Fundraise(fundraiseID, artifactID, title, name);
+                Integer price = result.getInt("price");
+                Fundraise fundraise = new Fundraise(fundraiseID, artifactID, title, name, price);
                 fundraiseList.add(fundraise);
             }
         } catch (SQLException e) {
@@ -97,10 +98,8 @@ public class FundraiseDAO {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-
         return fundraiseStudentList;
     }
-
 }
 
 

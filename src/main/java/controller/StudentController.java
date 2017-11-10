@@ -3,13 +3,17 @@ package controller;
 import DAO.*;
 import UI.StudentUI;
 import UI.UI;
+import com.sun.net.httpserver.HttpHandler;
 import models.*;
 
+import com.sun.net.httpserver.HttpExchange;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.StringJoiner;
 
-public class StudentController {
+public class StudentController implements HttpHandler {
 
     private ArtifactDAO artifactDAO;
     private StudentDAO studentDAO;
@@ -19,7 +23,21 @@ public class StudentController {
     private QuestDAO questDAO;
     private Student user;
 
-    public StudentController(Student student) throws SQLException {
+    public void handle(HttpExchange httpExchange) throws IOException {
+        String response = "";
+        String method = httpExchange.getRequestMethod();
+
+        if (method.equals("GET")) {
+            response = WebTemplate.getSiteContent("templates/student/student-menu.twig");
+        }
+
+        httpExchange.sendResponseHeaders(200, 0);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+    }
+
+    public StudentController() throws SQLException {
         artifactDAO = new ArtifactDAO();
         studentDAO = new StudentDAO();
         studentDAO = new StudentDAO();
@@ -27,118 +45,11 @@ public class StudentController {
         fundraiseDAO = new FundraiseDAO();
         submissionDAO = new SubmissionDAO();
         questDAO = new QuestDAO();
-        user = student;
+//        user = student;
     }
 
 
-    public void startController() throws SQLException {
 
-        handleMainMenu();
-
-    }
-
-
-    public void handleMainMenu() throws SQLException {
-
-        String choice;
-
-        do {
-            StudentUI.printLabel(StudentUI.mainMenuLabel);
-            StudentUI.printMenu(StudentUI.mainMenuOptions);
-            choice = StudentUI.getChoice();
-
-            switch (choice) {
-
-                case "1": {
-                    artifactPanel();
-                    break;
-                }
-                case "2": {
-                    walletPanel();
-                    break;
-                }
-                case "3": {
-                    submissionPanel();
-                    break;
-                }
-            }
-        } while (!choice.equals("0"));
-    }
-
-
-    public void artifactPanel() throws SQLException {
-
-        String choice;
-        do {
-            StudentUI.printLabel(StudentUI.artifactMenuLabel);
-            StudentUI.printMenu(StudentUI.artifactMenuOptions);
-            choice = StudentUI.getChoice();
-
-            switch (choice) {
-
-                case "1": {
-                    listAllArtifacts();
-                    break;
-                }
-                case "2": {
-                    buyArtifact();
-                    break;
-                }
-                case "3": {
-                    fundraisePanel();
-                    break;
-                }
-                case "4": {
-                    checkBalance();
-                    break;
-                }
-                case "5": {
-                    checkStudentArtifacts();
-                    break;
-                }
-            }
-        } while (!choice.equals("0"));
-    }
-
-
-    public void fundraisePanel() throws SQLException {
-        String choice;
-        do {
-            StudentUI.printLabel(StudentUI.fundraiseMenuLabel);
-            StudentUI.printMenu(StudentUI.fundraiseMenuOptions);
-            choice = StudentUI.getChoice();
-
-            switch (choice) {
-
-                case "1": {
-                    createFundraise();
-                    break;
-                }
-
-                case "2": {
-                    joinExistingFundraise();
-                    break;
-                }
-
-                case "3": {
-                    leaveFundraise();
-                    break;
-                }
-
-                case "4": {
-                    checkJoinedFundraises();
-                    break;
-                }
-
-                case "5": {
-                    listAllExistingFundraise();
-                    break;
-                }
-
-            }
-        } while (!choice.equals("0"));
-
-    }
 
 
     private void checkBalance() {
