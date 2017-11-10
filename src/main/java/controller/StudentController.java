@@ -4,6 +4,7 @@ import DAO.*;
 import UI.StudentUI;
 import UI.UI;
 import com.sun.net.httpserver.HttpHandler;
+import controller.helpers.Sessions;
 import models.*;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -27,8 +28,24 @@ public class StudentController implements HttpHandler {
         String response = "";
         String method = httpExchange.getRequestMethod();
 
-        if (method.equals("GET")) {
-            response = WebTemplate.getSiteContent("templates/student/student-menu.twig");
+        try {
+            String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+            String[] sessionID = cookieStr.split("sessionId=");
+            String sessionIDFull = sessionID[1].replace("\"", "");
+
+            System.out.println(Sessions.checkSession(sessionIDFull,"Student"));
+
+
+            if (method.equals("GET") && Sessions.checkSession(sessionIDFull,"Student")) {
+                response = WebTemplate.getSiteContent("templates/student/student-menu.twig");
+            }
+            else{
+                System.out.println(sessionIDFull);
+                Sessions.redirect(httpExchange);
+
+            }
+        }catch (NullPointerException e){
+            Sessions.redirect(httpExchange);
         }
 
         httpExchange.sendResponseHeaders(200, 0);
