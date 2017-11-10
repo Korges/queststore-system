@@ -1,16 +1,16 @@
 package controller.Admin;
 
 import DAO.WebTemplate;
-import DAO.WebTemplateDao;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.AdminController;
-
-import java.io.*;
-import java.net.URLDecoder;
+import controller.helpers.ParseForm;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class CreateMentor implements HttpHandler {
@@ -21,13 +21,12 @@ public class CreateMentor implements HttpHandler {
         if (method.equals("GET")) {
             response = WebTemplate.getSiteContent("templates/admin/create-mentor.twig");
         }
-
         if (method.equals("POST")) {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
                     "utf-8");
             BufferedReader br = new BufferedReader(isr);
             String formData = br.readLine();
-            Map<String,String> inputs = parseFormData(formData);
+            Map<String,String> inputs = ParseForm.parseFormData(formData);
             try{
                 AdminController adminController = new AdminController();
                 String firstName = inputs.get("first-name");
@@ -35,11 +34,13 @@ public class CreateMentor implements HttpHandler {
                 String email = inputs.get("email");
                 String password = inputs.get("password");
                 adminController.createMentor(firstName,lastName,password,email);
+                response =  WebTemplate.getSiteContent("templates/success.twig");
 
             }catch (SQLException e){
+                response =  WebTemplate.getSiteContent("templates/error-sq.twig");
 
             }catch (NoSuchAlgorithmException e){
-
+                response =  WebTemplate.getSiteContent("templates/error.twig");
             }
         }
 
@@ -47,17 +48,5 @@ public class CreateMentor implements HttpHandler {
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
-    }
-
-    private Map<String,String> parseFormData(String formData) throws UnsupportedEncodingException {
-
-        Map<String, String> map = new HashMap<>();
-        String[] pairs = formData.split("&");
-        for(String pair : pairs){
-            String[] keyValue = pair.split("=");
-            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
-            map.put(keyValue[0], value);
-        }
-        return map;
     }
 }
