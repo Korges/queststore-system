@@ -41,7 +41,8 @@ public class AdminController  implements HttpHandler {
         try {
             String[] sessionID = cookieStr.split("sessionId=");
             String sessionIDFull = sessionID[1].replace("\"", "");
-            if (method.equals("GET") || checkSession(sessionIDFull)) {
+
+            if (method.equals("GET") && checkSession(sessionIDFull)) {
                 response = WebTemplate.getSiteContent("templates/admin/admin-menu.twig");
             }
             else{
@@ -174,15 +175,18 @@ public class AdminController  implements HttpHandler {
         try {
             ConnectDB  connectDB = ConnectDB.getInstance();
             resultSet = connectDB.getResult(sqlQuery);
-            resultSet.next();
-            System.out.println(resultSet.getString("role"));
+            if(resultSet.next()){
+                if(resultSet.getString("role").equals("Admin") && resultSet.getString("session_id").equals(session)){
+                    return true;
+                }
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
 
-        return true;
+        return false;
     }
 
     public void redirect(HttpExchange httpExchange) throws IOException {

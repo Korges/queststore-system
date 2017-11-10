@@ -36,29 +36,14 @@ public class MainController implements HttpHandler {
         }
 
         if (method.equals("POST")) {
-            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
-                    "utf-8");
-            BufferedReader br = new BufferedReader(isr);
-            String formData = br.readLine();
-            Map<String,String> inputs = ParseForm.parseFormData(formData);
-            String login = inputs.get("login");
-            String password = inputs.get("password");
-            String user = setUp(login,password);
-            String sessionID = generateSessionID();
-            HttpCookie cookie = new HttpCookie("sessionId", sessionID);
-            httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
-            String getId = null;
+            String user = null;
             try {
-                getId = String.format("SELECT id FROM users WHERE email like '%s' and password like '%s'",login, HashSystem.getStringFromSHA256(password));
-                String sql = String.format("INSERT INTO sessions values('%s','%s',(%s))",sessionID,user,getId);
-                ConnectDB connectDB = ConnectDB.getInstance();
-                connectDB.addRecord(sql);
+                user = getUserType(httpExchange);
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
-
             if(user.equals("Admin")){
                 httpExchange.getResponseHeaders().set("Location", "/admin");
                 httpExchange.sendResponseHeaders(302, -1);
@@ -68,18 +53,6 @@ public class MainController implements HttpHandler {
 
             }
         }
-    }
-
-    public String setUp(String login,String password){
-        try{
-
-            return loginToSystem(login,password);
-        } catch (SQLException e){
-
-        }catch (NoSuchAlgorithmException e){
-
-        }
-        return "a;";
     }
 
     public String loginToSystem(String login,String passwordGet) throws SQLException,NoSuchAlgorithmException{
@@ -109,5 +82,29 @@ public class MainController implements HttpHandler {
     private String generateSessionID(){
         UUID SessionID = UUID.randomUUID();
         return String.valueOf(SessionID);
+    }
+
+    private String getUserType(HttpExchange httpExchange) throws IOException, SQLException, NoSuchAlgorithmException {
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
+                "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String formData = br.readLine();
+        Map<String,String> inputs = ParseForm.parseFormData(formData);
+        String login = inputs.get("login");
+        String password = inputs.get("password");
+
+        String userType = loginToSystem(login,password);
+        createSessions(httpExchange,login,password,userType);
+        return userType;
+    }
+
+    private void createSessions(HttpExchange httpExchange, String login, String password, String user) throws SQLException, NoSuchAlgorithmException {
+        String sessionID = generateSessionID();
+        HttpCookie cookie = new HttpCookie("sessionId", sessionID);
+        httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
+        String getId = String.format("SELECT id FROM users WHERE email like '%s' and password like '%s'",login, HashSystem.getStringFromSHA256(password));
+        String sql = String.format("INSERT INTO sessions values('%s','%s',(%s))",sessionID,user,getId);
+        ConnectDB connectDB = ConnectDB.getInstance();
+        connectDB.addRecord(sql);
     }
 }
