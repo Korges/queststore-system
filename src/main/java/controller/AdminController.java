@@ -7,15 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DAO.*;
-import UI.AdminUI;
-import UI.MentorUI;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.helpers.HashSystem;
 import models.Mentor;
 import models.Group;
-import org.jtwig.JtwigModel;
-import org.jtwig.JtwigTemplate;
 
 public class AdminController  implements HttpHandler {
 

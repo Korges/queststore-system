@@ -6,11 +6,13 @@ import UI.UI;
 import DAO.ConnectDB;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
 import controller.helpers.HashSystem;
 import controller.helpers.ParseForm;
 import models.Student;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.URLDecoder;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
@@ -21,6 +23,7 @@ import java.util.Map;
 public class MainController implements HttpHandler {
 
     public void handle(HttpExchange httpExchange) throws IOException {
+
         WebTemplateDao webTemplateDao = new WebTemplateDao();
         String response = "";
         String method = httpExchange.getRequestMethod();
@@ -35,6 +38,7 @@ public class MainController implements HttpHandler {
         }
 
         if (method.equals("POST")) {
+
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
                     "utf-8");
             BufferedReader br = new BufferedReader(isr);
@@ -43,7 +47,6 @@ public class MainController implements HttpHandler {
             String login = inputs.get("login");
             String password = inputs.get("password");
             String user = setUp(login,password);
-            System.out.println(user);
             if(user.equals("Admin")){
                 httpExchange.getResponseHeaders().set("Location", "/admin");
                 httpExchange.sendResponseHeaders(302, -1);
@@ -51,20 +54,25 @@ public class MainController implements HttpHandler {
                 httpExchange.getResponseHeaders().set("Location", "/mentor");
                 httpExchange.sendResponseHeaders(302, -1);
 
+            } else if (user.equals("Student")) {
+                httpExchange.getResponseHeaders().set("Location", "/student");
+                httpExchange.sendResponseHeaders(302, -1);
+
             }
         }
     }
 
     public String setUp(String login,String password){
+        String accountType = "";
         try{
 
-            return loginToSystem(login,password);
+            accountType = loginToSystem(login,password);
         } catch (SQLException e){
 
         }catch (NoSuchAlgorithmException e){
 
         }
-        return "a;";
+        return accountType;
     }
 
     public String loginToSystem(String login,String passwordGet) throws SQLException,NoSuchAlgorithmException{
@@ -77,11 +85,11 @@ public class MainController implements HttpHandler {
         if (result.next()) {
 
             if (result.getString("role").equals("student")) {
-                ResultSet studentResult = connectDB.getResult(String.format("SELECT users.id, first_name, last_name, email, password, role, klass, money, experience, level from users join wallets on users.id = wallets.id WHERE email like '%s' and password like '%s'",login,password));
-                studentResult.next();
-                Student student = studentd.createStudent(studentResult);
-                StudentController studentController = new StudentController(student);
-                studentController.startController();
+//                ResultSet studentResult = connectDB.getResult(String.format("SELECT users.id, first_name, last_name, email, password, role, klass, money, experience, level from users join wallets on users.id = wallets.id WHERE email like '%s' and password like '%s'",login,password));
+//                studentResult.next();
+//                Student student = studentd.createStudent(studentResult);
+//                StudentController studentController = new StudentController(student);
+//                System.out.println(student.getID());
                 return "Student";
             }
 

@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ListMentor implements HttpHandler{
+
     public void handle(HttpExchange httpExchange) throws IOException {
 
         try {
@@ -61,7 +62,6 @@ public class ListMentor implements HttpHandler{
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return response;
     }
 
