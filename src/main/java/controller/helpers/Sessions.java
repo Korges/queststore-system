@@ -17,7 +17,7 @@ public class Sessions {
             ConnectDB connectDB = ConnectDB.getInstance();
             resultSet = connectDB.getResult(sqlQuery);
             if(resultSet.next()){
-                if(resultSet.getString("role").equals("Admin") && resultSet.getString("session_id").equals(session)){
+                if(resultSet.getString("role").equals(controller) && resultSet.getString("session_id").equals(session)){
                     return true;
                 }
             }

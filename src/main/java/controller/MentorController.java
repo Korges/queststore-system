@@ -42,10 +42,14 @@ public class MentorController implements HttpHandler{
             String[] sessionID = cookieStr.split("sessionId=");
             String sessionIDFull = sessionID[1].replace("\"", "");
 
+            System.out.println(Sessions.checkSession(sessionIDFull,"Mentor"));
+
+
             if (method.equals("GET") && Sessions.checkSession(sessionIDFull,"Mentor")) {
                 response = WebTemplate.getSiteContent("templates/mentor/nav.twig");
             }
             else{
+                System.out.println(sessionIDFull);
                 Sessions.redirect(httpExchange);
 
             }
