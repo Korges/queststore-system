@@ -5,6 +5,7 @@ import UI.MentorUI;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.helpers.HashSystem;
+import controller.helpers.Sessions;
 import models.*;
 import UI.UI;
 
@@ -36,9 +37,22 @@ public class MentorController implements HttpHandler{
         String response = "";
         String method = httpExchange.getRequestMethod();
 
-        if (method.equals("GET")) {
-            response = WebTemplate.getSiteContent("templates/mentor/nav.twig");
+        try {
+            String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+            String[] sessionID = cookieStr.split("sessionId=");
+            String sessionIDFull = sessionID[1].replace("\"", "");
+
+            if (method.equals("GET") && Sessions.checkSession(sessionIDFull,"Mentor")) {
+                response = WebTemplate.getSiteContent("templates/mentor/nav.twig");
+            }
+            else{
+                Sessions.redirect(httpExchange);
+
+            }
+        }catch (NullPointerException e){
+            Sessions.redirect(httpExchange);
         }
+
 //todo distinct to external method due to DRY
         httpExchange.sendResponseHeaders(200, 0);
         OutputStream os = httpExchange.getResponseBody();
@@ -46,11 +60,6 @@ public class MentorController implements HttpHandler{
         os.close();
     }
 
-
-    public void startController() throws SQLException,NoSuchAlgorithmException {
-
-        handleMainMenu();
-    }
 
     public void handleMainMenu() throws SQLException,NoSuchAlgorithmException{
 

@@ -2,16 +2,23 @@ package controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.HttpCookie;
 import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import DAO.*;
 import UI.AdminUI;
 import UI.MentorUI;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.helpers.HashSystem;
+import controller.helpers.ParseForm;
+import controller.helpers.Sessions;
 import models.Mentor;
 import models.Group;
 import org.jtwig.JtwigModel;
@@ -31,13 +38,30 @@ public class AdminController  implements HttpHandler {
             String response = "";
             String method = httpExchange.getRequestMethod();
 
-            if (method.equals("GET")) {
+        try {
+            String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+            String[] sessionID = cookieStr.split("sessionId=");
+            String sessionIDFull = sessionID[1].replace("\"", "");
+
+            if (method.equals("GET") && Sessions.checkSession(sessionIDFull,"Admin")) {
                 response = WebTemplate.getSiteContent("templates/admin/admin-menu.twig");
             }
+            else{
+                Sessions.redirect(httpExchange);
 
-            httpExchange.sendResponseHeaders(200, 0);
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(response.getBytes());
+            }
+        }catch (NullPointerException e){
+            Sessions.redirect(httpExchange);
+        }
+
+
+
+
+            //response = WebTemplate.getSiteContent("static/login-page.html");
+
+        httpExchange.sendResponseHeaders(200, 0);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
             os.close();
     }
     public void createMentor(String firstName,String lastName,String password, String email) throws SQLException,NoSuchAlgorithmException{
@@ -144,4 +168,5 @@ public class AdminController  implements HttpHandler {
         levelDao.add(level,experience);
 
     }
+
 }

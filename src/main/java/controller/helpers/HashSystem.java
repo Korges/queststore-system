@@ -15,16 +15,11 @@ public class HashSystem {
         return sb.toString();
     }
 
-    public static String getStringFromSHA256(String stringToEncrypt){
+    public static String getStringFromSHA256(String stringToEncrypt) throws NoSuchAlgorithmException {
         MessageDigest messageDigest = null;
-        try {
-            messageDigest = MessageDigest.getInstance("SHA-256");
-            messageDigest.update(stringToEncrypt.getBytes());
-            return byteArray2Hex(messageDigest.digest());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return "a";
+        messageDigest = MessageDigest.getInstance("SHA-256");
+        messageDigest.update(stringToEncrypt.getBytes());
+        return byteArray2Hex(messageDigest.digest());
 
     }
 }
