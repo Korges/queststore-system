@@ -56,7 +56,7 @@ public class FundraiseDAO {
 
 
 
-    public ArrayList<Fundraise> getFundraisesStudents() {
+    public ArrayList<Fundraise> getFundraiseList() {
         ArrayList<Fundraise> fundraiseStudentList = new ArrayList<>();
         try {
 

@@ -53,7 +53,6 @@ public class CreateFundraise implements HttpHandler {
         os.write(response.getBytes());
         os.close();
     }
-
     private Fundraise createFundraise(Map<String, String> inputs) {
 
         Integer ID = Integer.parseInt(inputs.get("id"));

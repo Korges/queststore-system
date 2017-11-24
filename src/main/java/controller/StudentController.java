@@ -132,43 +132,10 @@ public class StudentController implements HttpHandler {
 
 
 
-    public void leaveFundraise() throws SQLException {
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
-        checkJoinedFundraises();
-        if (fundraiseList.size() != 0) {
-            boolean isTrue = true;
 
-            while (isTrue) {
 
-                Integer ID = UI.getInteger("Leave Fundraise by ID  :");
 
-                for (Fundraise fundraise : fundraiseList) {
-                    if (ID.equals(fundraise.getFundraiseID())) {
-                        isTrue = false;
-                        fundraiseDAO.remove(fundraise);
-                    }
 
-                }
-
-            }
-        }
-
-    }
-
-    private void checkJoinedFundraises() {
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
-        if (fundraiseList.size() == 0) {
-            UI.showMessage("Fundraise list is empty!");
-        } else {
-            for (Fundraise fundraise : fundraiseList) {
-                if (user.getID().equals(fundraise.getStudentID())) {
-                    System.out.println(fundraise.toString());
-                } else {
-                    UI.showMessage("You are not member of any Fundraise!");
-                }
-            }
-        }
-    }
 
     private void walletPanel() {
         String choice;
