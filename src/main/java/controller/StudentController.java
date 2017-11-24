@@ -126,81 +126,11 @@ public class StudentController implements HttpHandler {
     }
 
 
-    public void createFundraise() throws SQLException {
-        ArrayList<Artifact> artifactList = artifactDAO.getMagicItems();
-        listAllMagicArtifacts();
-
-        if (artifactList.size() != 0) {
-
-            boolean isTrue = true;
-
-            while (isTrue) {
-
-                Integer ID = UI.getInteger("Choose Artifact by ID to create new Fundraise :");
-
-                for (Artifact artifact : artifactList) {
-
-                    if (ID.equals(artifact.getID())) {
-
-                        isTrue = false;
-                        String title = UI.getString("Enter Fundraise Title :");
-                        Fundraise fundraise = new Fundraise(artifact.getID(), title);
-                        fundraiseDAO.add(fundraise);
-                        fundraiseDAO.join(getFundraise(artifact), user);
-                    }
-                }
-            }
-        }
-    }
 
 
-    private Fundraise getFundraise(Artifact artifact) {
-        Fundraise foundFundraise = null;
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
-        for(Fundraise fundraise : fundraiseList) {
-            if(artifact.getID().equals(fundraise.getArtifactID())) {
-                foundFundraise = fundraise;
-            }
-        }
-    return foundFundraise;
-    }
-
-    private boolean isInFundraise(Student student_me) {
-        ArrayList<Fundraise> fundraiseStudentList = fundraiseDAO.getFundraisesStudents();
-        boolean bool = false;
-        for (Fundraise fundraise : fundraiseStudentList) {
-            if (student_me.getID().equals(fundraise.getStudentID())) {
-                bool = true;
-            }
-        }
-        return bool;
-    }
 
 
-    public void joinExistingFundraise() throws SQLException {
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
 
-        listAllExistingFundraise();
-        if (fundraiseList.size() != 0) {
-            boolean isTrue = true;
-
-            while (isTrue) {
-
-                Integer ID = UI.getInteger("Join Existing Fundraise by ID  :");
-
-                for (Fundraise fundraise : fundraiseList) {
-                    if (ID.equals(fundraise.getFundraiseID())) {
-                        isTrue = false;
-                        if (!isInFundraise(user)) {
-                            fundraiseDAO.join(fundraise, user);
-                        } else {
-                            UI.showMessage("You are already member of the same Fundraise!");
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     public void leaveFundraise() throws SQLException {
         ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
@@ -289,16 +219,7 @@ public class StudentController implements HttpHandler {
         }
     }
 
-    private void listAllExistingFundraise() {
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
-        if(fundraiseList.size() == 0){
-            UI.showMessage("Fundraise list is empty!");
-        } else {
-            for (Fundraise fundraise : fundraiseList) {
-                System.out.println(fundraise.toString());
-            }
-        }
-    }
+
 
 
     public void checkStudentArtifacts() throws SQLException {

@@ -23,14 +23,14 @@ public class ListAllFundraise implements HttpHandler {
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        try {
+//        try {
             WebTemplateDao webTemplateDao = new WebTemplateDao();
             String response = "";
             String method = httpExchange.getRequestMethod();
 
             if (method.equals("GET")) {
 
-                response = listAllMentors();
+//                response = listAllMentors();
 
             }
 
@@ -38,38 +38,38 @@ public class ListAllFundraise implements HttpHandler {
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
-        }catch (SQLException e ){
-
-        }
+//        }catch (SQLException e ){
+//
+//        }
     }
 
-    public String listAllMentors() throws SQLException{
-
-        FundraiseDAO fundraiseDAO = new FundraiseDAO();
-        ArrayList<ArrayList<String>> data = new ArrayList<>();
-
-        ArrayList<String> record = new ArrayList<>();
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
-        for(Fundraise fundraise: fundraiseList){
-            record.add(fundraise.getFundraiseID().toString());
-            record.add(fundraise.getTitle());
-            record.add(fundraise.getName());
-            record.add(fundraise.getPrice().toString());
-            data.add(record);
-            record = new ArrayList<>();
-        }
-
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/view-all-fundraise.twig");
-        JtwigModel model = JtwigModel.newModel();
-
-        String response = "";
-        model.with("data", data);
-        try {
-            response = template.render(model);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return response;
-    }
+//    public String listAllMentors() throws SQLException{
+//
+//        FundraiseDAO fundraiseDAO = new FundraiseDAO();
+//        ArrayList<ArrayList<String>> data = new ArrayList<>();
+//
+//        ArrayList<String> record = new ArrayList<>();
+//        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
+//        for(Fundraise fundraise: fundraiseList){
+//            record.add(fundraise.getFundraiseID().toString());
+//            record.add(fundraise.getTitle());
+//            record.add(fundraise.getName());
+//            record.add(fundraise.getPrice().toString());
+//            data.add(record);
+//            record = new ArrayList<>();
+//        }
+//
+//        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/view-all-fundraise.twig");
+//        JtwigModel model = JtwigModel.newModel();
+//
+//        String response = "";
+//        model.with("data", data);
+//        try {
+//            response = template.render(model);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return response;
+//    }
 }
 

@@ -19,14 +19,6 @@ public class Fundraise {
         this.title = title;
     }
 
-    public Fundraise(Integer fundraiseID, Integer artifactID, String title, String name, Integer price) {
-
-        this.fundraiseID = fundraiseID;
-        this.artifactID = artifactID;
-        this.title = title;
-        this.name = name;
-        this.price = price;
-    }
 
     public Fundraise(Integer studentID, Integer fundraiseID, Integer artifactID, String title, String name, Integer price ) {
 

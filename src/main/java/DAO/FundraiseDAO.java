@@ -11,12 +11,13 @@ import java.util.ArrayList;
 public class FundraiseDAO {
 
     ConnectDB connect;
+
     public FundraiseDAO() throws SQLException {
         connect = DAO.ConnectDB.getInstance();
     }
 
 
-    public void add(Fundraise fundraise) throws SQLException {
+    public void createNewFundraise(Fundraise fundraise) throws SQLException {
 
         String sql = String.format("INSERT INTO fundraises" +
                 "(artifact_id, title)" +
@@ -53,30 +54,7 @@ public class FundraiseDAO {
          }
     }
 
-    public ArrayList<Fundraise> get() {
 
-        ArrayList<Fundraise> fundraiseList = new ArrayList<>();
-        try {
-
-            ResultSet result = connect.getResult(String.format("SELECT * FROM fundraises JOIN artifacts on fundraises.artifact_id = artifacts.id"));
-
-            while (result.next()) {
-                Integer fundraiseID = result.getInt("id");
-                Integer artifactID = result.getInt("artifact_id");
-                String title = result.getString("title");
-                String name = result.getString("name");
-                Integer price = result.getInt("price");
-                Fundraise fundraise = new Fundraise(fundraiseID, artifactID, title, name, price);
-                fundraiseList.add(fundraise);
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-
-        return fundraiseList;
-
-    }
 
     public ArrayList<Fundraise> getFundraisesStudents() {
         ArrayList<Fundraise> fundraiseStudentList = new ArrayList<>();

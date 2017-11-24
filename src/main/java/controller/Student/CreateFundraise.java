@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static controller.helpers.ParseForm.parseFormData;
+
 public class CreateFundraise implements HttpHandler {
 
 
@@ -33,18 +35,11 @@ public class CreateFundraise implements HttpHandler {
             BufferedReader br = new BufferedReader(isr);
             String formData = br.readLine();
             Map<String,String> inputs = parseFormData(formData);
+
             try{
 
-                FundraiseDAO fundraiseDAO = new FundraiseDAO();
-
-                Integer ID = Integer.parseInt(inputs.get("id"));
-                String title = inputs.get("title");
-
-                Fundraise fundraise = new Fundraise(ID, title);
-                fundraiseDAO.add(fundraise);
-//               fundraiseDAO.join(fundraise, user);
-
-
+                Fundraise fundraise = createFundraise(inputs);
+                addNewFundraiseToDatabase(fundraise);
 
             }catch (SQLException e){
 
@@ -59,15 +54,23 @@ public class CreateFundraise implements HttpHandler {
         os.close();
     }
 
-    private Map<String,String> parseFormData(String formData) throws UnsupportedEncodingException {
+    private Fundraise createFundraise(Map<String, String> inputs) {
 
-        Map<String, String> map = new HashMap<>();
-        String[] pairs = formData.split("&");
-        for(String pair : pairs){
-            String[] keyValue = pair.split("=");
-            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
-            map.put(keyValue[0], value);
-        }
-        return map;
+        Integer ID = Integer.parseInt(inputs.get("id"));
+        String title = inputs.get("title");
+
+        Fundraise fundraise = new Fundraise(ID, title);
+
+        return fundraise;
     }
+
+    public void addNewFundraiseToDatabase(Fundraise fundraise) throws SQLException {
+
+        FundraiseDAO fundraiseDAO = new FundraiseDAO();
+        fundraiseDAO.createNewFundraise(fundraise);
+    }
+
+
+
+
 }

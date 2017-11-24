@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ParseForm {
+
     public static Map<String,String> parseFormData(String formData) throws UnsupportedEncodingException {
 
         Map<String, String> map = new HashMap<>();
