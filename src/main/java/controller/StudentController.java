@@ -23,17 +23,18 @@ public class StudentController implements HttpHandler {
     private SubmissionDAO submissionDAO;
     private QuestDAO questDAO;
     private Student user;
+    static private String sessionIDFull;
 
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "";
         String method = httpExchange.getRequestMethod();
 
+
         try {
             String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
             String[] sessionID = cookieStr.split("sessionId=");
-            String sessionIDFull = sessionID[1].replace("\"", "");
+            sessionIDFull = sessionID[1].replace("\"", "");
 
-            System.out.println(Sessions.checkSession(sessionIDFull,"Student"));
 
 
             if (method.equals("GET") && Sessions.checkSession(sessionIDFull,"Student")) {
@@ -52,6 +53,11 @@ public class StudentController implements HttpHandler {
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
+    }
+
+    public static String getSession() {
+
+        return sessionIDFull;
     }
 
     public StudentController() throws SQLException {
