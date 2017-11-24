@@ -482,26 +482,7 @@ public class MentorController implements HttpHandler{
 
 
 
-    private void buyMagicItem(Fundraise fundraise, Integer pricePerSinglePerson) throws SQLException{
-        ArrayList<Student> studentList = studentDAO.get();
 
-        for (Student student : studentList) {
-            if (student.getID().equals(fundraise.getStudentID())) {
-                if (student.wallet.getBalance() >= pricePerSinglePerson) {
-                    student.wallet.substract(pricePerSinglePerson);
-                    studentDAO.editWalletValue(student);
-                    Inventory inventory = new Inventory(student.getID(), fundraise.getArtifactID(), UI.getCurrentDate());
-                    inventoryDAO.add(inventory);
-                    fundraiseDAO.remove(fundraise);
-                    fundraiseDAO.removeFundraise(fundraise);
-                } else {
-                    UI.showMessage(student.getFullName() + " doesnt have enough money!");
-                    System.out.println(student.wallet.getBalance());
-                }
-            }
-
-        }
-    }
 
 
 

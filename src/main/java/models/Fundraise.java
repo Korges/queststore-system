@@ -20,11 +20,9 @@ public class Fundraise {
     }
 
 
-    public Fundraise(Integer studentID, Integer fundraiseID, Integer artifactID, String title, String name, Integer price ) {
+    public Fundraise(Integer id,  String title, String name, Integer price ) {
 
-        this.studentID = studentID;
-        this.fundraiseID = fundraiseID;
-        this.artifactID = artifactID;
+        this.fundraiseID = id;
         this.title = title;
         this.name = name;
         this.price = price;

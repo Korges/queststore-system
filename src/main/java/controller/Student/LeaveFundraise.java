@@ -1,15 +1,20 @@
 package controller.Student;
 
+import DAO.ConnectDB;
 import DAO.FundraiseDAO;
 import DAO.WebTemplate;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import controller.StudentController;
 
 import java.io.*;
 import java.net.URLDecoder;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
+import static controller.helpers.ParseForm.parseFormData;
 
 public class LeaveFundraise implements HttpHandler {
 
@@ -31,15 +36,15 @@ public class LeaveFundraise implements HttpHandler {
             Map<String,String> inputs = parseFormData(formData);
             try{
 
-                FundraiseDAO fundraiseDAO = new FundraiseDAO();
-
-                Integer ID = Integer.parseInt(inputs.get("id"));
-
+                String sessionID = StudentController.getSession();
+                String fundraiseID = inputs.get("id");
+                String userID = getUserID(sessionID);
+                leaveFundraise(fundraiseID, userID);
 
 
 
             }catch (SQLException e){
-
+                e.printStackTrace();
             }
             response =  WebTemplate.getSiteContent("templates/success.twig");
 
@@ -51,15 +56,23 @@ public class LeaveFundraise implements HttpHandler {
         os.close();
     }
 
-    private Map<String,String> parseFormData(String formData) throws UnsupportedEncodingException {
+    private String getUserID(String sessionIDFull) throws SQLException {
+        ConnectDB connectDB = DAO.ConnectDB.getInstance();
+        String sql = String.format("SELECT user_id FROM sessions WHERE session_id LIKE '%s'", sessionIDFull);
+        ResultSet userID = connectDB.getResult(sql);
 
-        Map<String, String> map = new HashMap<>();
-        String[] pairs = formData.split("&");
-        for(String pair : pairs){
-            String[] keyValue = pair.split("=");
-            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
-            map.put(keyValue[0], value);
-        }
-        return map;
+        return userID.toString();
+
+    }
+
+
+
+    private void leaveFundraise(String fundraiseID, String userID) throws SQLException {
+
+        FundraiseDAO fundraiseDAO = new FundraiseDAO();
+        fundraiseDAO.leaveFundraise(fundraiseID, userID);
+
+
+
     }
 }
