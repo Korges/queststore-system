@@ -8,9 +8,13 @@
     <div class="container">
         <form method="POST">
             <fieldset>
-                Fundraise ID<br>
-                <input type="text" placeholder="Enter ID" name = "id"><br>
-                <input type="submit" value="Submit">
+                <select name="id">
+                    {% for element in data %}
+                        <option value={{ element[0] }}>
+                            {{ element[1] }}
+                        </option>
+                    {% endfor %}
+                    <input type="submit" value="Submit">
             </fieldset>
         </form>
     </div>

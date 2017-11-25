@@ -23,8 +23,8 @@ public class ListAllFundraise implements HttpHandler {
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
+        String response = "";
         try {
-            String response = "";
             String method = httpExchange.getRequestMethod();
 
             if (method.equals("GET")) {
@@ -33,13 +33,16 @@ public class ListAllFundraise implements HttpHandler {
 
             }
 
-            httpExchange.sendResponseHeaders(200, 0);
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
-        }catch (SQLException e ){
+
+        } catch (SQLException e) {
+
 
         }
+
+        httpExchange.sendResponseHeaders(200, 0);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
 
     public String listAllFundraise() throws SQLException{
@@ -58,9 +61,8 @@ public class ListAllFundraise implements HttpHandler {
         }catch (Exception e){
             e.printStackTrace();
         }
+        System.out.println(response);
         return response;
-
-
     }
 
     private ArrayList<Fundraise> getFundraiseList() throws SQLException {
@@ -84,6 +86,7 @@ public class ListAllFundraise implements HttpHandler {
             data.add(record);
             record = new ArrayList<>();
         }
+
     return data;
     }
 }

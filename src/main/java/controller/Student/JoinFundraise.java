@@ -7,11 +7,14 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.StudentController;
 import models.Fundraise;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
 
 import java.io.*;
 import java.net.URLDecoder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,11 +27,17 @@ public class JoinFundraise implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         String response = "";
-        String method = httpExchange.getRequestMethod();
+        try {
+            String method = httpExchange.getRequestMethod();
 
             if (method.equals("GET")) {
-                response = WebTemplate.getSiteContent("templates/student/join-fundraise.twig");
+
+
+                response = listAllFundraise();
             }
+
+//                response = WebTemplate.getSiteContent("templates/student/join-fundraise.twig");
+
 
             if (method.equals("POST")) {
 
@@ -37,23 +46,26 @@ public class JoinFundraise implements HttpHandler {
                 String formData = br.readLine();
                 Map<String, String> inputs = parseFormData(formData);
 
-                try {
 
-                    String sessionID = StudentController.getSession();
-                    String fundraiseID = inputs.get("id");
-                    String userID = getUserID(sessionID);
-                    joinFundraise(fundraiseID, userID);
+                String sessionID = StudentController.getSession();
+                String fundraiseID = inputs.get("id");
+                String userID = getUserID(sessionID);
+                joinFundraise(fundraiseID, userID);
 
-                } catch (SQLException e) {
 
-                }
             }
-            httpExchange.sendResponseHeaders(200, response.length());
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        httpExchange.sendResponseHeaders(200, 0);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
+
+
 
 
     private String getUserID(String sessionIDFull) throws SQLException {
@@ -72,10 +84,53 @@ public class JoinFundraise implements HttpHandler {
         FundraiseDAO fundraiseDAO = new FundraiseDAO();
         fundraiseDAO.joinFundraise(fundraiseID, userID);
 
+    }
+
+    public String listAllFundraise() throws SQLException{
+
+        ArrayList<Fundraise> fundraiseList = getFundraiseList();
+        ArrayList<ArrayList<String>> data = createJtwigData(fundraiseList);
 
 
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/join-fundraise.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        String response = "";
+        model.with("data", data);
+        try {
+            response = template.render(model);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println(response);
+        return response;
+    }
+
+    private ArrayList<Fundraise> getFundraiseList() throws SQLException {
+
+        FundraiseDAO fundraiseDAO = new FundraiseDAO();
+        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraiseList();
+
+        return fundraiseList;
+    }
+
+    private ArrayList<ArrayList<String>> createJtwigData(ArrayList<Fundraise> fundraiseList) {
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> record = new ArrayList<>();
+
+        for(Fundraise fundraise: fundraiseList){
+            record.add(fundraise.getFundraiseID().toString());
+            record.add(fundraise.getTitle());
+            data.add(record);
+            record = new ArrayList<>();
+        }
+
+
+        return data;
     }
 
 
 
 }
+
