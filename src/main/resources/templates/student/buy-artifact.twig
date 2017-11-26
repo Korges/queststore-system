@@ -3,22 +3,18 @@
 {% block content %}
 <div class="main-container">
     <div class="header-container">
-        <h1>Create Fundraise</h1>
+        <h1>Buy Artifact</h1>
     </div>
     <div class="container">
         <form method="POST">
             <fieldset>
-
-                Artifact ID<br>
                 <select name="id">
                     {% for element in data %}
                         <option value={{ element[0] }}>
                             {{ element[1] }}
                         </option>
                     {% endfor %}
-                Fundraise Title<br>
-                <input type="text" placeholder="Enter Title" name = "title"><br>
-                <input type="submit" value="Submit">
+                    <input type="submit" value="Submit">
             </fieldset>
         </form>
     </div>

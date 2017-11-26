@@ -1,4 +1,4 @@
-package controller.Student;
+package controller.Student.Fundraise;
 
 import DAO.ArtifactDAO;
 import DAO.FundraiseDAO;

@@ -96,40 +96,40 @@ public class StudentController implements HttpHandler {
     }
 
 
-    public void buyArtifact() throws SQLException {
-
-        ArrayList<Artifact> artifactList = artifactDAO.get();
-        listAllArtifacts();
-
-
-        if (artifactList.size() != 0) {
-
-            boolean isTrue = true;
-
-            while (isTrue) {
-
-                Integer ID = UI.getInteger("Choose Artifact by ID :");
-
-                for (Artifact artifact : artifactList) {
-
-                    if (ID.equals(artifact.getID())) {
-
-                        isTrue = false;
-
-                        if (checkEnoughBalance(artifact)) {
-
-                            if (UI.getBoolean("Do you want to buy : " + artifact.getName() + " ?")) {
-                                user.getWallet().substract(artifact.getPrice());
-                                studentDAO.editWalletValue(user);
-                                Inventory inventory = new Inventory(user.getID(), artifact.getID(), UI.getCurrentDate());
-                                inventoryDAO.add(inventory);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+//    public void buyArtifact() throws SQLException {
+//
+//        ArrayList<Artifact> artifactList = artifactDAO.get();
+//        listAllArtifacts();
+//
+//
+//        if (artifactList.size() != 0) {
+//
+//            boolean isTrue = true;
+//
+//            while (isTrue) {
+//
+//                Integer ID = UI.getInteger("Choose Artifact by ID :");
+//
+//                for (Artifact artifact : artifactList) {
+//
+//                    if (ID.equals(artifact.getID())) {
+//
+//                        isTrue = false;
+//
+//                        if (checkEnoughBalance(artifact)) {
+//
+//                            if (UI.getBoolean("Do you want to buy : " + artifact.getName() + " ?")) {
+//                                user.getWallet().substract(artifact.getPrice());
+//                                studentDAO.editWalletValue(user);
+//                                Inventory inventory = new Inventory(user.getID(), artifact.getID(), UI.getCurrentDate());
+//                                inventoryDAO.add(inventory);
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 
 
@@ -195,21 +195,21 @@ public class StudentController implements HttpHandler {
 
 
 
-    public void checkStudentArtifacts() throws SQLException {
-
-        ArrayList<Inventory> inventoryList = inventoryDAO.getStudentInventory(user);
-        int no = 0;
-        if (inventoryList.size() == 0) {
-            UI.showMessage("Purchase list is empty!");
-        } else {
-            for (Inventory inventory : inventoryList) {
-                no++;
-                System.out.println(String.format("ID: %d | %s", no, inventory.toString()));
-
-
-            }
-        }
-    }
+//    public void checkStudentArtifacts() throws SQLException {
+//
+//        ArrayList<Inventory> inventoryList = inventoryDAO.getStudentInventory(user);
+//        int no = 0;
+//        if (inventoryList.size() == 0) {
+//            UI.showMessage("Purchase list is empty!");
+//        } else {
+//            for (Inventory inventory : inventoryList) {
+//                no++;
+//                System.out.println(String.format("ID: %d | %s", no, inventory.toString()));
+//
+//
+//            }
+//        }
+//    }
 
     private void submissionPanel() throws SQLException {
 

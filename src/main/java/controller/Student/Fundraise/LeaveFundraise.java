@@ -1,4 +1,4 @@
-package controller.Student;
+package controller.Student.Fundraise;
 
 import DAO.ConnectDB;
 import DAO.FundraiseDAO;
@@ -36,17 +36,10 @@ public class LeaveFundraise implements HttpHandler {
             String userID = getUserID(sessionID);
 
 
-//            String userID = getUserID(sessionID);
-
             if (method.equals("GET")) {
-
-
-
 
                 response = listAllFundraise(userID);
             }
-
-
 
             if (method.equals("POST")) {
                 InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
@@ -57,11 +50,7 @@ public class LeaveFundraise implements HttpHandler {
 
                 String fundraiseID = inputs.get("id");
 
-
-
-
                 leaveFundraise(fundraiseID, userID);
-
 
             }
 

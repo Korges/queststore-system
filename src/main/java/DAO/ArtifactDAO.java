@@ -56,6 +56,50 @@ public class ArtifactDAO implements InterfaceDAO<Artifact> {
         return artifactList;
     }
 
+    public Artifact getSingleArtifact(Integer artifactID) throws SQLException {
+
+        Artifact artifact;
+        ConnectDB connectDB = DAO.ConnectDB.getInstance();
+
+        String sql = String.format("SELECT * FROM artifacts WHERE id = '%d'", artifactID);
+        ResultSet result = connect.getResult(sql);
+
+        Integer id = result.getInt("id");
+        String name = result.getString("name");
+        String description = result.getString("description");
+        Integer price = result.getInt("price");
+        boolean isMagic = result.getBoolean("is_magic");
+
+
+
+        if(isMagic) {
+            artifact = new MagicItem(id, name, description, price, true);
+        }
+        else {
+            artifact = new BasicItem(id, name, description, price, false);
+        }
+
+        return artifact;
+        }
+
+
+
+
+    private String getUserID(String sessionIDFull) throws SQLException {
+
+        ConnectDB connectDB = DAO.ConnectDB.getInstance();
+        String sql = String.format("SELECT user_id FROM sessions WHERE session_id LIKE '%s'", sessionIDFull);
+        ResultSet result = connectDB.getResult(sql);
+
+
+        String userID = result.getString("user_id");
+
+
+
+        return userID;
+
+    }
+
     public ArrayList<Artifact> getMagicItems() throws SQLException{
 
         ArrayList<Artifact> artifactList = new ArrayList<>();
@@ -67,6 +111,22 @@ public class ArtifactDAO implements InterfaceDAO<Artifact> {
             String description = result.getString("description");
             Integer price = result.getInt("price");
             MagicItem newItem = new MagicItem(id, name, description, price, true);
+            artifactList.add(newItem);
+        }
+        return artifactList;
+    }
+
+    public ArrayList<Artifact> getBasicItems() throws SQLException{
+
+        ArrayList<Artifact> artifactList = new ArrayList<>();
+        ResultSet result = connect.getResult("SELECT * FROM artifacts WHERE is_magic = 0");
+        while (result.next()) {
+
+            Integer  id = result.getInt("id");
+            String name = result.getString("name");
+            String description = result.getString("description");
+            Integer price = result.getInt("price");
+            MagicItem newItem = new MagicItem(id, name, description, price, false);
             artifactList.add(newItem);
         }
         return artifactList;
