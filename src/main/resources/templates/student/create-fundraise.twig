@@ -10,7 +10,12 @@
             <fieldset>
                 <legend>Legend:</legend>
                 Artifact ID<br>
-                <input type="text" placeholder="Enter ID" name = "id"><br>
+                <select name="id">
+                    {% for element in data %}
+                        <option value={{ element[0] }}>
+                            {{ element[1] }}
+                        </option>
+                    {% endfor %}
                 Fundraise Title<br>
                 <input type="text" placeholder="Enter Title" name = "title"><br>
                 <input type="submit" value="Submit">

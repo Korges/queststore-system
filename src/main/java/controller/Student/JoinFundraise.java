@@ -36,7 +36,6 @@ public class JoinFundraise implements HttpHandler {
                 response = listAllFundraise();
             }
 
-//                response = WebTemplate.getSiteContent("templates/student/join-fundraise.twig");
 
 
             if (method.equals("POST")) {
@@ -50,6 +49,7 @@ public class JoinFundraise implements HttpHandler {
                 String sessionID = StudentController.getSession();
                 String fundraiseID = inputs.get("id");
                 String userID = getUserID(sessionID);
+
                 joinFundraise(fundraiseID, userID);
 
 
@@ -69,11 +69,17 @@ public class JoinFundraise implements HttpHandler {
 
 
     private String getUserID(String sessionIDFull) throws SQLException {
+
         ConnectDB connectDB = DAO.ConnectDB.getInstance();
         String sql = String.format("SELECT user_id FROM sessions WHERE session_id LIKE '%s'", sessionIDFull);
-        ResultSet userID = connectDB.getResult(sql);
+        ResultSet result = connectDB.getResult(sql);
 
-        return userID.toString();
+
+        String userID = result.getString("user_id");
+
+
+
+        return userID;
 
     }
 
@@ -102,7 +108,6 @@ public class JoinFundraise implements HttpHandler {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println(response);
         return response;
     }
 

@@ -61,7 +61,6 @@ public class ListAllFundraise implements HttpHandler {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println(response);
         return response;
     }
 
