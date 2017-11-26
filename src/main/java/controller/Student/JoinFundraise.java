@@ -85,7 +85,7 @@ public class JoinFundraise implements HttpHandler {
 
 
 
-    private void joinFundraise(String fundraiseID, String userID) throws SQLException {
+    public void joinFundraise(String fundraiseID, String userID) throws SQLException {
 
         FundraiseDAO fundraiseDAO = new FundraiseDAO();
         fundraiseDAO.joinFundraise(fundraiseID, userID);

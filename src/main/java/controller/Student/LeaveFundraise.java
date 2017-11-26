@@ -28,27 +28,37 @@ public class LeaveFundraise implements HttpHandler {
 
         String response = "";
         String method = httpExchange.getRequestMethod();
+        String sessionID = StudentController.getSession();
+
+
+
         try {
+            String userID = getUserID(sessionID);
+
+
+//            String userID = getUserID(sessionID);
 
             if (method.equals("GET")) {
 
 
-                response = listAllFundraise();
+
+
+                response = listAllFundraise(userID);
             }
 
 
 
             if (method.equals("POST")) {
-
                 InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
                 BufferedReader br = new BufferedReader(isr);
                 String formData = br.readLine();
                 Map<String, String> inputs = parseFormData(formData);
 
 
-                String sessionID = StudentController.getSession();
                 String fundraiseID = inputs.get("id");
-                String userID = getUserID(sessionID);
+
+
+
 
                 leaveFundraise(fundraiseID, userID);
 
@@ -91,9 +101,10 @@ public class LeaveFundraise implements HttpHandler {
 
     }
 
-    public String listAllFundraise() throws SQLException{
+    public String listAllFundraise(String userID) throws SQLException{
 
-        ArrayList<Fundraise> fundraiseList = getFundraiseList();
+        ArrayList<Fundraise> fundraiseList = getFundraiseList(userID);
+
         ArrayList<ArrayList<String>> data = createJtwigData(fundraiseList);
 
 
@@ -107,13 +118,17 @@ public class LeaveFundraise implements HttpHandler {
         }catch (Exception e){
             e.printStackTrace();
         }
+
         return response;
     }
 
-    private ArrayList<Fundraise> getFundraiseList() throws SQLException {
+    private ArrayList<Fundraise> getFundraiseList(String userID) throws SQLException {
 
         FundraiseDAO fundraiseDAO = new FundraiseDAO();
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraiseList();
+
+        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getJoinedFundraiseList(userID);
+
+
 
         return fundraiseList;
     }

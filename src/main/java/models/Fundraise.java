@@ -20,6 +20,7 @@ public class Fundraise {
     }
 
 
+
     public Fundraise(Integer id,  String title, String name, Integer price ) {
 
         this.fundraiseID = id;

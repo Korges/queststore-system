@@ -50,7 +50,6 @@ public class CreateFundraise implements HttpHandler {
                 addNewFundraiseToDatabase(fundraise);
 
 
-
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -77,6 +77,31 @@ public class FundraiseDAO {
         }
         return fundraiseStudentList;
     }
+
+    public ArrayList<Fundraise> getJoinedFundraiseList(String userID) {
+
+        ArrayList<Fundraise> fundraiseStudentList = new ArrayList<>();
+        try {
+
+            ResultSet result = connect.getResult(String.format("SELECT * FROM fundraises_students JOIN fundraises ON fundraises_students.fundraise_id = fundraises.id JOIN artifacts ON fundraises.artifact_id = artifacts.id WHERE student_id = '%s'", userID));
+
+            while (result.next()) {
+                Integer fundraiseID = result.getInt("fundraise_id");
+                String title = result.getString("title");
+                String name = result.getString("name");
+                Integer price = result.getInt("price");
+
+
+                Fundraise fundraise = new Fundraise(fundraiseID, title, name, price);
+                fundraiseStudentList.add(fundraise);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("przed exekucj");
+        return fundraiseStudentList;
+    }
 }
 
 
