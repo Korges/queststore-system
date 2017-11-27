@@ -4,13 +4,16 @@ import java.io.*;
 import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 import DAO.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.helpers.HashSystem;
 import controller.helpers.ParseForm;
+import controller.helpers.ResponseGenerator;
 import controller.helpers.Sessions;
+import models.Group;
 import models.Mentor;
 
 public class AdminHandler  implements HttpHandler {
@@ -50,22 +53,28 @@ public class AdminHandler  implements HttpHandler {
     }
 
 
-    public String getResponse(String path){
+    public String getResponse(String path) {
         String response = "";
         if(path.equals("/admin")){
-            response = WebTemplate.getSiteContent("templates/admin/admin-menu.twig");
+            response = ResponseGenerator.generateModelResponse("templates/admin/nav.twig");
         }
-        else if(path.equals("/admin/create-group")){
-            response = WebTemplate.getSiteContent("templates/admin/create-group.twig");
+        else if (path.equals("/admin/create-group")){
+            response = ResponseGenerator.generateModelResponse(getKlasses(), "klasses", "templates/admin/create-group.twig");
+        }
+        else if (path.equals("/admin/edit-group")){
+            response = ResponseGenerator.generateModelResponse(getKlasses(), "klasses", "templates/admin/edit-group.twig");
         }
         else if (path.equals("/admin/create-mentor")){
-            response = WebTemplate.getSiteContent("templates/admin/create-mentor.twig");
+            response = ResponseGenerator.generateModelResponse("templates/admin/create-mentor.twig");
         }
         else if (path.equals("/admin/edit-mentor")){
-            response = WebTemplate.getSiteContent("templates/admin/edit-mentor.twig");
+            response = ResponseGenerator.generateModelResponse("templates/admin/edit-mentor.twig");
         }
-        else if (path.equals("/admin/edit-mentor")){
-            response = WebTemplate.getSiteContent("templates/admin/edit-mentor.twig");
+        else if (path.equals("/admin/create-level")){
+            response = ResponseGenerator.generateModelResponse("templates/admin/create-level.twig");
+        }
+        else if (path.equals("/admin/edit-level")){
+            response = ResponseGenerator.generateModelResponse("templates/admin/edit-level.twig");
         }
 
         return response;
@@ -127,6 +136,17 @@ public class AdminHandler  implements HttpHandler {
         return true;
     }
 
+
+    private List<Group> getKlasses(){
+        List<Group> klasses = null;
+        try {
+            GroupDAO dao = new GroupDAO();
+        klasses = dao.get();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return klasses;
+    }
 
 
 
