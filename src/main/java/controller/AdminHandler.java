@@ -21,32 +21,22 @@ public class AdminHandler  implements HttpHandler {
         String path = uri.getPath();
         String response = "";
         String method = httpExchange.getRequestMethod();
-        try {
-            String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
-            String[] sessionID = cookieStr.split("sessionId=");
-            String sessionIDFull = sessionID[1].replace("\"", "");
+        String sessionId = getSessionIdFromCookie(httpExchange);
 
-            if (method.equals("GET") && Sessions.checkSession(sessionIDFull,"Admin")) {
+        if (method.equals("GET") && Sessions.checkSession(sessionId,"Admin")) {
             response = getResponse(path);
-            httpExchange.sendResponseHeaders(200, 0);
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
-            }
-            else if (method.equals("POST")){
-                handlePost(path,httpExchange);
-                response = getResponse(path);
-                httpExchange.sendResponseHeaders(200, 0);
-                OutputStream os = httpExchange.getResponseBody();
-                os.write(response.getBytes());
-                os.close();
-            }
-            else{
-                Sessions.redirect(httpExchange);
-            }
-        }catch (NullPointerException e){
+        }
+        else if (method.equals("POST")){
+            handlePost(path,httpExchange);
+            response = getResponse(path);
+        }
+        else{
             Sessions.redirect(httpExchange);
-            }
+        }
+        httpExchange.sendResponseHeaders(200, 0);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
 
     }
 
@@ -81,8 +71,19 @@ public class AdminHandler  implements HttpHandler {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-
         }
+    }
+
+    public String getSessionIdFromCookie(HttpExchange httpExchange) throws IOException {
+        String sessionIDFull = "";
+        try {
+            String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+            String[] sessionID = cookieStr.split("sessionId=");
+            sessionIDFull= sessionID[1].replace("\"", "");
+        }catch (NullPointerException e){
+            Sessions.redirect(httpExchange);
+        }
+        return sessionIDFull;
     }
 
 
