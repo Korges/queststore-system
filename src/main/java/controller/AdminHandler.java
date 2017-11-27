@@ -12,6 +12,7 @@ import com.sun.net.httpserver.HttpHandler;
 import controller.helpers.HashSystem;
 import controller.helpers.ParseForm;
 import controller.helpers.Sessions;
+import models.Group;
 import models.Mentor;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -78,9 +79,26 @@ public class AdminHandler  implements HttpHandler {
         boolean handleStatus = false;
         if(path.equals("/admin/create-mentor")){
             handleStatus = createMentor(parsedForm);
-
+        }
+        else if(path.equals("/admin/create-group")){
+            handleStatus = createGroup(parsedForm);
         }
         return handleStatus;
+    }
+
+    private boolean createGroup(Map<String, String> parsedForm) {
+        boolean status = false;
+        String groupName = parsedForm.get("group-name");
+        GroupDAO groupDAO = null;
+        try {
+            Group newGroup = new Group(groupName);
+            groupDAO = new GroupDAO();
+            groupDAO.add(newGroup);
+            status = true;
+        } catch (SQLException e) {
+            return status;
+        }
+        return status;
     }
 
     public Map<String, String> parsePost(HttpExchange httpExchange) throws IOException {
@@ -131,33 +149,6 @@ public class AdminHandler  implements HttpHandler {
         return true;
     }
 
-    public String listAllMentors() throws SQLException{
-
-        MentorDAO mDAO = new MentorDAO();
-        ArrayList<ArrayList<String>> data = new ArrayList<>();
-
-        ArrayList<String> record = new ArrayList<>();
-        ArrayList<Mentor> mentorList = mDAO.get();
-        for(Mentor mentor: mentorList){
-            record.add(mentor.getFirstName());
-            record.add(mentor.getLastName());
-            record.add(mentor.getEmail());
-            data.add(record);
-            record = new ArrayList<>();
-        }
-
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin/view-mentor.twig");
-        JtwigModel model = JtwigModel.newModel();
-
-        String response = "";
-        model.with("data", data);
-        try {
-            response = template.render(model);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return response;
-    }
 
     public String getMentorListRespone(){
         String response = "";
