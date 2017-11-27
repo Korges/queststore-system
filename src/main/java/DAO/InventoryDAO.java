@@ -41,24 +41,24 @@ public class InventoryDAO {
 
     }
 
-//    public ArrayList<Inventory> getStudentInventory(Student student) throws SQLException {
-//
-//        ArrayList<Inventory> inventoryList = new ArrayList<>();
-//            ResultSet result = connect.getResult(String.format("SELECT * FROM student_inventory JOIN artifacts on artifact_id = id WHERE student_id = %d", student.getID()));
-//
-//        while (result.next()) {
-//            String name = result.getString("name");
-//            String description = result.getString("description");
-//            String date = result.getString("date");
-//            Integer price = result.getInt("price");
-//            boolean isMagic = result.getBoolean("is_magic");
-//
-//            Inventory inventory = new Inventory(name, description, date, price, isMagic);
-//            inventoryList.add(inventory);
-//        }
-//
-//        return inventoryList;
-//
-//    }
+    public ArrayList<Inventory> getStudentInventory(Student student) throws SQLException {
+
+        ArrayList<Inventory> inventoryList = new ArrayList<>();
+            ResultSet result = connect.getResult(String.format("SELECT * FROM logs JOIN artifacts on artifact_id = id WHERE student_id = %d", student.getID()));
+
+        while (result.next()) {
+            String name = result.getString("name");
+            String description = result.getString("description");
+            String date = result.getString("date");
+            Integer price = result.getInt("price");
+            boolean isMagic = result.getBoolean("is_magic");
+
+            Inventory inventory = new Inventory(name, description, date, price, isMagic);
+            inventoryList.add(inventory);
+        }
+
+        return inventoryList;
+
+    }
 
 }

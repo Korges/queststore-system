@@ -49,6 +49,8 @@ public class CreateFundraise implements HttpHandler {
                 Fundraise fundraise = createFundraise(inputs);
                 addNewFundraiseToDatabase(fundraise);
 
+                response = "<p> GITES </p>";
+
 
             }
         } catch (SQLException e) {

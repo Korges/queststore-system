@@ -21,14 +21,14 @@ public class Inventory {
         this.price = price;
     }
 
-//    public Inventory(String name, String description, String date, Integer price, boolean isMagic) {
-//
-//        this.name = name;
-//        this.description = description;
-//        this.date= date;
-//        this.price = price;
-//        this.isMagic = isMagic;
-//    }
+    public Inventory(String name, String description, String date, Integer price, boolean isMagic) {
+
+        this.name = name;
+        this.description = description;
+        this.date= date;
+        this.price = price;
+        this.isMagic = isMagic;
+    }
 
     public Integer getStudentID() {
         return studentID;
@@ -44,6 +44,17 @@ public class Inventory {
 
     public Integer getPrice() { return price; }
 
+    public String getName() { return name; }
+
+    public String getDescription() { return description; }
+
+    public String getCategory() {
+        if(isMagic) {
+            return "Magic Item";
+        } else {
+            return "Basic Item";
+        }
+    }
 //    public String toString() {
 //
 //        StringJoiner joiner = new StringJoiner(" | ");

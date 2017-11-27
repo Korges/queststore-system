@@ -14,6 +14,7 @@ import controller.Student.Fundraise.LeaveFundraise;
 import controller.Student.Fundraise.ListAllFundraise;
 import controller.Student.Store.BuyArtifact;
 import controller.Student.Store.ListBasicItems;
+import controller.Student.Store.ListUserInventory;
 import controller.StudentController;
 
 import java.io.IOException;
@@ -47,6 +48,7 @@ public class Main {
         server.createContext("/student/leave-fundraise", new LeaveFundraise());
         server.createContext("/student/basic-item-list", new ListBasicItems());
         server.createContext("/student/buy-artifact", new BuyArtifact());
+        server.createContext("/student/user-inventory", new ListUserInventory());
 
 
 

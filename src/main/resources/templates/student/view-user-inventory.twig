@@ -1,0 +1,29 @@
+{% extends "classpath:/templates/student/student-menu.twig" %}
+
+{% block content %}
+    <div class="table-container">
+        <div class="header-container">
+                <h1>User Inventory</h1>
+            </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Spent money</th>
+                <th>Category</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for element in data %}
+                    <tr>
+                        {% for record in element %}
+                        <td>{{ record }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
