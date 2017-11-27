@@ -120,8 +120,4 @@ public class CreateFundraise implements HttpHandler {
 
         return data;
     }
-
-
-
-
 }

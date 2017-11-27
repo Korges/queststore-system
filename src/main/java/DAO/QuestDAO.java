@@ -14,7 +14,7 @@ public class QuestDAO implements InterfaceDAO<Quest> {
         connect = DAO.ConnectDB.getInstance();
     }
 
-    public void add(Quest quest) throws SQLException{
+    public void addNewQuest(Quest quest) throws SQLException{
 
         String querry = String.format("INSERT INTO quests "+
                 "(name, description, value, experience, quest_category ) " +

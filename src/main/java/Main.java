@@ -9,6 +9,7 @@ import controller.Mentor.EditStudent;
 import controller.Mentor.Fundraise.DeleteFundraise;
 import controller.Mentor.Fundraise.FinalizeFundraise;
 import controller.Mentor.Fundraise.ListAllFundraiseMentor;
+import controller.Mentor.Quest.CreateQuest;
 import controller.Mentor.ViewStudent;
 import controller.MentorController;
 import controller.Student.Fundraise.CreateFundraise;
@@ -48,6 +49,8 @@ public class Main {
         server.createContext("/mentor/fundraise-list", new ListAllFundraiseMentor());
         server.createContext("/mentor/delete-fundraise", new DeleteFundraise());
         server.createContext("/mentor/finalize-fundraise", new FinalizeFundraise());
+        server.createContext("/mentor/create-quest", new CreateQuest());
+
 
         server.createContext("/student", new StudentController());
         server.createContext("/student/fundraise-list", new ListAllFundraiseStudent());
