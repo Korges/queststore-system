@@ -15,15 +15,9 @@
                 <input type="text" placeholder="enter last name" name = "last-name" value="{{mentor.lastName}}"><br>
                 email:<br>
                 <input type="email" placeholder="enter email"name = "email" value="{{mentor.email}}"><br>
-                Class:
-                <label>
-                    <select>
-                        <option value="2016.1" name = "class">2016.1</option>
-                        <option value="2017.1" name = "class">2017.1</option>
-                        <option value="2017.2" name = "class">2017.2</option>
-                    </select>
-                    <input type="hidden" name="r_id" value="1"/>
-                </label>
+                <input type="hidden" name="class" value="2016"/>
+                <input type="hidden" name="password" value="{{mentor.password}}"/>
+                <input type="hidden" name="id" value="{{mentor.id}}"/>
                 <input type="submit" value="Submit">
             </fieldset>
         </form>

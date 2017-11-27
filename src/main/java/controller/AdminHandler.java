@@ -92,10 +92,13 @@ public class AdminHandler  implements HttpHandler {
         else if(path.equals("/admin/create-group")){
             response = getHandleResponse(createGroup(parsedForm));
         }
-        if(path.equals("/admin/mentor-list")){
+        else if(path.equals("/admin/mentor-list") && !parsedForm.containsKey("first-name")){
             response = getEditResponse(parsedForm.get("id"));
-
         }
+        else if(path.equals("/admin/mentor-list") && parsedForm.containsKey("first-name")){
+            response = getHandleResponse(editMentor(parsedForm));
+        }
+
 
         return response;
     }
@@ -107,11 +110,33 @@ public class AdminHandler  implements HttpHandler {
             Mentor mentor = mentorDAO.getMentorById(id);
             response = ResponseGenerator.generateModelResponse(mentor,"mentor","templates/admin/edit-mentor.twig");
         } catch (Exception e) {
+            System.out.println("akkk");
             return ResponseGenerator.generateModelResponse("templates/error.twig");
         }
 
         return response;
     }
+
+    private boolean editMentor(Map<String, String> parsedForm)       {
+        MentorDAO mentorDAO = null;
+        try {
+        mentorDAO = new MentorDAO();
+        Integer id = Integer.parseInt(parsedForm.get("id"));
+        String firstName = parsedForm.get("first-name");
+        String lastName = parsedForm.get("last-name");
+        String email = parsedForm.get("email");
+        String password = parsedForm.get("password");
+        String passwordHash = HashSystem.getStringFromSHA256(password);
+        String klass = parsedForm.get("class");
+        Mentor mentor = new Mentor(id,firstName, lastName, email, passwordHash, klass);
+        mentorDAO.set(mentor);
+    } catch (SQLException e) {
+        return false;
+    } catch (NoSuchAlgorithmException e) {
+        return false;
+    }
+        return true;
+}
 
     private boolean createGroup(Map<String, String> parsedForm) {
         boolean status = false;
