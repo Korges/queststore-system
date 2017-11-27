@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.logging.Level;
+
 import DAO.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -78,9 +80,10 @@ public class AdminHandler  implements HttpHandler {
         else if (path.equals("/admin/create-level")){
             response = ResponseGenerator.generateModelResponse("templates/admin/create-level.twig");
         }
-        else if (path.equals("/admin/edit-level")){
-            response = ResponseGenerator.generateModelResponse("templates/admin/edit-level.twig");
+         else if (path.equals("/admin/view-level")) {
+            response = ResponseGenerator.generateModelResponse(getLevels(), "levels","templates/admin/view-level.twig");
         }
+
 
         return response;
     }
@@ -105,6 +108,13 @@ public class AdminHandler  implements HttpHandler {
         else if(path.equals("/admin/create-group")){
             response = getHandleResponse(createGroup(parsedForm));
         }
+        else if(path.equals("/admin/view-level") && !parsedForm.containsKey("level")){
+            response = getEditLevelResponse(parsedForm.get("id"));
+        }
+        else if(path.equals("/admin/view-level") && parsedForm.containsKey("level")){
+            response = getHandleResponse(submitEditLevel(parsedForm));
+        }
+
 
 
         return response;
@@ -135,12 +145,12 @@ public class AdminHandler  implements HttpHandler {
 
         return response;
     }
-    private String editLevel(String id) {
+    private String getEditLevelResponse(String id) {
         String response = "";
         try {
             LevelExperienceDAO lvlDAO = new LevelExperienceDAO();
             LevelExperience lvlexp = lvlDAO.getLevelById(id);
-            response = ResponseGenerator.generateModelResponse(lvlexp,"level","templates/admin/edit-mentor.twig");
+            response = ResponseGenerator.generateModelResponse(lvlexp,"level","templates/admin/edit-level.twig");
         } catch (Exception e) {
             return ResponseGenerator.generateModelResponse("templates/error-sql.twig");
         }
@@ -175,6 +185,24 @@ public class AdminHandler  implements HttpHandler {
             String name = parsedForm.get("group-name");
             Group group = new Group(id,name);
             groupDAO.set(group);
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean submitEditLevel(Map<String, String> parsedForm)       {
+        LevelExperienceDAO lvlDAO = null;
+        try {
+            lvlDAO = new LevelExperienceDAO();
+            Integer id = Integer.parseInt(parsedForm.get("id"));
+            Integer exp = Integer.parseInt(parsedForm.get("experience"));
+            Integer level = Integer.parseInt(parsedForm.get("level"));
+            LevelExperience levelExperience = new LevelExperience(id, exp, level);
+            lvlDAO.set(levelExperience);
 
         } catch (Exception e) {
             System.out.println(e);
@@ -260,6 +288,18 @@ public class AdminHandler  implements HttpHandler {
             e.printStackTrace();
         }
         return klasses;
+    }
+
+    private List<LevelExperience> getLevels(){
+        List<LevelExperience> levels = null;
+        try{
+            LevelExperienceDAO dao = new LevelExperienceDAO();
+
+            levels = dao.get();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return levels;
     }
 
 //    public String getMentorListRespone(){

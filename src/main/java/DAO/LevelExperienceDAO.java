@@ -1,5 +1,6 @@
 package DAO;
 
+import models.Group;
 import models.LevelExperience;
 import models.Mentor;
 
@@ -35,7 +36,7 @@ public class LevelExperienceDAO {
             Integer level = result.getInt("level");
             Integer experience = result.getInt("exp");
 
-            LevelExperience lvl = new LevelExperience(id, level, experience);
+            LevelExperience lvl = new LevelExperience(id, experience, level);
             levels.add(lvl);
         }
 
@@ -57,6 +58,10 @@ public class LevelExperienceDAO {
         return levelexp;
     }
 
-
+    public void set(LevelExperience level) throws SQLException{
+        String sql = String.format("UPDATE level_experience SET level='%s', exp='%s' WHERE id = %s",level.getLevel(), level.getExperience(), level.getId());
+        System.out.println(sql);
+        connect.addRecord(sql);
+    }
 
 }
