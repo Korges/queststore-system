@@ -64,7 +64,6 @@ public class MentorDAO implements InterfaceDAO<Mentor> {
     public void set(Mentor mentor) throws SQLException{
         String sql = String.format("UPDATE users SET first_name='%s',last_name = '%s',email = '%s', password = '%s' WHERE id = %s",mentor.getFirstName(),mentor.getLastName(),mentor.getEmail(),mentor.getPassword(),mentor.getID());
         connect.addRecord(sql);
-
     }
 
 

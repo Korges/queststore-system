@@ -15,9 +15,8 @@ import controller.helpers.ParseForm;
 import controller.helpers.ResponseGenerator;
 import controller.helpers.Sessions;
 import models.Group;
+import models.LevelExperience;
 import models.Mentor;
-import org.jtwig.JtwigModel;
-import org.jtwig.JtwigTemplate;
 
 public class AdminHandler  implements HttpHandler {
 
@@ -33,8 +32,6 @@ public class AdminHandler  implements HttpHandler {
         }
         else if (method.equals("POST")){
             Map<String,String> parsedPost = parsePost(httpExchange);
-            //boolean handleStatus = handleParsedPost(httpExchange, path, parsedPost);
-            //response = getHandleResponse(handleStatus);
             response = handleParsedPostResponse(path,parsedPost);
         }
         else{
@@ -52,7 +49,7 @@ public class AdminHandler  implements HttpHandler {
             return WebTemplate.getSiteContent("templates/success.twig");
         }
         else{
-            return WebTemplate.getSiteContent("templates/error.twig");
+            return WebTemplate.getSiteContent("templates/error-sql.twig");
         }
     }
 
@@ -63,16 +60,16 @@ public class AdminHandler  implements HttpHandler {
             response = ResponseGenerator.generateModelResponse("templates/admin/nav.twig");
         }
         else if (path.equals("/admin/create-group")){
-            response = ResponseGenerator.generateModelResponse(getKlasses(), "klasses", "templates/admin/create-group.twig");
+            response = ResponseGenerator.generateModelResponse(getKlasses(), "groups", "templates/admin/create-group.twig");
         }
-        else if (path.equals("/admin/edit-group")){
-            response = ResponseGenerator.generateModelResponse(getKlasses(), "klasses", "templates/admin/edit-group.twig");
+        else if (path.equals("/admin/view-group")){
+            response = ResponseGenerator.generateModelResponse(getKlasses(), "groups", "templates/admin/view-group.twig");
         }
         else if (path.equals("/admin/create-mentor")){
             response = ResponseGenerator.generateModelResponse("templates/admin/create-mentor.twig");
         }
-        else if (path.equals("/admin/mentor-list")) {
-            response = getMentorListRespone();
+        else if (path.equals("/admin/view-mentor")) {
+            response = ResponseGenerator.generateModelResponse(getMentorList(),"mentors","templates/admin/view-mentor.twig");
         }
         else if (path.equals("/admin/create-level")){
             response = ResponseGenerator.generateModelResponse("templates/admin/create-level.twig");
@@ -89,35 +86,61 @@ public class AdminHandler  implements HttpHandler {
         if(path.equals("/admin/create-mentor")){
             response = getHandleResponse(createMentor(parsedForm));
         }
-        else if(path.equals("/admin/create-group")){
-            response = getHandleResponse(createGroup(parsedForm));
+        else if(path.equals("/admin/view-group") && !parsedForm.containsKey("group-name")){
+            response = getEditGroupResponse(parsedForm.get("id"));
         }
-        else if(path.equals("/admin/mentor-list") && !parsedForm.containsKey("first-name")){
-            response = getEditResponse(parsedForm.get("id"));
+        else if(path.equals("/admin/view-group") && parsedForm.containsKey("group-name")){
+            response = getHandleResponse(submitEditGroup(parsedForm));
         }
-        else if(path.equals("/admin/mentor-list") && parsedForm.containsKey("first-name")){
-            response = getHandleResponse(editMentor(parsedForm));
+        else if(path.equals("/admin/view-mentor") && !parsedForm.containsKey("first-name")){
+            response = getEditMentorResponse(parsedForm.get("id"));
+        }
+        else if(path.equals("/admin/view-mentor") && parsedForm.containsKey("first-name")){
+            response = getHandleResponse(submitEditMentor(parsedForm));
         }
 
 
         return response;
     }
 
-    private String getEditResponse(String id) {
+    private String getEditMentorResponse(String id) {
         String response = "";
         try {
             MentorDAO mentorDAO = new MentorDAO();
             Mentor mentor = mentorDAO.getMentorById(id);
             response = ResponseGenerator.generateModelResponse(mentor,"mentor","templates/admin/edit-mentor.twig");
         } catch (Exception e) {
-            System.out.println("akkk");
-            return ResponseGenerator.generateModelResponse("templates/error.twig");
+            return ResponseGenerator.generateModelResponse("templates/error-sql.twig");
         }
 
         return response;
     }
 
-    private boolean editMentor(Map<String, String> parsedForm)       {
+    private String getEditGroupResponse(String id) {
+        String response = "";
+        try {
+            GroupDAO groupDAO = new GroupDAO();
+            Group group = groupDAO.getGroupById(id);
+            response = ResponseGenerator.generateModelResponse(group,"group","templates/admin/edit-group.twig");
+        } catch (Exception e) {
+            return ResponseGenerator.generateModelResponse("templates/error-sql.twig");
+        }
+
+        return response;
+    }
+    private String editLevel(String id) {
+        String response = "";
+        try {
+            LevelExperienceDAO lvlDAO = new LevelExperienceDAO();
+            LevelExperience lvlexp = lvlDAO.getLevelById(id);
+            response = ResponseGenerator.generateModelResponse(lvlexp,"level","templates/admin/edit-mentor.twig");
+        } catch (Exception e) {
+            return ResponseGenerator.generateModelResponse("templates/error-sql.twig");
+        }
+
+        return response;
+    }
+    private boolean submitEditMentor(Map<String, String> parsedForm)       {
         MentorDAO mentorDAO = null;
         try {
         mentorDAO = new MentorDAO();
@@ -137,6 +160,25 @@ public class AdminHandler  implements HttpHandler {
     }
         return true;
 }
+    private boolean submitEditGroup(Map<String, String> parsedForm)       {
+        GroupDAO groupDAO = null;
+        try {
+            groupDAO = new GroupDAO();
+            Integer id = Integer.parseInt(parsedForm.get("id"));
+            String name = parsedForm.get("group-name");
+            Group group = new Group(id,name);
+            groupDAO.set(group);
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+
+        return true;
+    }
+//private boolean getEditGroupResponse(Map<String, String> parsedForm){
+//        return true;
+//}
 
     private boolean createGroup(Map<String, String> parsedForm) {
         boolean status = false;
@@ -213,15 +255,15 @@ public class AdminHandler  implements HttpHandler {
         return klasses;
     }
 
-    public String getMentorListRespone(){
-        String response = "";
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin/view-mentor.twig");
-        JtwigModel model = JtwigModel.newModel();
-        ArrayList<Mentor> mentorList= getMentorList();
-        model.with("mentorList", mentorList);
-        response = template.render(model);
-        return response;
-    }
+//    public String getMentorListRespone(){
+//        String response = "";
+//        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin/view-mentor.twig");
+//        JtwigModel model = JtwigModel.newModel();
+//        ArrayList<Mentor> mentorList= getMentorList();
+//        model.with("mentorList", mentorList);
+//        response = template.render(model);
+//        return response;
+//    }
 
 
     public ArrayList<Mentor> getMentorList(){

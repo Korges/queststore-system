@@ -9,20 +9,22 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>e-mail</th>
+                <th>group</th>
                 <th>edit</th>
             </tr>
             </thead>
             <tbody>
             {% set ID = 1 %}
-                {% for mentor in mentorList %}
+                {% for mentor in mentors %}
                     <tr>
                         <td>{{ID}}</td>
                         <td>{{mentor.firstName}}</td>
                         <td>{{mentor.lastName}}</td>
                         <td>{{mentor.email}}</td>
+                        <td>{{mentor.klass}}</td>
                         <td>
                             <form action = "" method = "post">
-                                <button type="submit" name="id" value={{ mentor.id }} class="btn btn-default btn-sm">
+                                <button type="submit" name="id" value="{{ mentor.id }}" class="btn btn-default btn-sm">
                                     <span class="glyphicon glyphicon-cog">edit</span>
                                 </button>
                             </form>

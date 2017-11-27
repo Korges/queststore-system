@@ -3,15 +3,16 @@
 {% block content %}
 <div class="main-container">
     <div class="header-container">
-        <h1>Create Group</h1>
     </div>
     <div class="container">
         <form method="POST">
             <fieldset>
-                <legend>Legend</legend>
+                <legend>Edit Group</legend>
                 Group Name:<br>
-                <input type="text" placeholder="enter first name" name="group-name"><br>
+                <input type="text" placeholder="enter group name" name="group-name" value="{{ group.name }}"><br>
                 <input type="submit" value="Submit">
+                <input type="hidden" name="id" value="{{group.id}}"/>
+
             </fieldset>
         </form>
     </div>

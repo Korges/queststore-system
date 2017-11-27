@@ -3,28 +3,25 @@
 {% block content %}
     <div class="main-container">
         <div class="header-container">
-            <h1>Create Mentor</h1>
         </div>
         <div class="container">
             <form method="POST">
                 <fieldset>
-                    <legend>Legend:</legend>
+                    <legend>Create Mentor</legend>
                     First name:<br>
                     <input type="text" placeholder="enter first name" name = "first-name"><br>
                     Last name:<br>
                     <input type="text" placeholder="enter last name" name = "last-name"><br>
                     email:<br>
-                    <input type="email" placeholder="enter email"name = "email"><br>
+                    <input type="email" placeholder="enter email" name = "email"><br>
                     password:<br>
                     <input type="password" placeholder="enter password" name = password><br>
                     Class:
                     <label>
                         <select>
                             {% for klass in klasses %}
-                            <option value={{ klass.name }} name = "class">{{klass.name}}</option>
+                            <option value="{{ klass.name }}" name = "class">{{klass.name}}</option>
                                 {% endfor %}
-                            {#<option value="2017.1" name = "class">2017.1</option>#}
-                            {#<option value="2017.2" name = "class">2017.2</option>#}
                         </select>
                         <input type="hidden" name="r_id" value="1"/>
                     </label>
