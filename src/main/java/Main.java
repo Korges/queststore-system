@@ -1,19 +1,17 @@
 import DAO.StudentDAO;
+import controller.*;
 import controller.Admin.CreateGroup;
-import controller.AdminController;
-import controller.MainController;
+import controller.Admin.EditMentor;
 import com.sun.net.httpserver.HttpServer;
 import controller.Admin.CreateMentor;
 import controller.Admin.ListMentor;
 import controller.Mentor.CreateStudent;
 import controller.Mentor.EditStudent;
 import controller.Mentor.ViewStudent;
-import controller.MentorController;
 import controller.Student.CreateFundraise;
 import controller.Student.JoinFundraise;
 import controller.Student.LeaveFundraise;
 import controller.Student.ListAllFundraise;
-import controller.StudentController;
 import models.Student;
 
 import java.io.IOException;
@@ -31,11 +29,17 @@ public class Main {
 
         // set routes
         server.createContext("/login-page", new MainController());
-        server.createContext("/admin", new AdminController());
+//        server.createContext("/admin", new AdminController());
         server.createContext("/static", new Static());
-        server.createContext("/admin/mentor-list", new ListMentor());
-        server.createContext("/admin/create-mentor", new CreateMentor());
-        server.createContext("/admin/create-group", new CreateGroup());
+
+        //server.createContext("/admin/mentor-list", new ListMentor());
+//        server.createContext("/admin/create-mentor", new CreateMentor());
+//        server.createContext("/admin/create-group", new CreateGroup());
+//        server.createContext("/admin/edit-mentor", new EditMentor());
+
+
+        server.createContext("/admin", new AdminHandler());
+
         server.createContext("/mentor", new MentorController());
         server.createContext("/mentor/create-student", new CreateStudent());
         server.createContext("/mentor/edit-student", new EditStudent());
