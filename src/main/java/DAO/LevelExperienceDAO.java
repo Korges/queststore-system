@@ -19,10 +19,10 @@ public class LevelExperienceDAO {
     }
 
 
-    public void add(Integer level, Integer experience) throws SQLException{
+    public void add(LevelExperience levelExperience) throws SQLException{
         String sql = String.format("INSERT INTO level_experience " +
                 "(level, exp)" +
-                " VALUES ('%d', '%d')", level, experience);
+                " VALUES ('%d', '%d')", levelExperience.getLevel(), levelExperience.getExperience());
         connect.addRecord(sql);
     }
 

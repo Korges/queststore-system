@@ -150,13 +150,4 @@ public class AdminController  implements HttpHandler {
         }
     }
 
-    public void createLevelOfExperience() throws SQLException{
-
-        Integer level = UI.UI.getInteger("Write level: ");
-        Integer experience = UI.UI.getInteger("Write experience count");
-        LevelExperienceDAO levelDao = new LevelExperienceDAO();
-        levelDao.add(level,experience);
-
-    }
-
 }

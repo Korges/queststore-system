@@ -131,9 +131,9 @@ public class AdminHandler  implements HttpHandler {
 
         LevelExperienceDAO levelDAO = null;
         try {
-//            LevelExperience levelExperience = new LevelExperience(experience, level);
+            LevelExperience levelExperience = new LevelExperience(experience, level);
             levelDAO = new LevelExperienceDAO();
-            levelDAO.add(level,experience);
+            levelDAO.add(levelExperience);
             status = true;
         } catch (SQLException e) {
             return status;

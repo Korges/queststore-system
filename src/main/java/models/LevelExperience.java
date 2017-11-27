@@ -11,7 +11,7 @@ public class LevelExperience {
     Integer id;
 
     public LevelExperience(Integer experience, Integer level) throws SQLException {
-        if (!checkDuplicate(experience, level)){
+        if (!checkDuplicate(level)){
             this.level = level;
             this.experience = experience;
         } else {
@@ -26,13 +26,12 @@ public class LevelExperience {
         this.level = level;
     }
 
-    private boolean checkDuplicate(Integer experience, Integer level) throws SQLException {
+    private boolean checkDuplicate(Integer level) throws SQLException {
         LevelExperienceDAO lvlDAO = new LevelExperienceDAO();
         List<LevelExperience> levels = lvlDAO.get();
-        LevelExperience levelToCheck = new LevelExperience(experience, level);
 
         for(LevelExperience lvl: levels) {
-            if (lvl.equals(levelToCheck)) {
+            if (lvl.getLevel().equals(level)) {
                 return true;
             }
         }
