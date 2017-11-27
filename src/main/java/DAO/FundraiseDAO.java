@@ -44,14 +44,24 @@ public class FundraiseDAO {
     }
 
 
-    public void removeFundraise(Fundraise fundraise) {
-        String sql = String.format("DELETE FROM fundraises WHERE fundraise_id = '%d'", fundraise.getFundraiseID());
+    public void deleteFundraise(Integer fundraiseID) {
+        String sql = String.format("DELETE FROM fundraises WHERE id = '%d'", fundraiseID);
          try {
              connect.addRecord(sql);
          } catch (SQLException e) {
              System.err.println(e.getClass().getName() + ": " + e.getMessage());
              System.exit(0);
          }
+    }
+
+    public void deleteFundraiseStudents(Integer fundraiseID) {
+        String sql = String.format("DELETE FROM fundraises_students WHERE fundraise_id = '%d'", fundraiseID);
+        try {
+            connect.addRecord(sql);
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
     }
 
 
@@ -99,7 +109,6 @@ public class FundraiseDAO {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println("przed exekucj");
         return fundraiseStudentList;
     }
 }

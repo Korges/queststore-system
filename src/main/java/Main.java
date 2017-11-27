@@ -6,6 +6,7 @@ import controller.Admin.CreateMentor;
 import controller.Admin.ListMentor;
 import controller.Mentor.CreateStudent;
 import controller.Mentor.EditStudent;
+import controller.Mentor.Fundraise.DeleteFundraise;
 import controller.Mentor.ViewStudent;
 import controller.MentorController;
 import controller.Student.Fundraise.CreateFundraise;
@@ -37,10 +38,14 @@ public class Main {
         server.createContext("/admin/mentor-list", new ListMentor());
         server.createContext("/admin/create-mentor", new CreateMentor());
         server.createContext("/admin/create-group", new CreateGroup());
+
         server.createContext("/mentor", new MentorController());
         server.createContext("/mentor/create-student", new CreateStudent());
         server.createContext("/mentor/edit-student", new EditStudent());
         server.createContext("/mentor/view-student", new ViewStudent());
+        server.createContext("/mentor/fundraise-list", new ListAllFundraise());
+        server.createContext("/mentor/delete-fundraise", new DeleteFundraise());
+
         server.createContext("/student", new StudentController());
         server.createContext("/student/fundraise-list", new ListAllFundraise());
         server.createContext("/student/create-fundraise", new CreateFundraise());
