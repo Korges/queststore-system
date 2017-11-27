@@ -117,7 +117,8 @@ public class AdminHandler  implements HttpHandler {
             String email = parsedForm.get("email");
             String password = parsedForm.get("password");
             String passwordHash = HashSystem.getStringFromSHA256(password);
-            Mentor mentor = new Mentor(firstName, lastName, email, passwordHash, "class");
+            String klass = parsedForm.get("class");
+            Mentor mentor = new Mentor(firstName, lastName, email, passwordHash, klass);
             mentorDAO.add(mentor);
         } catch (SQLException e) {
             return false;
