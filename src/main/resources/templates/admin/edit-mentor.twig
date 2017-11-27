@@ -1,0 +1,26 @@
+{% extends "classpath:/templates/admin/nav.twig" %}
+
+{% block content %}
+<div class="main-container">
+    <div class="header-container">
+        <h1>Create Mentor</h1>
+    </div>
+    <div class="container">
+        <form method="POST">
+            <fieldset>
+                <legend>Legend:</legend>
+                First name:<br>
+                <input type="text" placeholder="enter first name" name = "first-name" value="{{mentor.firstName}}"><br>
+                Last name:<br>
+                <input type="text" placeholder="enter last name" name = "last-name" value="{{mentor.lastName}}"><br>
+                email:<br>
+                <input type="email" placeholder="enter email"name = "email" value="{{mentor.email}}"><br>
+                <input type="hidden" name="class" value="2016"/>
+                <input type="hidden" name="password" value="{{mentor.password}}"/>
+                <input type="hidden" name="id" value="{{mentor.id}}"/>
+                <input type="submit" value="Submit">
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}

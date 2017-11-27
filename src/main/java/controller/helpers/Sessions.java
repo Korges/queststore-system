@@ -34,4 +34,22 @@ public class Sessions {
         httpExchange.getResponseHeaders().set("Location", "/login-page");
         httpExchange.sendResponseHeaders(302, -1);
     }
+
+    public static String getIdBySession(String session){
+        String sqlQuery = String.format("SELECT * FROM sessions WHERE session_id like '%s'",session);
+        ResultSet resultSet = null;
+        String id = "";
+        try {
+            ConnectDB connectDB = ConnectDB.getInstance();
+            resultSet = connectDB.getResult(sqlQuery);
+            if(resultSet.next()){
+                id = resultSet.getString("user_id");
+                }
+
+        } catch (SQLException e) {
+            return id;
+        }
+
+        return id;
+    }
 }

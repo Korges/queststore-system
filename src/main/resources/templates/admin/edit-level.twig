@@ -1,0 +1,21 @@
+{% extends "classpath:/templates/admin/nav.twig" %}
+
+{% block content %}
+    <div class="main-container">
+        <div class="header-container">
+        </div>
+        <div class="container">
+            <form method="POST">
+                <fieldset>
+                    <legend>Edit Level</legend>
+                    Level<br>
+                    <input type="text" placeholder="enter level" name = "level" value="{{level.level}}"><br>
+                    Experience<br>
+                    <input type="text" placeholder="enter experience" name = "experience" value="{{level.experience}}"><br>
+                    <input type="submit" value="Submit">
+                    <input type="hidden" name="id" value="{{level.id}}"/>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

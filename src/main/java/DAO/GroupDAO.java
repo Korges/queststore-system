@@ -37,7 +37,23 @@ public class GroupDAO implements InterfaceDAO<Group> {
     }
 
 
-    public void set(Group group) {
+    public void set(Group group) throws SQLException{
+        String sql = String.format("UPDATE klasses SET name='%s' WHERE id = %s",group.getName(),group.getID());
+        System.out.println(sql);
+        connect.addRecord(sql);
+    }
+
+    public Group getGroupById(String id) throws SQLException{
+        String sql = String.format("SELECT * FROM klasses where id like '%s'",id);
+        ResultSet result = connect.getResult(sql);
+        Group group = null;
+
+        if(result.next()){
+            Integer idInt = result.getInt("id");
+            String name = result.getString("name");
+            group = new Group(idInt, name);
+        }
+        return group;
 
     }
 }
