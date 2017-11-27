@@ -16,6 +16,7 @@ import controller.helpers.ResponseGenerator;
 import controller.helpers.Sessions;
 import models.Group;
 import models.Mentor;
+import models.Admin;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -27,9 +28,10 @@ public class AdminHandler  implements HttpHandler {
         String response = "";
         String method = httpExchange.getRequestMethod();
         String sessionId = getSessionIdFromCookie(httpExchange);
+        Admin admin = getAdminModel(sessionId);
 
         if (method.equals("GET") && Sessions.checkSession(sessionId,"Admin")) {
-            response = getResponse(path);
+            response = getResponse(path,admin);
         }
         else if (method.equals("POST")){
             Map<String,String> parsedPost = parsePost(httpExchange);
@@ -57,10 +59,10 @@ public class AdminHandler  implements HttpHandler {
     }
 
 
-    public String getResponse(String path) {
+    public String getResponse(String path,Admin admin) {
         String response = "";
         if(path.equals("/admin")){
-            response = ResponseGenerator.generateModelResponse("templates/admin/nav.twig");
+            response = ResponseGenerator.generateModelResponse(admin,"user","templates/admin/nav.twig");
         }
         else if (path.equals("/admin/create-group")){
             response = ResponseGenerator.generateModelResponse(getKlasses(), "klasses", "templates/admin/create-group.twig");
@@ -234,5 +236,17 @@ public class AdminHandler  implements HttpHandler {
             return mentorList;
         }
         return mentorList;
+    }
+
+    public Admin getAdminModel(String session){
+        String id = Sessions.getIdBySession(session);
+        Admin admin = null;
+        try {
+            AdminDAO adminDAO = new AdminDAO();
+            admin = adminDAO.getAdminById(id);
+        } catch (SQLException e) {
+            return admin;
+        }
+        return admin;
     }
 }
