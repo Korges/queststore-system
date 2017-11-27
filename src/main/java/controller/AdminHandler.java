@@ -2,12 +2,16 @@ package controller;
 
 import java.io.*;
 import java.net.URI;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.Map;
 import DAO.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import controller.helpers.HashSystem;
 import controller.helpers.ParseForm;
 import controller.helpers.Sessions;
+import models.Mentor;
 
 public class AdminHandler  implements HttpHandler {
 
@@ -22,8 +26,9 @@ public class AdminHandler  implements HttpHandler {
             response = getResponse(path);
         }
         else if (method.equals("POST")){
-            handlePost(path,httpExchange);
-            response = getResponse(path);
+            Map<String,String> parsedPost = parsePost(httpExchange);
+            boolean handleStatus = handleParsedPost(path,parsedPost);
+            response = getHandleResponse(handleStatus);
         }
         else{
             Sessions.redirect(httpExchange);
@@ -33,6 +38,15 @@ public class AdminHandler  implements HttpHandler {
         os.write(response.getBytes());
         os.close();
 
+    }
+
+    private String getHandleResponse(boolean handleStatus) {
+        if(handleStatus){
+            return WebTemplate.getSiteContent("templates/success.twig");
+        }
+        else{
+            return WebTemplate.getSiteContent("templates/error.twig");
+        }
     }
 
 
@@ -57,20 +71,29 @@ public class AdminHandler  implements HttpHandler {
         return response;
     }
 
-    public void handlePost(String path,HttpExchange httpExchange) throws IOException {
+    public boolean handleParsedPost(String path, Map<String, String> parsedForm) throws IOException {
+        boolean handleStatus = false;
         if(path.equals("/admin/create-mentor")){
-            InputStreamReader isr = null;
-            try {
-                isr = new InputStreamReader(httpExchange.getRequestBody(),
-                        "utf-8");
-                BufferedReader br = new BufferedReader(isr);
-                String formData = br.readLine();
-                Map<String,String> inputs = ParseForm.parseFormData(formData);
-                System.out.printf(inputs.get("login"));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            handleStatus = createMentor(parsedForm);
+
         }
+        return handleStatus;
+    }
+
+    public Map<String, String> parsePost(HttpExchange httpExchange) throws IOException {
+        InputStreamReader inputStreamReader;
+        Map<String,String> inputs = null;
+        try {
+            inputStreamReader = new InputStreamReader(httpExchange.getRequestBody(),
+                    "utf-8");
+            BufferedReader br = new BufferedReader(inputStreamReader);
+            String formData = br.readLine();
+            System.out.println(formData);
+            inputs = ParseForm.parseFormData(formData);
+        } catch (UnsupportedEncodingException e) {
+            return inputs;
+        }
+        return inputs;
     }
 
     public String getSessionIdFromCookie(HttpExchange httpExchange) throws IOException {
@@ -83,6 +106,25 @@ public class AdminHandler  implements HttpHandler {
             return sessionIDFull;
         }
         return sessionIDFull;
+    }
+
+    public boolean createMentor(Map<String, String> parsedForm){
+        MentorDAO mentorDAO = null;
+        try {
+            mentorDAO = new MentorDAO();
+            String firstName = parsedForm.get("first-name");
+            String lastName = parsedForm.get("last-name");
+            String email = parsedForm.get("email");
+            String password = parsedForm.get("password");
+            String passwordHash = HashSystem.getStringFromSHA256(password);
+            Mentor mentor = new Mentor(firstName, lastName, email, passwordHash, "class");
+            mentorDAO.add(mentor);
+        } catch (SQLException e) {
+            return false;
+        } catch (NoSuchAlgorithmException e) {
+            return false;
+        }
+        return true;
     }
 
 
