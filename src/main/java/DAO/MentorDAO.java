@@ -43,6 +43,23 @@ public class MentorDAO implements InterfaceDAO<Mentor> {
         return mentorList;
     }
 
+    public Mentor getMentorById(String id) throws SQLException {
+        String sql = String.format("SELECT * FROM users where id like '%d'",id);
+        ResultSet result = connect.getResult(sql);
+        Mentor mentor = null;
+
+        if(result.next()){
+            int  idInt = result.getInt("id");
+            String first_name = result.getString("first_name");
+            String last_name = result.getString("last_name");
+            String email = result.getString("email");
+            String password = result.getString("password");
+            String klass = result.getString("klass");
+            mentor = new Mentor(idInt,first_name,last_name,email,password,klass);
+        }
+        return mentor;
+    }
+
 
     public void set(Mentor mentor) throws SQLException{
         String sql = String.format("UPDATE users SET first_name='%s',last_name = '%s',email = '%s', password = '%s' WHERE id = %s",mentor.getFirstName(),mentor.getLastName(),mentor.getEmail(),mentor.getPassword(),mentor.getID());

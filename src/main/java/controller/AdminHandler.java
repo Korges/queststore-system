@@ -5,6 +5,7 @@ import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import DAO.*;
 import com.sun.net.httpserver.HttpExchange;
@@ -15,6 +16,8 @@ import controller.helpers.ResponseGenerator;
 import controller.helpers.Sessions;
 import models.Group;
 import models.Mentor;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
 
 public class AdminHandler  implements HttpHandler {
 
@@ -30,8 +33,9 @@ public class AdminHandler  implements HttpHandler {
         }
         else if (method.equals("POST")){
             Map<String,String> parsedPost = parsePost(httpExchange);
-            boolean handleStatus = handleParsedPost(path,parsedPost);
-            response = getHandleResponse(handleStatus);
+            //boolean handleStatus = handleParsedPost(httpExchange, path, parsedPost);
+            //response = getHandleResponse(handleStatus);
+            response = handleParsedPostResponse(path,parsedPost);
         }
         else{
             Sessions.redirect(httpExchange);
@@ -70,6 +74,8 @@ public class AdminHandler  implements HttpHandler {
         else if (path.equals("/admin/edit-mentor")){
             response = ResponseGenerator.generateModelResponse("templates/admin/edit-mentor.twig");
         }
+        else if (path.equals("/admin/mentor-list")){
+            response = getMentorListRespone();
         else if (path.equals("/admin/create-level")){
             response = ResponseGenerator.generateModelResponse("templates/admin/create-level.twig");
         }
@@ -80,13 +86,46 @@ public class AdminHandler  implements HttpHandler {
         return response;
     }
 
-    public boolean handleParsedPost(String path, Map<String, String> parsedForm) throws IOException {
-        boolean handleStatus = false;
+    public String handleParsedPostResponse(String path, Map<String, String> parsedForm){
+        String response = "";
         if(path.equals("/admin/create-mentor")){
-            handleStatus = createMentor(parsedForm);
-
+            response = getHandleResponse(createMentor(parsedForm));
         }
-        return handleStatus;
+        else if(path.equals("/admin/create-group")){
+            response = getHandleResponse(createGroup(parsedForm));
+        }
+        if(path.equals("/admin/mentor-list")){
+            response = getEditResponse(parsedForm.get("id"));
+        }
+
+        return response;
+    }
+
+    private String getEditResponse(String id) {
+        String response = "";
+        try {
+            MentorDAO mentorDAO = new MentorDAO();
+        } catch (SQLException e) {
+            return WebTemplate.getSiteContent("templates/error.twig");
+        }
+        response = WebTemplate.getSiteContent("templates/admin/edit-mentor.twig");
+
+        return response;
+    }
+
+    private boolean createGroup(Map<String, String> parsedForm) {
+        boolean status = false;
+        String groupName = parsedForm.get("group-name");
+        GroupDAO groupDAO = null;
+        try {
+            Group newGroup = new Group(groupName);
+            groupDAO = new GroupDAO();
+            groupDAO.add(newGroup);
+            status = true;
+        } catch (SQLException e) {
+            return status;
+        }
+        return status;
     }
 
     public Map<String, String> parsePost(HttpExchange httpExchange) throws IOException {
@@ -126,7 +165,8 @@ public class AdminHandler  implements HttpHandler {
             String email = parsedForm.get("email");
             String password = parsedForm.get("password");
             String passwordHash = HashSystem.getStringFromSHA256(password);
-            Mentor mentor = new Mentor(firstName, lastName, email, passwordHash, "class");
+            String klass = parsedForm.get("class");
+            Mentor mentor = new Mentor(firstName, lastName, email, passwordHash, klass);
             mentorDAO.add(mentor);
         } catch (SQLException e) {
             return false;
@@ -148,6 +188,26 @@ public class AdminHandler  implements HttpHandler {
         return klasses;
     }
 
+    public String getMentorListRespone(){
+        String response = "";
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin/view-mentor.twig");
+        JtwigModel model = JtwigModel.newModel();
+        ArrayList<Mentor> mentorList= getMentorList();
+        model.with("mentorList", mentorList);
+        response = template.render(model);
+        return response;
+    }
 
 
+    public ArrayList<Mentor> getMentorList(){
+        MentorDAO mentorDAO = null;
+        ArrayList<Mentor> mentorList = null;
+        try {
+            mentorDAO = new MentorDAO();
+            mentorList = mentorDAO.get();
+        } catch (SQLException e) {
+            return mentorList;
+        }
+        return mentorList;
+    }
 }
