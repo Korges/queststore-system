@@ -7,14 +7,14 @@ public class Quest {
     private Integer id;
     private String name;
     private String description;
-    private int value;
-    private int experience;
+    private Integer value;
+    private Integer experience;
 
     private String category;
 
 
 
-    public Quest(String name, String description, int value, int experience, String category) {
+    public Quest(String name, String description, Integer value, Integer experience, String category) {
 
         this.name = name;
         this.description = description;
@@ -24,7 +24,7 @@ public class Quest {
     }
 
 
-    public Quest(Integer id, String name, String description, int value, int experience, String category) {
+    public Quest(Integer id, String name, String description, Integer value, Integer experience, String category) {
 
         this.id = id;
         this.name = name;
@@ -44,11 +44,11 @@ public class Quest {
         return description;
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public int getExperience() {
+    public Integer getExperience() {
         return experience;
     }
 
