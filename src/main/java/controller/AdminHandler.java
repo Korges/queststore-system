@@ -102,6 +102,9 @@ public class AdminHandler  implements HttpHandler {
         else if(path.equals("/admin/view-mentor") && parsedForm.containsKey("first-name")){
             response = getHandleResponse(submitEditMentor(parsedForm));
         }
+        else if(path.equals("/admin/create-group")){
+            response = getHandleResponse(createGroup(parsedForm));
+        }
 
 
         return response;
