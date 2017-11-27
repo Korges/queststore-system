@@ -21,9 +21,11 @@
                         <td>{{mentor.lastName}}</td>
                         <td>{{mentor.email}}</td>
                         <td>
-                            <button type="button" class="btn btn-default btn-sm">
-                                <span class="glyphicon glyphicon-cog">edit</span>
-                            </button>
+                            <form action = "" method = "post">
+                                <button type="submit" name="id" value={{ mentor.id }} class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-cog">edit</span>
+                                </button>
+                            </form>
                         <td>
                     <tr>
                     {% set ID = ID + 1 %}

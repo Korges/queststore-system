@@ -31,8 +31,9 @@ public class AdminHandler  implements HttpHandler {
         }
         else if (method.equals("POST")){
             Map<String,String> parsedPost = parsePost(httpExchange);
-            boolean handleStatus = handleParsedPost(path,parsedPost);
-            response = getHandleResponse(handleStatus);
+            //boolean handleStatus = handleParsedPost(httpExchange, path, parsedPost);
+            //response = getHandleResponse(handleStatus);
+            response = handleParsedPostResponse(path,parsedPost);
         }
         else{
             Sessions.redirect(httpExchange);
@@ -75,15 +76,31 @@ public class AdminHandler  implements HttpHandler {
         return response;
     }
 
-    public boolean handleParsedPost(String path, Map<String, String> parsedForm) throws IOException {
-        boolean handleStatus = false;
+    public String handleParsedPostResponse(String path, Map<String, String> parsedForm){
+        String response = "";
         if(path.equals("/admin/create-mentor")){
-            handleStatus = createMentor(parsedForm);
+            response = getHandleResponse(createMentor(parsedForm));
         }
         else if(path.equals("/admin/create-group")){
-            handleStatus = createGroup(parsedForm);
+            response = getHandleResponse(createGroup(parsedForm));
         }
-        return handleStatus;
+        if(path.equals("/admin/mentor-list")){
+            response = getEditResponse(parsedForm.get("id"));
+        }
+
+        return response;
+    }
+
+    private String getEditResponse(String id) {
+        String response = "";
+        try {
+            MentorDAO mentorDAO = new MentorDAO();
+        } catch (SQLException e) {
+            return WebTemplate.getSiteContent("templates/error.twig");
+        }
+        response = WebTemplate.getSiteContent("templates/admin/edit-mentor.twig");
+
+        return response;
     }
 
     private boolean createGroup(Map<String, String> parsedForm) {
