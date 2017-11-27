@@ -20,12 +20,15 @@ public class ResponseGenerator {
     }
 
     public static String generateModelResponse(Object object, String alias, String URL) {
-
-        JtwigTemplate template = JtwigTemplate.classpathTemplate(URL);
-        JtwigModel model = JtwigModel.newModel();
-        model.with(alias, object);
-
-        return template.render(model);
+        try {
+            JtwigTemplate template = JtwigTemplate.classpathTemplate(URL);
+            JtwigModel model = JtwigModel.newModel();
+            model.with(alias, object);
+            return template.render(model);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return "a";
     }
 
     public static String generateModelResponse(String URL){

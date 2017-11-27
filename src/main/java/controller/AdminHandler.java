@@ -71,11 +71,9 @@ public class AdminHandler  implements HttpHandler {
         else if (path.equals("/admin/create-mentor")){
             response = ResponseGenerator.generateModelResponse("templates/admin/create-mentor.twig");
         }
-        else if (path.equals("/admin/edit-mentor")){
-            response = ResponseGenerator.generateModelResponse("templates/admin/edit-mentor.twig");
-        }
-        else if (path.equals("/admin/mentor-list")){
+        else if (path.equals("/admin/mentor-list")) {
             response = getMentorListRespone();
+        }
         else if (path.equals("/admin/create-level")){
             response = ResponseGenerator.generateModelResponse("templates/admin/create-level.twig");
         }
@@ -96,6 +94,7 @@ public class AdminHandler  implements HttpHandler {
         }
         if(path.equals("/admin/mentor-list")){
             response = getEditResponse(parsedForm.get("id"));
+
         }
 
         return response;
@@ -105,10 +104,11 @@ public class AdminHandler  implements HttpHandler {
         String response = "";
         try {
             MentorDAO mentorDAO = new MentorDAO();
-        } catch (SQLException e) {
-            return WebTemplate.getSiteContent("templates/error.twig");
+            Mentor mentor = mentorDAO.getMentorById(id);
+            response = ResponseGenerator.generateModelResponse(mentor,"mentor","templates/admin/edit-mentor.twig");
+        } catch (Exception e) {
+            return ResponseGenerator.generateModelResponse("templates/error.twig");
         }
-        response = WebTemplate.getSiteContent("templates/admin/edit-mentor.twig");
 
         return response;
     }

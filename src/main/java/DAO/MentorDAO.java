@@ -44,7 +44,7 @@ public class MentorDAO implements InterfaceDAO<Mentor> {
     }
 
     public Mentor getMentorById(String id) throws SQLException {
-        String sql = String.format("SELECT * FROM users where id like '%d'",id);
+        String sql = String.format("SELECT * FROM users where id like '%s'",id);
         ResultSet result = connect.getResult(sql);
         Mentor mentor = null;
 
