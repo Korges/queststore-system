@@ -2,17 +2,12 @@ package controller;
 
 import java.io.*;
 import java.net.URI;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.Map;
-
 import DAO.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.helpers.ParseForm;
 import controller.helpers.Sessions;
-import models.Mentor;
-import models.Group;
 
 public class AdminHandler  implements HttpHandler {
 
@@ -46,15 +41,19 @@ public class AdminHandler  implements HttpHandler {
         if(path.equals("/admin")){
             response = WebTemplate.getSiteContent("templates/admin/admin-menu.twig");
         }
-        if(path.equals("/admin/create-group")){
+        else if(path.equals("/admin/create-group")){
             response = WebTemplate.getSiteContent("templates/admin/create-group.twig");
         }
-        if (path.equals("/admin/create-mentor")){
+        else if (path.equals("/admin/create-mentor")){
             response = WebTemplate.getSiteContent("templates/admin/create-mentor.twig");
         }
-        if (path.equals("/admin/edit-mentor")){
+        else if (path.equals("/admin/edit-mentor")){
             response = WebTemplate.getSiteContent("templates/admin/edit-mentor.twig");
         }
+        else if (path.equals("/admin/edit-mentor")){
+            response = WebTemplate.getSiteContent("templates/admin/edit-mentor.twig");
+        }
+
         return response;
     }
 
@@ -81,7 +80,7 @@ public class AdminHandler  implements HttpHandler {
             String[] sessionID = cookieStr.split("sessionId=");
             sessionIDFull= sessionID[1].replace("\"", "");
         }catch (NullPointerException e){
-            Sessions.redirect(httpExchange);
+            return sessionIDFull;
         }
         return sessionIDFull;
     }
