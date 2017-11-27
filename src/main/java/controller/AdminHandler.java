@@ -108,6 +108,9 @@ public class AdminHandler  implements HttpHandler {
         else if(path.equals("/admin/create-group")){
             response = getHandleResponse(createGroup(parsedForm));
         }
+        else if(path.equals("/admin/create-level")){
+            response = getHandleResponse(createLevel(parsedForm));
+        }
         else if(path.equals("/admin/view-level") && !parsedForm.containsKey("level")){
             response = getEditLevelResponse(parsedForm.get("id"));
         }
@@ -118,6 +121,25 @@ public class AdminHandler  implements HttpHandler {
 
 
         return response;
+    }
+
+    private boolean createLevel(Map<String, String> parsedForm) {
+        boolean status = false;
+//        String level = parsedForm.get("level");y
+        Integer level = Integer.parseInt(parsedForm.get("level"));
+        Integer experience = Integer.parseInt(parsedForm.get("experience"));
+
+        LevelExperienceDAO levelDAO = null;
+        try {
+//            LevelExperience levelExperience = new LevelExperience(experience, level);
+            levelDAO = new LevelExperienceDAO();
+            levelDAO.add(level,experience);
+            status = true;
+        } catch (SQLException e) {
+            return status;
+        }
+        return status;
+
     }
 
     private String getEditMentorResponse(String id) {
