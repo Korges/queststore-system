@@ -1,34 +1,33 @@
-{% extends "classpath:/templates/admin/admin-menu.twig" %}
+{% extends "classpath:/templates/admin/nav.twig" %}
 
 {% block content %}
-<div class="main-container">
-    <div class="header-container">
-        <h1>Create Mentor</h1>
+    <div class="main-container">
+        <div class="header-container">
+        </div>
+        <div class="container">
+            <form method="POST">
+                <fieldset>
+                    <legend>Create Mentor</legend>
+                    First name:<br>
+                    <input type="text" placeholder="enter first name" name = "first-name"><br>
+                    Last name:<br>
+                    <input type="text" placeholder="enter last name" name = "last-name"><br>
+                    email:<br>
+                    <input type="email" placeholder="enter email" name = "email"><br>
+                    password:<br>
+                    <input type="password" placeholder="enter password" name = password><br>
+                    Class:
+                    <label>
+                        <select>
+                            {% for klass in klasses %}
+                            <option value="{{ klass.name }}" name = "class">{{klass.name}}</option>
+                                {% endfor %}
+                        </select>
+                        <input type="hidden" name="r_id" value="1"/>
+                    </label>
+                    <input type="submit" value="Submit">
+                </fieldset>
+            </form>
+        </div>
     </div>
-    <div class="container">
-        <form method="POST">
-            <fieldset>
-                <legend>Legend:</legend>
-                First name:<br>
-                <input type="text" placeholder="enter first name" name = "first-name"><br>
-                Last name:<br>
-                <input type="text" placeholder="enter last name" name = "last-name"><br>
-                email:<br>
-                <input type="email" placeholder="enter email"name = "email"><br>
-                password:<br>
-                <input type="password" placeholder="enter password" name = password><br>
-                Class:
-                <label>
-                    <select>
-                        <option value="2016.1" name = "class">2016.1</option>
-                        <option value="2017.1" name = "class">2017.1</option>
-                        <option value="2017.2" name = "class">2017.2</option>
-                    </select>
-                    <input type="hidden" name="r_id" value="1"/>
-                </label>
-                <input type="submit" value="Submit">
-            </fieldset>
-        </form>
-    </div>
-</div>
 {% endblock %}

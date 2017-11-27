@@ -1,4 +1,4 @@
-{% extends "classpath:/templates/admin/admin-menu.twig" %}
+{% extends "classpath:/templates/admin/nav.twig" %}
 
 {% block content %}
     <div class="table-container">
@@ -9,16 +9,26 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>e-mail</th>
+                <th>group</th>
+                <th>edit</th>
             </tr>
             </thead>
             <tbody>
             {% set ID = 1 %}
-                {% for element in data %}
+                {% for mentor in mentors %}
                     <tr>
                         <td>{{ID}}</td>
-                        {% for record in element %}
-                        <td>{{ record }}</td>
-                        {% endfor %}
+                        <td>{{mentor.firstName}}</td>
+                        <td>{{mentor.lastName}}</td>
+                        <td>{{mentor.email}}</td>
+                        <td>{{mentor.klass}}</td>
+                        <td>
+                            <form action = "" method = "post">
+                                <button type="submit" name="id" value="{{ mentor.id }}" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-cog">edit</span>
+                                </button>
+                            </form>
+                        <td>
                     <tr>
                     {% set ID = ID + 1 %}
                 {% endfor %}
