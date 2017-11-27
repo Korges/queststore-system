@@ -1,0 +1,31 @@
+{% extends "classpath:/templates/mentor/nav.twig" %}
+
+{% block content %}
+    <div class="main-container">
+    <div class="header-container">
+        <h1>Create Quest</h1>
+    </div>
+    <div class="container">
+        <form>
+            <fieldset>
+                Quest name:<br>
+                <input name="name" type="text" placeholder="Enter quest name"><br>
+                Description:<br>
+                <textarea name="description" placeholder="Enter description"></textarea><br>
+                Value:<br>
+                <input name="value" type="number" placeholder="Enter value"><br>
+                Experience:<br>
+                <input name="experience" type="number" placeholder="Enter experience"><br>
+                Category:
+                <label>
+                    <select name="category">
+                        <option value="Basic Quest">Basic Quest</option>
+                        <option value="Magic Quest">Magic Quest</option>
+                    </select>
+                </label>
+                <input type="submit" value="Submit">
+            </fieldset>
+        </form>
+    </div>
+    </div>
+{% endblock %}

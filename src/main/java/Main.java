@@ -10,12 +10,16 @@ import controller.Mentor.EditStudent;
 import controller.Mentor.Fundraise.DeleteFundraise;
 import controller.Mentor.Fundraise.FinalizeFundraise;
 import controller.Mentor.Fundraise.ListAllFundraiseMentor;
+import controller.Mentor.Quest.CreateQuest;
+import controller.Mentor.Quest.DeleteQuest;
+import controller.Mentor.Quest.ListAllQuestMentor;
 import controller.Mentor.ViewStudent;
 import controller.MentorController;
 import controller.Student.Fundraise.CreateFundraise;
 import controller.Student.Fundraise.JoinFundraise;
 import controller.Student.Fundraise.LeaveFundraise;
 import controller.Student.Fundraise.ListAllFundraiseStudent;
+import controller.Student.Quest.ListAllQuestStudent;
 import controller.Student.Store.BuyArtifact;
 import controller.Student.Store.ListBasicItems;
 import controller.Student.Store.ListUserInventory;
@@ -47,6 +51,11 @@ public class Main {
         server.createContext("/mentor/fundraise-list", new ListAllFundraiseMentor());
         server.createContext("/mentor/delete-fundraise", new DeleteFundraise());
         server.createContext("/mentor/finalize-fundraise", new FinalizeFundraise());
+        server.createContext("/mentor/create-quest", new CreateQuest());
+        server.createContext("/mentor/delete-quest", new DeleteQuest());
+        server.createContext("/mentor/view-quest", new ListAllQuestMentor());
+
+
 
         server.createContext("/student", new StudentController());
         server.createContext("/student/fundraise-list", new ListAllFundraiseStudent());
@@ -56,6 +65,7 @@ public class Main {
         server.createContext("/student/basic-item-list", new ListBasicItems());
         server.createContext("/student/buy-artifact", new BuyArtifact());
         server.createContext("/student/user-inventory", new ListUserInventory());
+        server.createContext("/student/view-quest", new ListAllQuestStudent());
 
 
 

@@ -62,4 +62,14 @@ public class QuestDAO implements InterfaceDAO<Quest> {
         ResultSet result = connect.getResult(query);
         return result.next();
     }
+
+    public void deleteQuest(Integer questID) {
+        String sql = String.format("DELETE FROM quests WHERE id = '%d'", questID);
+        try {
+            connect.addRecord(sql);
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
 }
