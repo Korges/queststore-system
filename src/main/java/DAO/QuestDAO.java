@@ -14,7 +14,7 @@ public class QuestDAO implements InterfaceDAO<Quest> {
         connect = DAO.ConnectDB.getInstance();
     }
 
-    public void addNewQuest(Quest quest) throws SQLException{
+    public void add(Quest quest) throws SQLException{
 
         String querry = String.format("INSERT INTO quests "+
                 "(name, description, value, experience, quest_category ) " +
@@ -61,5 +61,15 @@ public class QuestDAO implements InterfaceDAO<Quest> {
         String query = String.format("SELECT id FROM quests WHERE id = '%d';", questID);
         ResultSet result = connect.getResult(query);
         return result.next();
+    }
+
+    public void deleteQuest(Integer questID) {
+        String sql = String.format("DELETE FROM quests WHERE id = '%d'", questID);
+        try {
+            connect.addRecord(sql);
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
     }
 }

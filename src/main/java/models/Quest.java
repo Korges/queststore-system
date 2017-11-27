@@ -4,7 +4,7 @@ import java.util.StringJoiner;
 
 public class Quest {
 
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     private int value;
@@ -34,18 +34,7 @@ public class Quest {
         this.category = category;
     }
 
-    @Override
-    public String toString() {
 
-        return "Quest{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", value=" + value +
-                ", experience=" + experience +
-                ", category='" + category + '\'' +
-                '}';
-    }
 
     public String getName() {
         return name;
@@ -67,7 +56,7 @@ public class Quest {
         return category;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

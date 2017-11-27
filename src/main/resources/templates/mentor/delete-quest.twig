@@ -1,0 +1,22 @@
+{% extends "classpath:/templates/mentor/nav.twig" %}
+
+{% block content %}
+<div class="main-container">
+    <div class="header-container">
+        <h1>Delete Quest</h1>
+    </div>
+    <div class="container">
+        <form method="POST">
+            <fieldset>
+                <select name="id">
+                    {% for element in data %}
+                        <option value={{ element[0] }}>
+                            {{ element[1] }}
+                        </option>
+                    {% endfor %}
+                    <input type="submit" value="Submit">
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}
