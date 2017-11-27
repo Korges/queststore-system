@@ -2,19 +2,14 @@ package controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.HttpCookie;
 import java.security.NoSuchAlgorithmException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import DAO.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.helpers.HashSystem;
-import controller.helpers.ParseForm;
 import controller.helpers.Sessions;
 import models.Mentor;
 import models.Group;
@@ -39,7 +34,7 @@ public class AdminController  implements HttpHandler {
             String sessionIDFull = sessionID[1].replace("\"", "");
 
             if (method.equals("GET") && Sessions.checkSession(sessionIDFull,"Admin")) {
-                response = WebTemplate.getSiteContent("templates/admin/admin-menu.twig");
+                response = WebTemplate.getSiteContent("templates/admin/nav.twig");
             }
             else{
                 Sessions.redirect(httpExchange);
