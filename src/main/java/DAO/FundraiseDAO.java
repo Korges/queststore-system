@@ -11,12 +11,13 @@ import java.util.ArrayList;
 public class FundraiseDAO {
 
     ConnectDB connect;
+
     public FundraiseDAO() throws SQLException {
         connect = DAO.ConnectDB.getInstance();
     }
 
 
-    public void add(Fundraise fundraise) throws SQLException {
+    public void createNewFundraise(Fundraise fundraise) throws SQLException {
 
         String sql = String.format("INSERT INTO fundraises" +
                 "(artifact_id, title)" +
@@ -24,16 +25,16 @@ public class FundraiseDAO {
         connect.addRecord(sql);
     }
 
-    public void join(Fundraise fundraise, Student student) throws SQLException{
+    public void joinFundraise(String fundraiseID, String userID) throws SQLException{
 
         String sql = String.format("INSERT INTO fundraises_students" +
                 "(fundraise_id, student_id)" +
-                "VALUES ('%d', '%d')", fundraise.getFundraiseID(), student.getID());
+                "VALUES ('%s', '%s')", fundraiseID, userID);
         connect.addRecord(sql);
     }
-    public void remove(Fundraise fundraise) {
+    public void leaveFundraise(String fundraiseID, String userID) {
 
-         String sql = String.format("DELETE FROM fundraises_students WHERE (fundraise_id = '%d' and student_id = '%d')", fundraise.getFundraiseID(), fundraise.getStudentID());
+         String sql = String.format("DELETE FROM fundraises_students WHERE (fundraise_id = '%s' and student_id = '%s')", fundraiseID, userID);
          try {
              connect.addRecord(sql);
          } catch (SQLException e) {
@@ -43,8 +44,8 @@ public class FundraiseDAO {
     }
 
 
-    public void removeFundraise(Fundraise fundraise) {
-        String sql = String.format("DELETE FROM fundraises WHERE fundraise_id = '%d'", fundraise.getFundraiseID());
+    public void deleteFundraise(Integer fundraiseID) {
+        String sql = String.format("DELETE FROM fundraises WHERE id = '%d'", fundraiseID);
          try {
              connect.addRecord(sql);
          } catch (SQLException e) {
@@ -53,45 +54,101 @@ public class FundraiseDAO {
          }
     }
 
-    public ArrayList<Fundraise> get() {
+    public void deleteFundraiseStudents(Integer fundraiseID) {
+        String sql = String.format("DELETE FROM fundraises_students WHERE fundraise_id = '%d'", fundraiseID);
+        try {
+            connect.addRecord(sql);
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
 
-        ArrayList<Fundraise> fundraiseList = new ArrayList<>();
+    public Fundraise getFundraiseByID(Integer id) {
+
+        Fundraise fundraise = new Fundraise();
         try {
 
-            ResultSet result = connect.getResult(String.format("SELECT * FROM fundraises JOIN artifacts on fundraises.artifact_id = artifacts.id"));
+            ResultSet result = connect.getResult(String.format("SELECT * FROM fundraises JOIN artifacts ON fundraises.artifact_id = artifacts.id WHERE fundraises.id = '%d'", id));
 
             while (result.next()) {
                 Integer fundraiseID = result.getInt("id");
-                Integer artifactID = result.getInt("artifact_id");
                 String title = result.getString("title");
                 String name = result.getString("name");
                 Integer price = result.getInt("price");
-                Fundraise fundraise = new Fundraise(fundraiseID, artifactID, title, name, price);
-                fundraiseList.add(fundraise);
+
+                 fundraise = new Fundraise(fundraiseID, title, name, price);
+
             }
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-
-        return fundraiseList;
-
+        return fundraise;
     }
 
-    public ArrayList<Fundraise> getFundraisesStudents() {
+    public ArrayList<Fundraise> getFundraiseList() {
         ArrayList<Fundraise> fundraiseStudentList = new ArrayList<>();
         try {
 
-            ResultSet result = connect.getResult(String.format("SELECT * FROM fundraises_students JOIN fundraises ON fundraises_students.fundraise_id = fundraises.fundraise_id JOIN artifacts ON fundraises.artifact_id = artifacts.id"));
+            ResultSet result = connect.getResult(String.format("SELECT * FROM fundraises JOIN artifacts ON fundraises.artifact_id = artifacts.id"));
 
             while (result.next()) {
-                Integer studentID = result.getInt("student_id");
-                Integer fundraiseID = result.getInt("fundraise_id");
-                Integer artifactID = result.getInt("artifact_id");
+                Integer fundraiseID = result.getInt("id");
                 String title = result.getString("title");
                 String name = result.getString("name");
                 Integer price = result.getInt("price");
-                Fundraise fundraise = new Fundraise(studentID, fundraiseID, artifactID, title, name, price);
+
+                Fundraise fundraise = new Fundraise(fundraiseID, title, name, price);
+                fundraiseStudentList.add(fundraise);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return fundraiseStudentList;
+    }
+
+    public ArrayList<Fundraise> getFundraiseStudentList(Integer fundraiseID) {
+
+        ArrayList<Fundraise> fundraiseStudentList = new ArrayList<>();
+        try {
+
+            ResultSet result = connect.getResult(String.format("SELECT * FROM fundraises_students WHERE fundraise_id = '%d'", fundraiseID));
+
+            while (result.next()) {
+                Integer studentID = result.getInt("student_id");
+
+                Fundraise fundraise = new Fundraise(studentID);
+                fundraiseStudentList.add(fundraise);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return fundraiseStudentList;
+    }
+
+
+
+
+
+
+    public ArrayList<Fundraise> getJoinedFundraiseList(String userID) {
+
+        ArrayList<Fundraise> fundraiseStudentList = new ArrayList<>();
+        try {
+
+            ResultSet result = connect.getResult(String.format("SELECT * FROM fundraises_students JOIN fundraises ON fundraises_students.fundraise_id = fundraises.id JOIN artifacts ON fundraises.artifact_id = artifacts.id WHERE student_id = '%s'", userID));
+
+            while (result.next()) {
+                Integer fundraiseID = result.getInt("fundraise_id");
+                String title = result.getString("title");
+                String name = result.getString("name");
+                Integer price = result.getInt("price");
+
+
+                Fundraise fundraise = new Fundraise(fundraiseID, title, name, price);
                 fundraiseStudentList.add(fundraise);
             }
         } catch (SQLException e) {

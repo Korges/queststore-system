@@ -1,4 +1,3 @@
-import DAO.StudentDAO;
 import controller.Admin.CreateGroup;
 import controller.AdminController;
 import controller.MainController;
@@ -7,14 +6,19 @@ import controller.Admin.CreateMentor;
 import controller.Admin.ListMentor;
 import controller.Mentor.CreateStudent;
 import controller.Mentor.EditStudent;
+import controller.Mentor.Fundraise.DeleteFundraise;
+import controller.Mentor.Fundraise.FinalizeFundraise;
+import controller.Mentor.Fundraise.ListAllFundraiseMentor;
 import controller.Mentor.ViewStudent;
 import controller.MentorController;
-import controller.Student.CreateFundraise;
-import controller.Student.JoinFundraise;
-import controller.Student.LeaveFundraise;
-import controller.Student.ListAllFundraise;
+import controller.Student.Fundraise.CreateFundraise;
+import controller.Student.Fundraise.JoinFundraise;
+import controller.Student.Fundraise.LeaveFundraise;
+import controller.Student.Fundraise.ListAllFundraiseStudent;
+import controller.Student.Store.BuyArtifact;
+import controller.Student.Store.ListBasicItems;
+import controller.Student.Store.ListUserInventory;
 import controller.StudentController;
-import models.Student;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -36,15 +40,23 @@ public class Main {
         server.createContext("/admin/mentor-list", new ListMentor());
         server.createContext("/admin/create-mentor", new CreateMentor());
         server.createContext("/admin/create-group", new CreateGroup());
+
         server.createContext("/mentor", new MentorController());
         server.createContext("/mentor/create-student", new CreateStudent());
         server.createContext("/mentor/edit-student", new EditStudent());
         server.createContext("/mentor/view-student", new ViewStudent());
+        server.createContext("/mentor/fundraise-list", new ListAllFundraiseMentor());
+        server.createContext("/mentor/delete-fundraise", new DeleteFundraise());
+        server.createContext("/mentor/finalize-fundraise", new FinalizeFundraise());
+
         server.createContext("/student", new StudentController());
-        server.createContext("/student/fundraise-list", new ListAllFundraise());
+        server.createContext("/student/fundraise-list", new ListAllFundraiseStudent());
         server.createContext("/student/create-fundraise", new CreateFundraise());
         server.createContext("/student/join-fundraise", new JoinFundraise());
         server.createContext("/student/leave-fundraise", new LeaveFundraise());
+        server.createContext("/student/basic-item-list", new ListBasicItems());
+        server.createContext("/student/buy-artifact", new BuyArtifact());
+        server.createContext("/student/user-inventory", new ListUserInventory());
 
 
 

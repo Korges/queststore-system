@@ -13,11 +13,12 @@ public class Inventory {
     private boolean isMagic;
 
 
-    public Inventory(Integer studentID, Integer artifactID, String date) {
+    public Inventory(Integer studentID, Integer artifactID, String date, Integer price) {
 
         this.studentID = studentID;
         this.artifactID = artifactID;
         this.date = date;
+        this.price = price;
     }
 
     public Inventory(String name, String description, String date, Integer price, boolean isMagic) {
@@ -41,23 +42,36 @@ public class Inventory {
         return date;
     }
 
-    public String toString() {
+    public Integer getPrice() { return price; }
 
-        StringJoiner joiner = new StringJoiner(" | ");
-        joiner.add("Name : " + name);
-        joiner.add("Description : " + description);
-        joiner.add("Date : " + date);
-        joiner.add("Price : " + price);
+    public String getName() { return name; }
 
+    public String getDescription() { return description; }
+
+    public String getCategory() {
         if(isMagic) {
-            joiner.add("Magic Item");
+            return "Magic Item";
+        } else {
+            return "Basic Item";
         }
-
-        else {
-            joiner.add("Basic Item");
-        }
-        String joinedString = joiner.toString();
-
-        return joinedString;
     }
+//    public String toString() {
+//
+//        StringJoiner joiner = new StringJoiner(" | ");
+//        joiner.add("Name : " + name);
+//        joiner.add("Description : " + description);
+//        joiner.add("Date : " + date);
+//        joiner.add("Price : " + price);
+//
+//        if(isMagic) {
+//            joiner.add("Magic Item");
+//        }
+//
+//        else {
+//            joiner.add("Basic Item");
+//        }
+//        String joinedString = joiner.toString();
+//
+//        return joinedString;
+//    }
 }

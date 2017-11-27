@@ -12,6 +12,14 @@ public class Fundraise {
     private String title;
     private String name;
 
+    public Fundraise() {
+
+    }
+
+    public Fundraise(Integer studentID) {
+        this.studentID = studentID;
+    }
+
 
     public Fundraise(Integer artifactID, String title) {
 
@@ -19,20 +27,11 @@ public class Fundraise {
         this.title = title;
     }
 
-    public Fundraise(Integer fundraiseID, Integer artifactID, String title, String name, Integer price) {
+
+
+    public Fundraise(Integer fundraiseID,  String title, String name, Integer price ) {
 
         this.fundraiseID = fundraiseID;
-        this.artifactID = artifactID;
-        this.title = title;
-        this.name = name;
-        this.price = price;
-    }
-
-    public Fundraise(Integer studentID, Integer fundraiseID, Integer artifactID, String title, String name, Integer price ) {
-
-        this.studentID = studentID;
-        this.fundraiseID = fundraiseID;
-        this.artifactID = artifactID;
         this.title = title;
         this.name = name;
         this.price = price;
