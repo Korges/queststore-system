@@ -1,0 +1,30 @@
+{% extends "classpath:/templates/student/nav.twig" %}
+
+{% block content %}
+    <div class="table-container">
+        <div class="header-container">
+                <h1>List All Quest</h1>
+            </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Quest ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Value</th>
+                <th>Experience</th>
+                <th>Category</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for element in data %}
+                    <tr>
+                        {% for record in element %}
+                        <td>{{ record }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

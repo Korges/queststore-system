@@ -8,7 +8,7 @@
     <div class="container">
         <form method="POST">
             <fieldset>
-                <select name="id">
+                <select name="id" required>
                     {% for element in data %}
                         <option value={{ element[0] }}>
                             {{ element[1] }}

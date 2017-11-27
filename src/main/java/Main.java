@@ -18,6 +18,7 @@ import controller.Student.Fundraise.CreateFundraise;
 import controller.Student.Fundraise.JoinFundraise;
 import controller.Student.Fundraise.LeaveFundraise;
 import controller.Student.Fundraise.ListAllFundraiseStudent;
+import controller.Student.Quest.ListAllQuestStudent;
 import controller.Student.Store.BuyArtifact;
 import controller.Student.Store.ListBasicItems;
 import controller.Student.Store.ListUserInventory;
@@ -65,6 +66,7 @@ public class Main {
         server.createContext("/student/basic-item-list", new ListBasicItems());
         server.createContext("/student/buy-artifact", new BuyArtifact());
         server.createContext("/student/user-inventory", new ListUserInventory());
+        server.createContext("/student/view-quest", new ListAllQuestStudent());
 
 
 
