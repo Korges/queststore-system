@@ -1,24 +1,18 @@
-package controller.Student.Fundraise;
+package controller.Mentor.Fundraise;
 
-import DAO.ArtifactDAO;
 import DAO.FundraiseDAO;
-import DAO.MentorDAO;
-import DAO.WebTemplateDao;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import models.Artifact;
 import models.Fundraise;
-import models.Mentor;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ListAllFundraise implements HttpHandler {
+public class ListAllFundraiseMentor implements HttpHandler {
 
 
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -51,7 +45,7 @@ public class ListAllFundraise implements HttpHandler {
         ArrayList<ArrayList<String>> data = createJtwigData(fundraiseList);
 
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/view-all-fundraise.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/view-all-fundraise.twig");
         JtwigModel model = JtwigModel.newModel();
 
         String response = "";
