@@ -197,19 +197,19 @@ public class MentorController implements HttpHandler{
 
             switch (choice) {
                 case "1": {
-                    listAllExistingFundraise();
+
                     break;
                 }
                 case "2": {
-                    listFundraiseMembers();
+
                     break;
                 }
                 case "3": {
-                    executeExistingMembers();
+
                     break;
                 }
                 case "4": {
-                    deleteFundraise();
+
                     break;
                 }
 
@@ -474,118 +474,17 @@ public class MentorController implements HttpHandler{
         }
     }
 
-    private void listAllExistingFundraise() {
-
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
-
-        if(fundraiseList.size() == 0){
-            UI.showMessage("Fundraise list is empty!");
-        } else {
-            for(Fundraise fundraise: fundraiseList){
-                System.out.println(fundraise.toString());
-            }
-        }
-    }
-
-    private void listFundraiseMembers() {
-
-        listAllExistingFundraise();
-        ArrayList<Fundraise> fundraiseStudentList = fundraiseDAO.getFundraisesStudents();
-
-        if (fundraiseStudentList.size() == 0) {
-            UI.showMessage("Fundraise Student list is empty!");
-        }
-        else {
-            Integer fundraiseID = UI.getInteger("Choose fundraise by ID");
-            for(Fundraise fundraise : fundraiseStudentList) {
-                System.out.println(fundraise.getTitle() + " members:");
-                if(fundraiseID.equals(fundraise.getFundraiseID())) {
-                    System.out.println(studentDAO.getStudentById(fundraise.getStudentID()).toString());
-                }
-                else {
-                    UI.showMessage("No members!");
-                }
-            }
-        }
-    }
-
-    private void deleteFundraise() {
-
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
-        listAllExistingFundraise();
-
-        if (fundraiseList.size() != 0) {
-            boolean isTrue = true;
-
-            while(isTrue) {
-                Integer fundraiseID = UI.getInteger("Choose Fundraise by ID to remove");
-                for(Fundraise fundraise: fundraiseList){
-                    if(fundraiseID.equals(fundraise.getFundraiseID())) {
-                        isTrue = false;
-                        fundraiseDAO.removeFundraise(fundraise);
-
-                    }
-                }
-
-            }
-        }
-    }
 
 
-    private void executeExistingMembers() throws SQLException{
-
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
-        listAllExistingFundraise();
-
-        if(fundraiseList.size() != 0) {
-            boolean toContinue = true;
-
-            while(toContinue) {
-                Integer fundraiseID = UI.getInteger("Choose Fundraise by ID to execute");
-                for(Fundraise fundraise: fundraiseList) {
-                    if(fundraiseID.equals(fundraise.getFundraiseID())) {
-                        toContinue = false;
-                        Integer amountStudents = countMembers(fundraiseID);
-                        Integer pricePerSinglePerson = pricePerOneStudent(amountStudents, fundraise.getPrice());
-                        buyMagicItem(fundraise, pricePerSinglePerson);
-                    }
-                }
-            }
-        }
-    }
-
-    private void buyMagicItem(Fundraise fundraise, Integer pricePerSinglePerson) throws SQLException{
-        ArrayList<Student> studentList = studentDAO.get();
-
-        for (Student student : studentList) {
-            if (student.getID().equals(fundraise.getStudentID())) {
-                if (student.wallet.getBalance() >= pricePerSinglePerson) {
-                    student.wallet.substract(pricePerSinglePerson);
-                    studentDAO.editWalletValue(student);
-                    Inventory inventory = new Inventory(student.getID(), fundraise.getArtifactID(), UI.getCurrentDate());
-                    inventoryDAO.add(inventory);
-                    fundraiseDAO.remove(fundraise);
-                    fundraiseDAO.removeFundraise(fundraise);
-                } else {
-                    UI.showMessage(student.getFullName() + " doesnt have enough money!");
-                    System.out.println(student.wallet.getBalance());
-                }
-            }
-
-        }
-    }
 
 
-    private Integer countMembers(Integer fundraiseID) {
-        Integer amountStudents = 0;
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
-        for(Fundraise student : fundraiseList) {
-            if(student.getFundraiseID().equals(fundraiseID)) {
-                amountStudents++;
-            }
-        }
-        return amountStudents;
-    }
+
+
+
+
+
+
+
 
     private Integer pricePerOneStudent(Integer amountStudents, Integer price) {
         Integer pricePerSinglePerson = price/amountStudents;

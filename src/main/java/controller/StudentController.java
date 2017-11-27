@@ -23,17 +23,18 @@ public class StudentController implements HttpHandler {
     private SubmissionDAO submissionDAO;
     private QuestDAO questDAO;
     private Student user;
+    static private String sessionIDFull;
 
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "";
         String method = httpExchange.getRequestMethod();
 
+
         try {
             String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
             String[] sessionID = cookieStr.split("sessionId=");
-            String sessionIDFull = sessionID[1].replace("\"", "");
+            sessionIDFull = sessionID[1].replace("\"", "");
 
-            System.out.println(Sessions.checkSession(sessionIDFull,"Student"));
 
 
             if (method.equals("GET") && Sessions.checkSession(sessionIDFull,"Student")) {
@@ -52,6 +53,11 @@ public class StudentController implements HttpHandler {
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
+    }
+
+    public static String getSession() {
+
+        return sessionIDFull;
     }
 
     public StudentController() throws SQLException {
@@ -90,155 +96,52 @@ public class StudentController implements HttpHandler {
     }
 
 
-    public void buyArtifact() throws SQLException {
-
-        ArrayList<Artifact> artifactList = artifactDAO.get();
-        listAllArtifacts();
-
-
-        if (artifactList.size() != 0) {
-
-            boolean isTrue = true;
-
-            while (isTrue) {
-
-                Integer ID = UI.getInteger("Choose Artifact by ID :");
-
-                for (Artifact artifact : artifactList) {
-
-                    if (ID.equals(artifact.getID())) {
-
-                        isTrue = false;
-
-                        if (checkEnoughBalance(artifact)) {
-
-                            if (UI.getBoolean("Do you want to buy : " + artifact.getName() + " ?")) {
-                                user.getWallet().substract(artifact.getPrice());
-                                studentDAO.editWalletValue(user);
-                                Inventory inventory = new Inventory(user.getID(), artifact.getID(), UI.getCurrentDate());
-                                inventoryDAO.add(inventory);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
-    public void createFundraise() throws SQLException {
-        ArrayList<Artifact> artifactList = artifactDAO.getMagicItems();
-        listAllMagicArtifacts();
-
-        if (artifactList.size() != 0) {
-
-            boolean isTrue = true;
-
-            while (isTrue) {
-
-                Integer ID = UI.getInteger("Choose Artifact by ID to create new Fundraise :");
-
-                for (Artifact artifact : artifactList) {
-
-                    if (ID.equals(artifact.getID())) {
-
-                        isTrue = false;
-                        String title = UI.getString("Enter Fundraise Title :");
-                        Fundraise fundraise = new Fundraise(artifact.getID(), title);
-                        fundraiseDAO.add(fundraise);
-                        fundraiseDAO.join(getFundraise(artifact), user);
-                    }
-                }
-            }
-        }
-    }
+//    public void buyArtifact() throws SQLException {
+//
+//        ArrayList<Artifact> artifactList = artifactDAO.get();
+//        listAllArtifacts();
+//
+//
+//        if (artifactList.size() != 0) {
+//
+//            boolean isTrue = true;
+//
+//            while (isTrue) {
+//
+//                Integer ID = UI.getInteger("Choose Artifact by ID :");
+//
+//                for (Artifact artifact : artifactList) {
+//
+//                    if (ID.equals(artifact.getID())) {
+//
+//                        isTrue = false;
+//
+//                        if (checkEnoughBalance(artifact)) {
+//
+//                            if (UI.getBoolean("Do you want to buy : " + artifact.getName() + " ?")) {
+//                                user.getWallet().substract(artifact.getPrice());
+//                                studentDAO.editWalletValue(user);
+//                                Inventory inventory = new Inventory(user.getID(), artifact.getID(), UI.getCurrentDate());
+//                                inventoryDAO.add(inventory);
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 
-    private Fundraise getFundraise(Artifact artifact) {
-        Fundraise foundFundraise = null;
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
-        for(Fundraise fundraise : fundraiseList) {
-            if(artifact.getID().equals(fundraise.getArtifactID())) {
-                foundFundraise = fundraise;
-            }
-        }
-    return foundFundraise;
-    }
-
-    private boolean isInFundraise(Student student_me) {
-        ArrayList<Fundraise> fundraiseStudentList = fundraiseDAO.getFundraisesStudents();
-        boolean bool = false;
-        for (Fundraise fundraise : fundraiseStudentList) {
-            if (student_me.getID().equals(fundraise.getStudentID())) {
-                bool = true;
-            }
-        }
-        return bool;
-    }
 
 
-    public void joinExistingFundraise() throws SQLException {
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
 
-        listAllExistingFundraise();
-        if (fundraiseList.size() != 0) {
-            boolean isTrue = true;
 
-            while (isTrue) {
 
-                Integer ID = UI.getInteger("Join Existing Fundraise by ID  :");
 
-                for (Fundraise fundraise : fundraiseList) {
-                    if (ID.equals(fundraise.getFundraiseID())) {
-                        isTrue = false;
-                        if (!isInFundraise(user)) {
-                            fundraiseDAO.join(fundraise, user);
-                        } else {
-                            UI.showMessage("You are already member of the same Fundraise!");
-                        }
-                    }
-                }
-            }
-        }
-    }
 
-    public void leaveFundraise() throws SQLException {
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
-        checkJoinedFundraises();
-        if (fundraiseList.size() != 0) {
-            boolean isTrue = true;
 
-            while (isTrue) {
 
-                Integer ID = UI.getInteger("Leave Fundraise by ID  :");
 
-                for (Fundraise fundraise : fundraiseList) {
-                    if (ID.equals(fundraise.getFundraiseID())) {
-                        isTrue = false;
-                        fundraiseDAO.remove(fundraise);
-                    }
-
-                }
-
-            }
-        }
-
-    }
-
-    private void checkJoinedFundraises() {
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraisesStudents();
-        if (fundraiseList.size() == 0) {
-            UI.showMessage("Fundraise list is empty!");
-        } else {
-            for (Fundraise fundraise : fundraiseList) {
-                if (user.getID().equals(fundraise.getStudentID())) {
-                    System.out.println(fundraise.toString());
-                } else {
-                    UI.showMessage("You are not member of any Fundraise!");
-                }
-            }
-        }
-    }
 
     private void walletPanel() {
         String choice;
@@ -289,33 +192,24 @@ public class StudentController implements HttpHandler {
         }
     }
 
-    private void listAllExistingFundraise() {
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.get();
-        if(fundraiseList.size() == 0){
-            UI.showMessage("Fundraise list is empty!");
-        } else {
-            for (Fundraise fundraise : fundraiseList) {
-                System.out.println(fundraise.toString());
-            }
-        }
-    }
 
 
-    public void checkStudentArtifacts() throws SQLException {
 
-        ArrayList<Inventory> inventoryList = inventoryDAO.getStudentInventory(user);
-        int no = 0;
-        if (inventoryList.size() == 0) {
-            UI.showMessage("Purchase list is empty!");
-        } else {
-            for (Inventory inventory : inventoryList) {
-                no++;
-                System.out.println(String.format("ID: %d | %s", no, inventory.toString()));
-
-
-            }
-        }
-    }
+//    public void checkStudentArtifacts() throws SQLException {
+//
+//        ArrayList<Inventory> inventoryList = inventoryDAO.getStudentInventory(user);
+//        int no = 0;
+//        if (inventoryList.size() == 0) {
+//            UI.showMessage("Purchase list is empty!");
+//        } else {
+//            for (Inventory inventory : inventoryList) {
+//                no++;
+//                System.out.println(String.format("ID: %d | %s", no, inventory.toString()));
+//
+//
+//            }
+//        }
+//    }
 
     private void submissionPanel() throws SQLException {
 

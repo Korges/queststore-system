@@ -134,7 +134,7 @@ public class UI {
 
     public static String getCurrentDate() {
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date date = new Date();
 
         return date.toString();
