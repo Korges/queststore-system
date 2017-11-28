@@ -67,7 +67,6 @@ public class FinalizeFundraise implements HttpHandler {
 
     private ArrayList<Fundraise> getFundraiseStudentList(Integer fundraiseID) throws SQLException {
         FundraiseDAO fundraiseDAO = new FundraiseDAO();
-
         ArrayList<Fundraise> fundraiseStudentList = fundraiseDAO.getFundraiseStudentList(fundraiseID);
 
         return fundraiseStudentList;
@@ -80,13 +79,6 @@ public class FinalizeFundraise implements HttpHandler {
             deleteFinalizedFundraise(fundraiseID);
             System.out.println("udało sie");
         }
-
-
-
-
-
-
-
     }
 
     private boolean checkSaldo(Integer fundraiseID) throws SQLException {

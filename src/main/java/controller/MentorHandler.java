@@ -109,7 +109,7 @@ public class MentorHandler implements HttpHandler {
     }
 
     private String getEditStudentResponse(String id) {
-        String response = "";
+        String response;
         try{
             StudentDAO studentDAO = new StudentDAO();
             Student student = studentDAO.getStudentById(Integer.parseInt(id));
@@ -151,8 +151,8 @@ public class MentorHandler implements HttpHandler {
         }
     }
 
-    public ArrayList<Student> getStudentList(){
-        StudentDAO studentDAO = null;
+    private ArrayList<Student> getStudentList(){
+        StudentDAO studentDAO;
         ArrayList<Student> studentList = null;
         try {
             studentDAO = new StudentDAO();
@@ -163,9 +163,9 @@ public class MentorHandler implements HttpHandler {
         return studentList;
     }
 
-    public ArrayList<Fundraise> getFundraiseList(){
+    private ArrayList<Fundraise> getFundraiseList(){
         ArrayList<Fundraise> fundraiseList = null;
-        FundraiseDAO fundraiseDAO = null;
+        FundraiseDAO fundraiseDAO;
         try {
             fundraiseDAO = new FundraiseDAO();
             fundraiseList =  fundraiseDAO.getFundraiseList();
@@ -176,7 +176,7 @@ public class MentorHandler implements HttpHandler {
     }
 
     private boolean deleteFundraise(Integer fundraiseID){
-        FundraiseDAO fundraiseDAO = null;
+        FundraiseDAO fundraiseDAO;
         try {
             fundraiseDAO = new FundraiseDAO();
             fundraiseDAO.deleteFundraise(fundraiseID);
