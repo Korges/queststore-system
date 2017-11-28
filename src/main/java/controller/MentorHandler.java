@@ -11,8 +11,6 @@ import controller.helpers.ResponseGenerator;
 import controller.helpers.Sessions;
 import models.Fundraise;
 import models.Student;
-import org.jtwig.JtwigTemplate;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
@@ -49,7 +47,7 @@ public class MentorHandler implements HttpHandler {
         if(path.equals("/mentor")){
             response = ResponseGenerator.generateModelResponse("templates/mentor/nav.twig");
         }
-        if(path.equals("/mentor/create-student")){
+        else if(path.equals("/mentor/create-student")){
             response = ResponseGenerator.generateModelResponse("templates/mentor/create-student.twig");
         }
         else if (path.equals("/mentor/view-student")) {
@@ -61,6 +59,10 @@ public class MentorHandler implements HttpHandler {
 
         else if(path.equals("/mentor/fundraise-list")){
             response = ResponseGenerator.generateModelResponse(getFundraiseList(),"fundraises","templates/mentor/view-all-fundraise.twig");
+        }
+
+        else if(path.equals("/mentor/delete-fundraise")){
+            response = ResponseGenerator.generateModelResponse(getFundraiseList(),"fundraises","templates/mentor/delete-fundraise.twig");
 
         }
 
@@ -78,7 +80,9 @@ public class MentorHandler implements HttpHandler {
         else if(path.equals("/mentor/view-student") && parsedForm.containsKey("first-name")){
             response = getHandleResponse(submitEditStudent(parsedForm));
         }
-
+        else if(path.equals("/mentor/delete-fundraise")){
+            response = getHandleResponse(deleteFundraise(Integer.parseInt(parsedForm.get("id"))));
+        }
         return response;
     }
 
@@ -166,8 +170,18 @@ public class MentorHandler implements HttpHandler {
         } catch (SQLException e) {
             return fundraiseList;
         }
-        System.out.println(fundraiseList);
         return fundraiseList;
+    }
 
+    private boolean deleteFundraise(Integer fundraiseID){
+        FundraiseDAO fundraiseDAO = null;
+        try {
+            fundraiseDAO = new FundraiseDAO();
+            fundraiseDAO.deleteFundraise(fundraiseID);
+            fundraiseDAO.deleteFundraiseStudents(fundraiseID);
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
     }
 }
