@@ -5,10 +5,7 @@ import DAO.StudentDAO;
 import DAO.WebTemplate;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import controller.helpers.HashSystem;
-import controller.helpers.ParseForm;
-import controller.helpers.ResponseGenerator;
-import controller.helpers.Sessions;
+import controller.helpers.*;
 import models.Fundraise;
 import models.Student;
 import java.io.IOException;
@@ -72,7 +69,7 @@ public class MentorHandler implements HttpHandler {
     }
 
     private String handleParsedPostResponse(String path, Map<String, String> parsedForm) {
-        String response = "";
+        String response = "sss";
         if(path.equals("/mentor/create-student")){
             response = getHandleResponse(createStudent(parsedForm));
         }
@@ -84,6 +81,12 @@ public class MentorHandler implements HttpHandler {
         }
         else if(path.equals("/mentor/delete-fundraise")){
             response = getHandleResponse(deleteFundraise(Integer.parseInt(parsedForm.get("id"))));
+        }
+        else if(path.equals("/mentor/finalize-fundraise")){
+            FundraiseHelper fundraiseHelper = new FundraiseHelper();
+            Integer fundraiseId = Integer.parseInt(parsedForm.get("id"));
+            boolean status = fundraiseHelper.finalizeFundraise(fundraiseId);
+            response = getHandleResponse(true);
         }
         return response;
     }

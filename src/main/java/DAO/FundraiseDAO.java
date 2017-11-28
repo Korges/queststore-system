@@ -46,6 +46,7 @@ public class FundraiseDAO {
 
     public void deleteFundraise(Integer fundraiseID) {
         String sql = String.format("DELETE FROM fundraises WHERE id = '%d'", fundraiseID);
+        System.out.println(sql);
          try {
              connect.addRecord(sql);
          } catch (SQLException e) {
@@ -56,6 +57,7 @@ public class FundraiseDAO {
 
     public void deleteFundraiseStudents(Integer fundraiseID) {
         String sql = String.format("DELETE FROM fundraises_students WHERE fundraise_id = '%d'", fundraiseID);
+        System.out.println(sql);
         try {
             connect.addRecord(sql);
         } catch (SQLException e) {
@@ -114,7 +116,10 @@ public class FundraiseDAO {
         ArrayList<Fundraise> fundraiseStudentList = new ArrayList<>();
         try {
 
-            ResultSet result = connect.getResult(String.format("SELECT * FROM fundraises_students WHERE fundraise_id = '%d'", fundraiseID));
+
+            String sql = String.format("SELECT * FROM fundraises_students WHERE fundraise_id = '%d'", fundraiseID);
+            System.out.println(sql);
+            ResultSet result = connect.getResult(String.format(sql));
 
             while (result.next()) {
                 Integer studentID = result.getInt("student_id");
@@ -124,7 +129,6 @@ public class FundraiseDAO {
             }
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
         }
         return fundraiseStudentList;
     }
