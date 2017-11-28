@@ -63,7 +63,9 @@ public class MentorHandler implements HttpHandler {
 
         else if(path.equals("/mentor/delete-fundraise")){
             response = ResponseGenerator.generateModelResponse(getFundraiseList(),"fundraises","templates/mentor/delete-fundraise.twig");
-
+        }
+        else if(path.equals("/mentor/finalize-fundraise")){
+            response = ResponseGenerator.generateModelResponse(getFundraiseList(),"fundraises","templates/mentor/finalize-fundraise.twig");
         }
 
         return response;
