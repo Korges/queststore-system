@@ -62,4 +62,26 @@ public class QuestDAO implements InterfaceDAO<Quest> {
         ResultSet result = connect.getResult(query);
         return result.next();
     }
+
+    public Quest getQuestById(int questID) throws SQLException {
+        {
+            Quest quest;
+            ConnectDB connectDB = DAO.ConnectDB.getInstance();
+
+            String sql = String.format("SELECT * FROM quests WHERE id = '%d'", questID);
+            ResultSet result = connect.getResult(sql);
+
+            Integer id = result.getInt("id");
+            String name = result.getString("name");
+            String description = result.getString("description");
+            Integer value = result.getInt("value");
+            Integer experience = result.getInt("experience");
+            String questCategory = result.getString("quest_category");
+
+            quest = new Quest(id, name, description, value, experience, questCategory);
+
+            return quest;
+        }
+
+    }
 }

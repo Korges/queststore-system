@@ -1,0 +1,39 @@
+{% extends "classpath:/templates/mentor/nav.twig" %}
+
+{% block content %}
+    <div class="table-container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>isMagic</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set ID = 1 %}
+            {% for artifact in artifacts%}
+            <tr>
+                <td>{{ID}}</td>
+                <td>{{artifact.id}}</td>
+                <td>{{artifact.name}}</td>
+                <td>{{artifact.price}}</td>
+                <td>{{artifact.description}}</td>
+                <td>{{artifact.isMagic}}</td>
+                <td>
+                    <form action = "" method = "post">
+                        <button type="submit" name="id" value="{{ artifact.id }}" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-cog">edit</span>
+                        </button>
+                    </form>
+                <td>
+            <tr>
+                {% set ID = ID + 1 %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

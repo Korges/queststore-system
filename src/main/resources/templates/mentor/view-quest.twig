@@ -1,0 +1,41 @@
+{% extends "classpath:/templates/mentor/nav.twig" %}
+
+{% block content %}
+    <div class="table-container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Id</th>
+                <th>Category</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Value</th>
+                <th>Experience</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set ID = 1 %}
+            {% for quest in quests%}
+            <tr>
+                <td>{{ID}}</td>
+                <td>{{quest.id}}</td>
+                <td>{{quest.category}}</td>
+                <td>{{quest.name}}</td>
+                <td>{{quest.description}}</td>
+                <td>{{quest.value}}</td>
+                <td>{{quest.experience}}</td>
+                <td>
+                    <form action = "" method = "post">
+                        <button type="submit" name="id" value="{{ quest.id }}" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-cog">edit</span>
+                        </button>
+                    </form>
+                <td>
+            <tr>
+                {% set ID = ID + 1 %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

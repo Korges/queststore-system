@@ -2,13 +2,11 @@ package controller.Student.Store;
 
 import DAO.ArtifactDAO;
 import DAO.ConnectDB;
-import DAO.FundraiseDAO;
 import DAO.InventoryDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.StudentController;
 import models.Artifact;
-import models.Fundraise;
 import models.Inventory;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -99,7 +97,7 @@ public class BuyArtifact implements HttpHandler {
     private Integer getArtifactPrice(Integer artifactID) throws SQLException {
 
         ArtifactDAO artifactDAO = new ArtifactDAO();
-        Integer artifactPrice = artifactDAO.getSingleArtifact(artifactID).getPrice();
+        Integer artifactPrice = artifactDAO.getArtifactById(artifactID).getPrice();
 
         return artifactPrice;
     }
