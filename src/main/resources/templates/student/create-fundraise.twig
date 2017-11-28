@@ -1,4 +1,4 @@
-{% extends "classpath:/templates/student/student-menu.twig" %}
+{% extends "classpath:/templates/student/nav.twig" %}
 
 {% block content %}
 <div class="main-container">
@@ -8,14 +8,14 @@
     <div class="container">
         <form method="POST">
             <fieldset>
-
-                Artifact ID<br>
-                <select name="id">
-                    {% for element in data %}
-                        <option value={{ element[0] }}>
-                            {{ element[1] }}
-                        </option>
-                    {% endfor %}
+                Artifact<br>
+                    <select name ="id">
+                        {% for artifact in magicItemList %}
+                            <option value={{ artifact.id }}>
+                                {{ artifact.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 Fundraise Title<br>
                 <input type="text" placeholder="Enter Title" name = "title"><br>
                 <input type="submit" value="Submit">
