@@ -3,8 +3,6 @@ package controller.Mentor.Fundraise;
 import DAO.FundraiseDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import controller.StudentController;
-import models.Artifact;
 import models.Fundraise;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
