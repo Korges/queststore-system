@@ -39,14 +39,16 @@ public class Main {
         server.createContext("/static", new Static());
 
         server.createContext("/admin", new AdminHandler());
+        server.createContext("/mentor", new MentorHandler());
 
-        server.createContext("/mentor", new MentorController());
-        server.createContext("/mentor/create-student", new CreateStudent());
-        server.createContext("/mentor/edit-student", new EditStudent());
-        server.createContext("/mentor/view-student", new ViewStudent());
-        server.createContext("/mentor/fundraise-list", new ListAllFundraiseMentor());
-        server.createContext("/mentor/delete-fundraise", new DeleteFundraise());
-        server.createContext("/mentor/finalize-fundraise", new FinalizeFundraise());
+
+//        server.createContext("/mentor", new MentorController());
+//        server.createContext("/mentor/create-student", new CreateStudent());
+//        server.createContext("/mentor/edit-student", new EditStudent());
+//        server.createContext("/mentor/view-student", new ViewStudent());
+//        server.createContext("/mentor/fundraise-list", new ListAllFundraiseMentor());
+//        server.createContext("/mentor/delete-fundraise", new DeleteFundraise());
+//        server.createContext("/mentor/finalize-fundraise", new FinalizeFundraise());
 
         server.createContext("/student", new StudentController());
         server.createContext("/student/fundraise-list", new ListAllFundraiseStudent());

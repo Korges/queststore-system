@@ -1,5 +1,10 @@
 package controller.helpers;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -17,5 +22,21 @@ public class ParseForm {
             map.put(keyValue[0], value);
         }
         return map;
+    }
+
+    public static Map<String, String> parsePost(HttpExchange httpExchange) throws IOException {
+        InputStreamReader inputStreamReader;
+        Map<String, String> inputs = null;
+        try {
+            inputStreamReader = new InputStreamReader(httpExchange.getRequestBody(),
+                    "utf-8");
+            BufferedReader br = new BufferedReader(inputStreamReader);
+            String formData = br.readLine();
+            System.out.println(formData);
+            inputs = ParseForm.parseFormData(formData);
+        } catch (UnsupportedEncodingException e) {
+            return inputs;
+        }
+        return inputs;
     }
 }
