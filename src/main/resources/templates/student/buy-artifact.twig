@@ -1,4 +1,4 @@
-{% extends "classpath:/templates/student/student-menu.twig" %}
+{% extends "classpath:/templates/student/nav.twig" %}
 
 {% block content %}
 <div class="main-container">
@@ -9,9 +9,9 @@
         <form method="POST">
             <fieldset>
                 <select name="id">
-                    {% for element in data %}
-                        <option value={{ element[0] }}>
-                            {{ element[1] }}
+                    {% for artifact in basicItemList %}
+                        <option value={{ artifact.id }}>
+                            {{ artifact.name }}
                         </option>
                     {% endfor %}
                     <input type="submit" value="Submit">
