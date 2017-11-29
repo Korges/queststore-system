@@ -76,6 +76,27 @@ public class SubmissionDAO implements InterfaceDAO<Submission> {
         return submissionList;
     }
 
+    public ArrayList<Submission> getUnfinishedSubmission() throws SQLException {
+
+        ArrayList<Submission> unfinishedSubmissionList = new ArrayList<>();
+        String query = String.format("SELECT * from submissions WHERE is_marked = 0;");
+        ResultSet result = connect.getResult(query);
+        while (result.next()) {
+            Submission submission = createSubmission(result);
+            unfinishedSubmissionList.add(submission);
+
+        }
+
+        return unfinishedSubmissionList;
+    }
+
+    public void completeSubmission(Integer submissionID) throws SQLException {
+
+        String query = String.format("UPDATE submissions SET is_marked = '1' WHERE id = '%d';", submissionID);
+        connect.addRecord(query);
+    }
+
+
 
 
     public void set(Submission submission) throws SQLException{
@@ -93,10 +114,5 @@ public class SubmissionDAO implements InterfaceDAO<Submission> {
         return dbResult.getInt("value");
     }
 
-    public Boolean checkAlreadySubmitted(Integer questId, Integer studentId) throws SQLException{
 
-        String query = String.format("SELECT id FROM submissions WHERE quest_id = '%d' AND student_id = '%d';", questId, studentId);
-        ResultSet result = connect.getResult(query);
-        return result.next();
-    }
 }

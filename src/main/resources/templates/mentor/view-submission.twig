@@ -1,0 +1,33 @@
+{% extends "classpath:/templates/mentor/nav.twig" %}
+
+{% block content %}
+    <div class="table-container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>description</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for submission in unfinishedSubmissionList%}
+            <tr>
+                <td>{{submission.id}}</td>
+                <td>{{submission.questId}}</td>
+                <td>{{submission.studentId}}</td>
+                <td>{{submission.description}}</td>
+                <td>
+                    <form action = "" method ="POST">
+                        <button type="submit" name="id" value="{{ submission.id }}" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-cog">Complete</span>
+                        </button>
+                    </form>
+                <td>
+            <tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
