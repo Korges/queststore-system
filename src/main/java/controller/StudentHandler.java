@@ -24,18 +24,17 @@ public class StudentHandler implements HttpHandler {
         String path = uri.getPath();
         String response = "";
         String method = httpExchange.getRequestMethod();
-        String sessionId = getSessionIdFromCookie(httpExchange);
+        String sessionId = Sessions.getSessionIdFromCookie(httpExchange);
         Student student = getStudentModel(sessionId);
 
         if (method.equals("GET") && Sessions.checkSession(sessionId, "Student")) {
 
-                response = getResponse(path, student);
+            response = getResponse(path, student);
 
         } else if (method.equals("POST")) {
-            Map<String, String> parsedPost = parsePost(httpExchange);
+            Map<String, String> parsedPost = ParseForm.parsePost(httpExchange);
             response = handleParsedPostResponse(path, parsedPost, student);
-        }
-        else{
+        } else {
             Sessions.redirect(httpExchange);
         }
         httpExchange.sendResponseHeaders(200, 0);
@@ -45,54 +44,42 @@ public class StudentHandler implements HttpHandler {
     }
 
     private String getHandleResponse(boolean handleStatus) {
-        if(handleStatus){
+        if (handleStatus) {
             return WebTemplate.getSiteContent("templates/success-student.twig");
-        }
-        else{
+        } else {
             return WebTemplate.getSiteContent("templates/error-sql-student.twig");
         }
     }
 
-    public String getResponse(String path,Student student) {
+    public String getResponse(String path, Student student) {
         FundraisePanel fundraise = new FundraisePanel();
         StorePanel store = new StorePanel();
         QuestPanel quest = new QuestPanel();
 
         String response = "";
-        if(path.equals("/student")){
-            response = ResponseGenerator.generateModelResponse(student,"user","templates/student/nav.twig");
-        }
-        else if (path.equals("/student/create-fundraise")) {
+        if (path.equals("/student")) {
+            response = ResponseGenerator.generateModelResponse(student, "user", "templates/student/nav.twig");
+        } else if (path.equals("/student/create-fundraise")) {
             response = ResponseGenerator.generateModelResponse(fundraise.getMagicItemList(), "magicItemList", "templates/student/create-fundraise.twig");
-        }
-        else if (path.equals("/student/join-fundraise")) {
+        } else if (path.equals("/student/join-fundraise")) {
             response = ResponseGenerator.generateModelResponse(fundraise.getFundraiseList(), "fundraiseList", "templates/student/join-fundraise.twig");
-        }
-        else if (path.equals("/student/leave-fundraise")) {
+        } else if (path.equals("/student/leave-fundraise")) {
             response = ResponseGenerator.generateModelResponse(fundraise.getJoinedFundraiseList(student.getID()), "joinedFundraiseList", "templates/student/leave-fundraise.twig");
-        }
-        else if (path.equals("/student/view-fundraise")) {
+        } else if (path.equals("/student/view-fundraise")) {
             response = ResponseGenerator.generateModelResponse(fundraise.getFundraiseList(), "fundraiseList", "templates/student/view-fundraise.twig");
-        }
-        else if( path.equals("/student/buy-artifact")) {
+        } else if (path.equals("/student/buy-artifact")) {
             response = ResponseGenerator.generateModelResponse(store.getBasicItemList(), "basicItemList", "templates/student/buy-artifact.twig");
-        }
-        else if(path.equals("/student/view-basic-items")) {
+        } else if (path.equals("/student/view-basic-items")) {
             response = ResponseGenerator.generateModelResponse(store.getBasicItemList(), "basicItemList", "templates/student/view-basic-items.twig");
-        }
-        else if(path.equals("/student/view-inventory")) {
+        } else if (path.equals("/student/view-inventory")) {
             response = ResponseGenerator.generateModelResponse(store.getStudentInventoryList(student), "inventoryList", "templates/student/view-inventory.twig");
-        }
-        else if(path.equals("/student/view-quest")) {
+        } else if (path.equals("/student/view-quest")) {
             response = ResponseGenerator.generateModelResponse(quest.getQuestList(), "questList", "templates/student/view-quest.twig");
-        }
-        else if(path.equals("/student/create-submission")) {
+        } else if (path.equals("/student/create-submission")) {
             response = ResponseGenerator.generateModelResponse(quest.getQuestList(), "questList", "templates/student/complete-quest.twig");
-        }
-        else if(path.equals("/student/view-student-submission")) {
+        } else if (path.equals("/student/view-student-submission")) {
             response = ResponseGenerator.generateModelResponse(quest.getSubmissionList(student), "submissionList", "templates/student/view-student-submission.twig");
         }
-
 
 
         return response;
@@ -106,42 +93,18 @@ public class StudentHandler implements HttpHandler {
 
         if (path.equals("/student/create-fundraise")) {
             response = getHandleResponse(fundraise.createFundraise(parsedForm));
-        }
-        else if (path.equals("/student/join-fundraise")) {
+        } else if (path.equals("/student/join-fundraise")) {
 
             response = getHandleResponse(fundraise.joinFundraise(parsedForm, student));
-        }
-        else if (path.equals("/student/leave-fundraise")) {
+        } else if (path.equals("/student/leave-fundraise")) {
             response = getHandleResponse(fundraise.leaveFundraise(parsedForm, student));
-        }
-        else if (path.equals("/student/buy-artifact")) {
+        } else if (path.equals("/student/buy-artifact")) {
             response = getHandleResponse(store.buyArtifact(parsedForm, student));
-        }
-        else if (path.equals("/student/create-submission")) {
+        } else if (path.equals("/student/create-submission")) {
             response = getHandleResponse(quest.createSubmission(parsedForm, student));
         }
-            return response;
-        }
-
-
-
-
-    public Map<String, String> parsePost(HttpExchange httpExchange) throws IOException {
-        InputStreamReader inputStreamReader;
-        Map<String,String> inputs = null;
-        try {
-            inputStreamReader = new InputStreamReader(httpExchange.getRequestBody(),
-                    "utf-8");
-            BufferedReader br = new BufferedReader(inputStreamReader);
-            String formData = br.readLine();
-            System.out.println(formData);
-            inputs = ParseForm.parseFormData(formData);
-        } catch (UnsupportedEncodingException e) {
-            return inputs;
-        }
-        return inputs;
+        return response;
     }
-
 
 
     private Student getStudentModel(String session) {
@@ -155,17 +118,4 @@ public class StudentHandler implements HttpHandler {
         }
         return student;
     }
-
-    public String getSessionIdFromCookie(HttpExchange httpExchange) throws IOException {
-        String sessionIDFull = "";
-        try {
-            String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
-            String[] sessionID = cookieStr.split("sessionId=");
-            sessionIDFull= sessionID[1].replace("\"", "");
-        }catch (NullPointerException e){
-            return sessionIDFull;
-        }
-        return sessionIDFull;
-    }
-
 }
