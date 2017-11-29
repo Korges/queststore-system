@@ -233,13 +233,10 @@ public class MentorHandler implements HttpHandler {
             String lastName = parsedForm.get("last-name");
             String email = parsedForm.get("email");
             String password = parsedForm.get("password");
-            String passwordHash = HashSystem.getStringFromSHA256(password);
             String klass = parsedForm.get("class");
-            Student student = new Student(id,firstName,lastName,email,passwordHash,klass);
+            Student student = new Student(id,firstName,lastName,email,password,klass);
             studentDAO.set(student);
         } catch (SQLException e) {
-            return false;
-        } catch (NoSuchAlgorithmException e) {
             return false;
         }
         return true;
