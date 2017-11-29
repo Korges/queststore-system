@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.Mentor.Fundraise.FundraiseHelper;
 import controller.Mentor.Quest.QuestPanel;
+import controller.Mentor.Submission.SubmissionPanel;
 import controller.helpers.*;
 import models.*;
 import java.io.IOException;
@@ -42,6 +43,7 @@ public class MentorHandler implements HttpHandler {
     private String getResponse(String path) {
         String response = "";
         QuestPanel quest = new QuestPanel();
+        SubmissionPanel submission = new SubmissionPanel();
         if(path.equals("/mentor")){
             response = ResponseGenerator.generateModelResponse("templates/mentor/nav.twig");
         }
@@ -49,11 +51,9 @@ public class MentorHandler implements HttpHandler {
             response = ResponseGenerator.generateModelResponse("templates/mentor/create-artifact.twig");
         }
         else if(path.equals("/mentor/create-student")){
-
             response = ResponseGenerator.generateModelResponse("templates/mentor/create-student.twig");
         }
         else if(path.equals("/mentor/create-quest")){
-            System.out.println("jestem w gecie");
             response = ResponseGenerator.generateModelResponse("templates/mentor/create-quest.twig");
         }
         else if (path.equals("/mentor/view-artifact")) {
@@ -65,11 +65,9 @@ public class MentorHandler implements HttpHandler {
         else if (path.equals("/mentor/view-quest")) {
             response = ResponseGenerator.generateModelResponse(quest.getQuests(),"quests","templates/mentor/view-quest.twig");
         }
-
         else if(path.equals("/mentor/fundraise-list")){
             response = ResponseGenerator.generateModelResponse(getFundraiseList(),"fundraises","templates/mentor/view-all-fundraise.twig");
         }
-
         else if(path.equals("/mentor/delete-fundraise")){
             response = ResponseGenerator.generateModelResponse(getFundraiseList(),"fundraises","templates/mentor/delete-fundraise.twig");
         }
@@ -78,6 +76,9 @@ public class MentorHandler implements HttpHandler {
         }
         else if(path.equals("/mentor/finalize-fundraise")){
             response = ResponseGenerator.generateModelResponse(getFundraiseList(),"fundraises","templates/mentor/finalize-fundraise.twig");
+        }
+        else if(path.equals("/mentor/view-submission")) {
+            response = ResponseGenerator.generateModelResponse(submission.getUnfinishedSubmissionList(), "unfinishedSubmissionList", "templates/mentor/view-submission.twig");
         }
 
         return response;
@@ -101,6 +102,7 @@ public class MentorHandler implements HttpHandler {
         String response = "sss";
         FundraiseHelper fundraiseHelper = new FundraiseHelper();
         QuestPanel quest = new QuestPanel();
+        SubmissionPanel submission = new SubmissionPanel();
         if(path.equals("/mentor/create-student")){
             response = getHandleResponse(createStudent(parsedForm));
         }
@@ -108,7 +110,6 @@ public class MentorHandler implements HttpHandler {
             response = getHandleResponse(createArtifact(parsedForm));
         }
         else if(path.equals("/mentor/create-quest")){
-            System.out.println("jestem");
             response = getHandleResponse(quest.addNewQuestToDatabase(parsedForm));
         }
         else if(path.equals("/mentor/view-student") && !parsedForm.containsKey("first-name")){
@@ -137,6 +138,9 @@ public class MentorHandler implements HttpHandler {
         }
         else if(path.equals("/mentor/delete-quest")) {
             response = getHandleResponse(quest.deleteQuest(parsedForm));
+        }
+        else if(path.equals("/mentor/view-submission")) {
+            response = getHandleResponse(submission.completeSubmission(parsedForm));
         }
         return response;
     }
