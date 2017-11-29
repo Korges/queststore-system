@@ -37,6 +37,7 @@ public class QuestPanel {
         try {
             submissionDAO = new SubmissionDAO();
             submissionDAO.add(submission);
+            status = true;
 
         } catch (SQLException e) {
             e.printStackTrace();
