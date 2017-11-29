@@ -31,6 +31,19 @@ public class ResponseGenerator {
         return "a";
     }
 
+    public static String generateModelResponse(Object object, String alias, Object object2, String alias2, String URL) {
+        try {
+            JtwigTemplate template = JtwigTemplate.classpathTemplate(URL);
+            JtwigModel model = JtwigModel.newModel();
+            model.with(alias, object);
+            model.with(alias2, object2);
+            return template.render(model);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return "a";
+    }
+
     public static String generateModelResponse(String URL){
         JtwigTemplate template = JtwigTemplate.classpathTemplate(URL);
         JtwigModel model = JtwigModel.newModel();
