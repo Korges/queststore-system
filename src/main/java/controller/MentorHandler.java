@@ -3,6 +3,7 @@ package controller;
 import DAO.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import controller.Mentor.Fundraise.FundraiseHelper;
 import controller.helpers.*;
 import models.*;
 import java.io.IOException;
@@ -100,16 +101,14 @@ public class MentorHandler implements HttpHandler {
 
     private String handleParsedPostResponse(String path, Map<String, String> parsedForm) {
         String response = "sss";
+        FundraiseHelper fundraiseHelper = new FundraiseHelper();
         if(path.equals("/mentor/create-student")){
             response = getHandleResponse(createStudent(parsedForm));
         }
         else if(path.equals("/mentor/create-artifact")){
-            //todo
-
             response = getHandleResponse(createArtifact(parsedForm));
         }
         else if(path.equals("/mentor/create-quest")){
-            //todo
             response = getHandleResponse(createQuest(parsedForm));
         }
         else if(path.equals("/mentor/view-student") && !parsedForm.containsKey("first-name")){
@@ -134,10 +133,7 @@ public class MentorHandler implements HttpHandler {
             response = getHandleResponse(deleteFundraise(Integer.parseInt(parsedForm.get("id"))));
         }
         else if(path.equals("/mentor/finalize-fundraise")){
-            FundraiseHelper fundraiseHelper = new FundraiseHelper();
-            Integer fundraiseId = Integer.parseInt(parsedForm.get("id"));
-            boolean status = fundraiseHelper.finalizeFundraise(fundraiseId);
-            response = getHandleResponse(true);
+            response = getHandleResponse(fundraiseHelper.finalizeFundraise(parsedForm));
         }
         return response;
     }
