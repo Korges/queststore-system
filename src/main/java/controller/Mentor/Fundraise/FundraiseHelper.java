@@ -1,4 +1,4 @@
-package controller.helpers;
+package controller.Mentor.Fundraise;
 
 import DAO.ConnectDB;
 import DAO.FundraiseDAO;
@@ -11,8 +11,27 @@ import models.Inventory;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class FundraiseHelper {
+
+
+    public boolean finalizeFundraise(Map<String, String> parsedForm) {
+
+        boolean status = false;
+        Integer fundraiseID = Integer.valueOf(parsedForm.get("id"));
+
+        try {
+            if (checkSaldo(fundraiseID)) {
+                addFundraiseToInventory(fundraiseID);
+                deleteFinalizedFundraise(fundraiseID);
+                status = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
 
 
     private boolean checkSaldo(Integer fundraiseID) throws SQLException {
@@ -27,9 +46,9 @@ public class FundraiseHelper {
             }
         }
         return true;
-
     }
 
+    
     private Integer countPricePerStudent(Integer fundraiseID) throws SQLException {
 
         FundraiseDAO fundraiseDAO = new FundraiseDAO();
@@ -40,6 +59,7 @@ public class FundraiseHelper {
 
         return pricePerOneStudent;
     }
+
 
     private void addFundraiseToInventory(Integer fundraiseID) throws SQLException {
 
@@ -55,10 +75,9 @@ public class FundraiseHelper {
             Integer studentID = fundraise.getStudentID();
             Inventory inventory = new Inventory(studentID, artifactID, date, price);
             inventoryDAO.add(inventory);
-
-
         }
     }
+
 
     private ArrayList<Fundraise> getFundraiseStudentList(Integer fundraiseID) throws SQLException {
         FundraiseDAO fundraiseDAO = new FundraiseDAO();
@@ -67,20 +86,6 @@ public class FundraiseHelper {
         return fundraiseStudentList;
     }
 
-    public boolean finalizeFundraise(Integer fundraiseID) {
-        boolean status = false;
-        try {
-            if(checkSaldo(fundraiseID)) {
-                addFundraiseToInventory(fundraiseID);
-                deleteFinalizedFundraise(fundraiseID);
-                status = true;
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-            return status;
-        }
-        return status;
-    }
 
     private void deleteFinalizedFundraise(Integer fundraiseID) throws SQLException {
 
@@ -89,6 +94,7 @@ public class FundraiseHelper {
         fundraiseDAO.deleteFundraiseStudents(fundraiseID);
 
     }
+
 
     private Integer getArtifactID(Integer fundraiseID) throws SQLException {
 
@@ -101,6 +107,4 @@ public class FundraiseHelper {
 
         return artifactID;
     }
-
-
 }
