@@ -58,7 +58,7 @@ public class StudentHandler implements HttpHandler {
 
         String response = "";
         if (path.equals("/student")) {
-            response = ResponseGenerator.generateModelResponse(student, "user", "templates/student/nav.twig");
+            response = ResponseGenerator.generateModelResponse(student, "user", "templates/student/profile.twig");
         } else if (path.equals("/student/create-fundraise")) {
             response = ResponseGenerator.generateModelResponse(student, "user", fundraise.getMagicItemList(), "magicItemList", "templates/student/create-fundraise.twig");
         } else if (path.equals("/student/join-fundraise")) {
