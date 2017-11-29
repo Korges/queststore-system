@@ -1,5 +1,12 @@
 {% extends "classpath:/templates/index.twig" %}
 
+{% block mainpage %}
+    <div class="logo-main">
+        <a href="/mentor" title="Go to Main Page">
+            <img src="../static/img/cc-logo.png">
+        </a>
+    </div>
+{% endblock %}
 {% block menu %}
     <ul>
         <li class="list-header">Student Panel</li>

@@ -13,7 +13,8 @@
     <body>
           <div class="main-panel">
           <!--<header>-->
-              <div class="logo-main"><img src="../static/img/cc-logo.png"></div>
+              {% block mainpage %}
+              {% endblock %}
               <div class="logo-bb">bB</div>
               <div class="status-page">HOMEPAGE</div>
               <div class="status-user">USER: {{ user.firstName }} {{ user.lastName }}<br>ID: {{ user.id }}</div>
