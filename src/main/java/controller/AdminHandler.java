@@ -185,13 +185,10 @@ public class AdminHandler  implements HttpHandler {
         String lastName = parsedForm.get("last-name");
         String email = parsedForm.get("email");
         String password = parsedForm.get("password");
-        String passwordHash = HashSystem.getStringFromSHA256(password);
         String klass = parsedForm.get("class");
-        Mentor mentor = new Mentor(id,firstName, lastName, email, passwordHash, klass);
+        Mentor mentor = new Mentor(id,firstName, lastName, email, password, klass);
         mentorDAO.set(mentor);
     } catch (SQLException e) {
-        return false;
-    } catch (NoSuchAlgorithmException e) {
         return false;
     }
         return true;
