@@ -119,16 +119,17 @@ public class FundraiseDAO {
 
             String sql = String.format("SELECT * FROM fundraises_students WHERE fundraise_id = '%d'", fundraiseID);
             System.out.println(sql);
-            ResultSet result = connect.getResult(String.format(sql));
+            ResultSet result = connect.getResult(sql);
 
             while (result.next()) {
                 Integer studentID = result.getInt("student_id");
 
                 Fundraise fundraise = new Fundraise(studentID);
                 fundraiseStudentList.add(fundraise);
+                System.out.println(fundraiseStudentList);
             }
         } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.err.println(e.getClass().getName() + ":dupa " + e.getMessage());
         }
         return fundraiseStudentList;
     }
