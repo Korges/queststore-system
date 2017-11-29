@@ -48,7 +48,7 @@ public class FundraiseHelper {
         return true;
     }
 
-    
+
     private Integer countPricePerStudent(Integer fundraiseID) throws SQLException {
 
         FundraiseDAO fundraiseDAO = new FundraiseDAO();
