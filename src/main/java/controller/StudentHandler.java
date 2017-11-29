@@ -46,10 +46,10 @@ public class StudentHandler implements HttpHandler {
 
     private String getHandleResponse(boolean handleStatus) {
         if(handleStatus){
-            return WebTemplate.getSiteContent("templates/success-mentor.twig");
+            return WebTemplate.getSiteContent("templates/success-student.twig");
         }
         else{
-            return WebTemplate.getSiteContent("templates/error-sql.twig");
+            return WebTemplate.getSiteContent("templates/error-sql-student.twig");
         }
     }
 
