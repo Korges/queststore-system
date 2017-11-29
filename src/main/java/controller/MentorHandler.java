@@ -4,6 +4,7 @@ import DAO.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.Mentor.Fundraise.FundraiseHelper;
+import controller.Mentor.Quest.QuestPanel;
 import controller.helpers.*;
 import models.*;
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class MentorHandler implements HttpHandler {
 
     private String getResponse(String path) {
         String response = "";
+        QuestPanel quest = new QuestPanel();
         if(path.equals("/mentor")){
             response = ResponseGenerator.generateModelResponse("templates/mentor/nav.twig");
         }
@@ -47,9 +49,11 @@ public class MentorHandler implements HttpHandler {
             response = ResponseGenerator.generateModelResponse("templates/mentor/create-artifact.twig");
         }
         else if(path.equals("/mentor/create-student")){
+
             response = ResponseGenerator.generateModelResponse("templates/mentor/create-student.twig");
         }
         else if(path.equals("/mentor/create-quest")){
+            System.out.println("jestem w gecie");
             response = ResponseGenerator.generateModelResponse("templates/mentor/create-quest.twig");
         }
         else if (path.equals("/mentor/view-artifact")) {
@@ -59,7 +63,7 @@ public class MentorHandler implements HttpHandler {
             response = ResponseGenerator.generateModelResponse(getStudentList(),"students","templates/mentor/view-student.twig");
         }
         else if (path.equals("/mentor/view-quest")) {
-            response = ResponseGenerator.generateModelResponse(getQuests(),"quests","templates/mentor/view-quest.twig");
+            response = ResponseGenerator.generateModelResponse(quest.getQuests(),"quests","templates/mentor/view-quest.twig");
         }
 
         else if(path.equals("/mentor/fundraise-list")){
@@ -69,6 +73,9 @@ public class MentorHandler implements HttpHandler {
         else if(path.equals("/mentor/delete-fundraise")){
             response = ResponseGenerator.generateModelResponse(getFundraiseList(),"fundraises","templates/mentor/delete-fundraise.twig");
         }
+        else if(path.equals("/mentor/delete-quest")) {
+            response = ResponseGenerator.generateModelResponse(quest.getFullQuestList(),"questList","templates/mentor/delete-quest.twig");
+        }
         else if(path.equals("/mentor/finalize-fundraise")){
             response = ResponseGenerator.generateModelResponse(getFundraiseList(),"fundraises","templates/mentor/finalize-fundraise.twig");
         }
@@ -76,16 +83,7 @@ public class MentorHandler implements HttpHandler {
         return response;
     }
 
-    private List<Quest> getQuests() {
-        List<Quest> quests = null;
-        try {
-            QuestDAO questDAO = new QuestDAO();
-            quests = questDAO.get();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return quests;
-    }
+
 
     private List<Artifact> getArtifacts() {
         List<Artifact> artifacts = null;
@@ -102,6 +100,7 @@ public class MentorHandler implements HttpHandler {
     private String handleParsedPostResponse(String path, Map<String, String> parsedForm) {
         String response = "sss";
         FundraiseHelper fundraiseHelper = new FundraiseHelper();
+        QuestPanel quest = new QuestPanel();
         if(path.equals("/mentor/create-student")){
             response = getHandleResponse(createStudent(parsedForm));
         }
@@ -109,7 +108,8 @@ public class MentorHandler implements HttpHandler {
             response = getHandleResponse(createArtifact(parsedForm));
         }
         else if(path.equals("/mentor/create-quest")){
-            response = getHandleResponse(createQuest(parsedForm));
+            System.out.println("jestem");
+            response = getHandleResponse(quest.addNewQuestToDatabase(parsedForm));
         }
         else if(path.equals("/mentor/view-student") && !parsedForm.containsKey("first-name")){
             response = getEditStudentResponse(parsedForm.get("id"));
@@ -135,13 +135,12 @@ public class MentorHandler implements HttpHandler {
         else if(path.equals("/mentor/finalize-fundraise")){
             response = getHandleResponse(fundraiseHelper.finalizeFundraise(parsedForm));
         }
+        else if(path.equals("/mentor/delete-quest")) {
+            response = getHandleResponse(quest.deleteQuest(parsedForm));
+        }
         return response;
     }
 
-    private boolean createQuest(Map<String, String> parsedForm) {
-        //todo
-        return true;
-    }
 
     private boolean createArtifact(Map<String, String> parsedForm) {
         //todo
