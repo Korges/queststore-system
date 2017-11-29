@@ -52,4 +52,16 @@ public class Sessions {
 
         return id;
     }
+
+    public static String getSessionIdFromCookie(HttpExchange httpExchange) throws IOException {
+        String sessionIDFull = "";
+        try {
+            String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+            String[] sessionID = cookieStr.split("sessionId=");
+            sessionIDFull= sessionID[1].replace("\"", "");
+        }catch (NullPointerException e){
+            return sessionIDFull;
+        }
+        return sessionIDFull;
+    }
 }

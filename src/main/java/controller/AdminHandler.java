@@ -30,14 +30,14 @@ public class AdminHandler  implements HttpHandler {
         String path = uri.getPath();
         String response = "";
         String method = httpExchange.getRequestMethod();
-        String sessionId = getSessionIdFromCookie(httpExchange);
+        String sessionId = Sessions.getSessionIdFromCookie(httpExchange);
         Admin admin = getAdminModel(sessionId);
 
         if (method.equals("GET") && Sessions.checkSession(sessionId,"Admin")) {
             response = getResponse(path,admin);
         }
         else if (method.equals("POST")){
-            Map<String,String> parsedPost = parsePost(httpExchange);
+            Map<String,String> parsedPost = ParseForm.parsePost(httpExchange);
             response = handleParsedPostResponse(path,parsedPost);
         }
         else{
@@ -252,33 +252,6 @@ public class AdminHandler  implements HttpHandler {
         return status;
     }
 
-    public Map<String, String> parsePost(HttpExchange httpExchange) throws IOException {
-        InputStreamReader inputStreamReader;
-        Map<String,String> inputs = null;
-        try {
-            inputStreamReader = new InputStreamReader(httpExchange.getRequestBody(),
-                    "utf-8");
-            BufferedReader br = new BufferedReader(inputStreamReader);
-            String formData = br.readLine();
-            System.out.println(formData);
-            inputs = ParseForm.parseFormData(formData);
-        } catch (UnsupportedEncodingException e) {
-            return inputs;
-        }
-        return inputs;
-    }
-
-    public String getSessionIdFromCookie(HttpExchange httpExchange) throws IOException {
-        String sessionIDFull = "";
-        try {
-            String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
-            String[] sessionID = cookieStr.split("sessionId=");
-            sessionIDFull= sessionID[1].replace("\"", "");
-        }catch (NullPointerException e){
-            return sessionIDFull;
-        }
-        return sessionIDFull;
-    }
 
     public boolean createMentor(Map<String, String> parsedForm){
         MentorDAO mentorDAO = null;

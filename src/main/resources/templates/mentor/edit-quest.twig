@@ -1,0 +1,29 @@
+{% extends "classpath:/templates/mentor/nav.twig" %}
+
+{% block content %}
+<div class="main-container">
+    <div class="header-container">
+    </div>
+    <div class="container">
+        <form method="POST">
+            <fieldset>
+                <legend>Edit Quest</legend>
+                Quest Name:<br>
+                <input type="text" placeholder="name" name="name" value="{{ quest.name }}"><br>
+                Quest description<br>
+                <input type="text" placeholder="description" name="description" value="{{ quest.description }}"><br>
+                Quest value<br>
+                <input type="text" placeholder="value" name="value" value="{{ quest.value }}"><br>
+                Quest experience<br>
+                <input type="text" placeholder="experience" name="experience" value="{{ quest.experience }}"><br>
+                Quest category<br>
+                <input type="text" placeholder="category" name="category" value="{{ quest.category }}"><br>
+                <input type="submit" value="Submit">
+                <input type="hidden" name="id" value="{{quest.id}}"/>
+
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}

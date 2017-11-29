@@ -9,9 +9,9 @@
         <form method="POST">
             <fieldset>
                 <select name="id">
-                    {% for element in data %}
-                        <option value={{ element[0] }}>
-                            {{ element[1] }}
+                    {% for fundraise in fundraises %}
+                        <option value={{ fundraise.fundraiseID }}>
+                            {{ fundraise.title }}
                         </option>
                     {% endfor %}
                     <input type="submit" value="Submit">

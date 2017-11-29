@@ -56,7 +56,7 @@ public class ArtifactDAO implements InterfaceDAO<Artifact> {
         return artifactList;
     }
 
-    public Artifact getSingleArtifact(Integer artifactID) throws SQLException {
+    public Artifact getArtifactById(Integer artifactID) throws SQLException {
 
         Artifact artifact;
         ConnectDB connectDB = DAO.ConnectDB.getInstance();

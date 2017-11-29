@@ -1,0 +1,27 @@
+{% extends "classpath:/templates/mentor/nav.twig" %}
+
+{% block content %}
+    <div class="main-container">
+        <div class="header-container">
+        </div>
+        <div class="container">
+            <form method="POST">
+                <fieldset>
+                    <legend>Edit Artifact</legend>
+                    Artifact Name:<br>
+                    <input type="text" placeholder="name" name="name" value="{{ artifact.name }}"><br>
+                    Artifact description<br>
+                    <input type="text" placeholder="description" name="description" value="{{ artifact.description }}"><br>
+                    Artifact value<br>
+                    <input type="text" placeholder="price" name="price" value="{{ artifact.price }}"><br>
+                    Artifact type<br>
+                    <input type="text" placeholder="is magic" name="isMagic" value="{{ artifact.isMagic }}"><br>
+                    <input type="submit" value="Submit">
+                    <input type="hidden" name="id" value="{{artifact.id}}"/>
+
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

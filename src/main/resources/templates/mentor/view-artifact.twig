@@ -6,25 +6,26 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>e-mail</th>
-                <th>group</th>
-                <th>edit</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>isMagic</th>
             </tr>
             </thead>
             <tbody>
             {% set ID = 1 %}
-            {% for student in students%}
+            {% for artifact in artifacts%}
             <tr>
                 <td>{{ID}}</td>
-                <td>{{student.firstName}}</td>
-                <td>{{student.lastName}}</td>
-                <td>{{student.email}}</td>
-                <td>{{student.klass}}</td>
+                <td>{{artifact.id}}</td>
+                <td>{{artifact.name}}</td>
+                <td>{{artifact.price}}</td>
+                <td>{{artifact.description}}</td>
+                <td>{{artifact.isMagic}}</td>
                 <td>
                     <form action = "" method = "post">
-                        <button type="submit" name="id" value="{{ student.id }}" class="btn btn-default btn-sm">
+                        <button type="submit" name="id" value="{{ artifact.id }}" class="btn btn-default btn-sm">
                             <span class="glyphicon glyphicon-cog">edit</span>
                         </button>
                     </form>
