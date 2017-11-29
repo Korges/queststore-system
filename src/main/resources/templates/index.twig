@@ -17,7 +17,14 @@
               <div class="logo-bb">bB</div>
               <div class="status-page">HOMEPAGE</div>
               <div class="status-user">USER: {{ user.firstName }} {{ user.lastName }}<br>ID: {{ user.id }}</div>
-              <div class="button-logout"><img src="../static/img/button-logout.png" width="32" height="32" ></div>
+              <form method="POST">
+              <div class="button-logout" >
+                  <input type="hidden" name="logout" value="logout"/>
+                  <button type="submit" class="btn btn-default btn-sm">
+                      <span class="glyphicon glyphicon-log-out"></span> Log out
+                  </button>
+              </div>
+              </form>
               <div class="status-date"><iframe src="http://free.timeanddate.com/clock/i5ydye2u/n535/tlpl31/fcfff/tc000/pc000" frameborder="0" width="57" height="18"></iframe>
               </div>
           </div>

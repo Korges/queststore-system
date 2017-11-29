@@ -25,17 +25,22 @@ public class StudentHandler implements HttpHandler {
         String response = "";
         String method = httpExchange.getRequestMethod();
         String sessionId = Sessions.getSessionIdFromCookie(httpExchange);
-        Student student = getStudentModel(sessionId);
 
         if (method.equals("GET") && Sessions.checkSession(sessionId, "Student")) {
-
+            Student student = getStudentModel(sessionId);
             response = getResponse(path, student);
 
-        } else if (method.equals("POST")) {
+        } else if (method.equals("POST") && Sessions.checkSession(sessionId, "Student")){
+            Student student = getStudentModel(sessionId);
             Map<String, String> parsedPost = ParseForm.parsePost(httpExchange);
             response = handleParsedPostResponse(path, parsedPost, student);
         } else {
             Sessions.redirect(httpExchange);
+        }
+
+        if(!Sessions.checkSession(sessionId, "Student")){
+            Sessions.redirect(httpExchange);
+
         }
         httpExchange.sendResponseHeaders(200, 0);
         OutputStream os = httpExchange.getResponseBody();
@@ -90,8 +95,11 @@ public class StudentHandler implements HttpHandler {
         StorePanel store = new StorePanel();
         QuestPanel quest = new QuestPanel();
         String response = "";
+        if(parsedForm.containsKey("logout")){
+            logout(student);
+        }
 
-        if (path.equals("/student/create-fundraise")) {
+        else if (path.equals("/student/create-fundraise")) {
             response = getHandleResponse(fundraise.createFundraise(parsedForm));
         } else if (path.equals("/student/join-fundraise")) {
 
@@ -117,5 +125,15 @@ public class StudentHandler implements HttpHandler {
             return student;
         }
         return student;
+    }
+
+    public void logout(Student student){
+        try {
+            ConnectDB connectDB = ConnectDB.getInstance();
+            String sql = String.format("DELETE FROM sessions WHERE user_id like '%s'",student.getID());
+             connectDB.addRecord(sql);
+        } catch (Exception e) {
+        }
+
     }
 }
