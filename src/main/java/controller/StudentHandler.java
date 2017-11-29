@@ -60,25 +60,25 @@ public class StudentHandler implements HttpHandler {
         if (path.equals("/student")) {
             response = ResponseGenerator.generateModelResponse(student, "user", "templates/student/nav.twig");
         } else if (path.equals("/student/create-fundraise")) {
-            response = ResponseGenerator.generateModelResponse(fundraise.getMagicItemList(), "magicItemList", "templates/student/create-fundraise.twig");
+            response = ResponseGenerator.generateModelResponse(student, "user", fundraise.getMagicItemList(), "magicItemList", "templates/student/create-fundraise.twig");
         } else if (path.equals("/student/join-fundraise")) {
-            response = ResponseGenerator.generateModelResponse(fundraise.getFundraiseList(), "fundraiseList", "templates/student/join-fundraise.twig");
+            response = ResponseGenerator.generateModelResponse(student, "user", fundraise.getFundraiseList(), "fundraiseList", "templates/student/join-fundraise.twig");
         } else if (path.equals("/student/leave-fundraise")) {
-            response = ResponseGenerator.generateModelResponse(fundraise.getJoinedFundraiseList(student.getID()), "joinedFundraiseList", "templates/student/leave-fundraise.twig");
+            response = ResponseGenerator.generateModelResponse(student, "user", fundraise.getJoinedFundraiseList(student.getID()), "joinedFundraiseList", "templates/student/leave-fundraise.twig");
         } else if (path.equals("/student/view-fundraise")) {
-            response = ResponseGenerator.generateModelResponse(fundraise.getFundraiseList(), "fundraiseList", "templates/student/view-fundraise.twig");
+            response = ResponseGenerator.generateModelResponse(student, "user", fundraise.getFundraiseList(), "fundraiseList", "templates/student/view-fundraise.twig");
         } else if (path.equals("/student/buy-artifact")) {
-            response = ResponseGenerator.generateModelResponse(store.getBasicItemList(), "basicItemList", "templates/student/buy-artifact.twig");
+            response = ResponseGenerator.generateModelResponse(student, "user", store.getBasicItemList(), "basicItemList", "templates/student/buy-artifact.twig");
         } else if (path.equals("/student/view-basic-items")) {
-            response = ResponseGenerator.generateModelResponse(store.getBasicItemList(), "basicItemList", "templates/student/view-basic-items.twig");
+            response = ResponseGenerator.generateModelResponse(student, "user", store.getBasicItemList(), "basicItemList", "templates/student/view-basic-items.twig");
         } else if (path.equals("/student/view-inventory")) {
-            response = ResponseGenerator.generateModelResponse(store.getStudentInventoryList(student), "inventoryList", "templates/student/view-inventory.twig");
+            response = ResponseGenerator.generateModelResponse(student, "user", store.getStudentInventoryList(student), "inventoryList", "templates/student/view-inventory.twig");
         } else if (path.equals("/student/view-quest")) {
-            response = ResponseGenerator.generateModelResponse(quest.getQuestList(), "questList", "templates/student/view-quest.twig");
+            response = ResponseGenerator.generateModelResponse(student, "user", quest.getQuestList(), "questList", "templates/student/view-quest.twig");
         } else if (path.equals("/student/create-submission")) {
-            response = ResponseGenerator.generateModelResponse(quest.getQuestList(), "questList", "templates/student/complete-quest.twig");
+            response = ResponseGenerator.generateModelResponse(student, "user", quest.getQuestList(), "questList", "templates/student/complete-quest.twig");
         } else if (path.equals("/student/view-student-submission")) {
-            response = ResponseGenerator.generateModelResponse(quest.getSubmissionList(student), "submissionList", "templates/student/view-student-submission.twig");
+            response = ResponseGenerator.generateModelResponse(student, "user", quest.getSubmissionList(student), "submissionList", "templates/student/view-student-submission.twig");
         }
 
 
