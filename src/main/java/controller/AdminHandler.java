@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.logging.Level;
-
 import DAO.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -16,12 +14,7 @@ import controller.helpers.HashSystem;
 import controller.helpers.ParseForm;
 import controller.helpers.ResponseGenerator;
 import controller.helpers.Sessions;
-import models.Group;
-import models.LevelExperience;
-import models.Mentor;
-import models.Admin;
-import org.jtwig.JtwigModel;
-import org.jtwig.JtwigTemplate;
+import models.*;
 
 public class AdminHandler  implements HttpHandler {
 
@@ -38,11 +31,15 @@ public class AdminHandler  implements HttpHandler {
         }
         else if (method.equals("POST")){
             Map<String,String> parsedPost = ParseForm.parsePost(httpExchange);
-            response = handleParsedPostResponse(path,parsedPost);
+            response = handleParsedPostResponse(path,parsedPost,admin);
         }
         else{
             Sessions.redirect(httpExchange);
         }
+        if(!Sessions.checkSession(sessionId, "Admin")){
+            Sessions.redirect(httpExchange);
+        }
+
         httpExchange.sendResponseHeaders(200, 0);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
@@ -66,31 +63,35 @@ public class AdminHandler  implements HttpHandler {
             response = ResponseGenerator.generateModelResponse(admin,"user","templates/admin/nav.twig");
         }
         else if (path.equals("/admin/create-group")){
-            response = ResponseGenerator.generateModelResponse(getKlasses(), "groups", "templates/admin/create-group.twig");
+            response = ResponseGenerator.generateModelResponse(admin,"user", getKlasses(), "groups", "templates/admin/create-group.twig");
         }
         else if (path.equals("/admin/view-group")){
-            response = ResponseGenerator.generateModelResponse(getKlasses(), "groups", "templates/admin/view-group.twig");
+            response = ResponseGenerator.generateModelResponse(admin,"user", getKlasses(), "groups", "templates/admin/view-group.twig");
         }
         else if (path.equals("/admin/create-mentor")){
-            response = ResponseGenerator.generateModelResponse("templates/admin/create-mentor.twig");
+            response = ResponseGenerator.generateModelResponse(admin,"user", getKlasses(), "groups", "templates/admin/create-mentor.twig");
         }
         else if (path.equals("/admin/view-mentor")) {
-            response = ResponseGenerator.generateModelResponse(getMentorList(),"mentors","templates/admin/view-mentor.twig");
+            response = ResponseGenerator.generateModelResponse(admin,"user", getMentorList(),"mentors","templates/admin/view-mentor.twig");
         }
         else if (path.equals("/admin/create-level")){
-            response = ResponseGenerator.generateModelResponse("templates/admin/create-level.twig");
+            response = ResponseGenerator.generateModelResponse(admin,"user", "templates/admin/create-level.twig");
         }
          else if (path.equals("/admin/view-level")) {
-            response = ResponseGenerator.generateModelResponse(getLevels(), "levels","templates/admin/view-level.twig");
+            response = ResponseGenerator.generateModelResponse(admin,"user", getLevels(), "levels","templates/admin/view-level.twig");
         }
 
 
         return response;
     }
 
-    public String handleParsedPostResponse(String path, Map<String, String> parsedForm){
+    public String handleParsedPostResponse(String path, Map<String, String> parsedForm, Admin admin){
         String response = "";
-        if(path.equals("/admin/create-mentor")){
+        if(parsedForm.containsKey("logout")){
+            logout(admin);
+        }
+
+        else if(path.equals("/admin/create-mentor")){
             response = getHandleResponse(createMentor(parsedForm));
         }
         else if(path.equals("/admin/view-group") && !parsedForm.containsKey("group-name")){
@@ -117,15 +118,11 @@ public class AdminHandler  implements HttpHandler {
         else if(path.equals("/admin/view-level") && parsedForm.containsKey("level")){
             response = getHandleResponse(submitEditLevel(parsedForm));
         }
-
-
-
         return response;
     }
 
     private boolean createLevel(Map<String, String> parsedForm) {
         boolean status = false;
-//        String level = parsedForm.get("level");y
         Integer level = Integer.parseInt(parsedForm.get("level"));
         Integer experience = Integer.parseInt(parsedForm.get("experience"));
 
@@ -233,9 +230,6 @@ public class AdminHandler  implements HttpHandler {
 
         return true;
     }
-//private boolean getEditGroupResponse(Map<String, String> parsedForm){
-//        return true;
-//}
 
     private boolean createGroup(Map<String, String> parsedForm) {
         boolean status = false;
@@ -297,17 +291,6 @@ public class AdminHandler  implements HttpHandler {
         return levels;
     }
 
-//    public String getMentorListRespone(){
-//        String response = "";
-//        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin/view-mentor.twig");
-//        JtwigModel model = JtwigModel.newModel();
-//        ArrayList<Mentor> mentorList= getMentorList();
-//        model.with("mentorList", mentorList);
-//        response = template.render(model);
-//        return response;
-//    }
-
-
     public ArrayList<Mentor> getMentorList(){
         MentorDAO mentorDAO = null;
         ArrayList<Mentor> mentorList = null;
@@ -330,5 +313,15 @@ public class AdminHandler  implements HttpHandler {
             return admin;
         }
         return admin;
+    }
+
+    public void logout(Admin admin){
+        try {
+            ConnectDB connectDB = ConnectDB.getInstance();
+            String sql = String.format("DELETE FROM sessions WHERE user_id like '%s'",admin.getID());
+            connectDB.addRecord(sql);
+        } catch (Exception e) {
+        }
+
     }
 }

@@ -11,7 +11,7 @@ public class WebTemplate {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate(URL);
         JtwigModel model = JtwigModel.newModel();
-        model.with("name", "cyc");
+
 
         return template.render(model);
     }

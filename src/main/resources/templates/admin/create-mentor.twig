@@ -17,14 +17,14 @@
                     password:<br>
                     <input type="password" placeholder="enter password" name = password><br>
                     Class:
-                    <label>
-                        <select>
-                            {% for klass in klasses %}
-                            <option value="{{ klass.name }}" name = "class">{{klass.name}}</option>
-                                {% endfor %}
-                        </select>
-                        <input type="hidden" name="r_id" value="1"/>
-                    </label>
+                    <fieldset>
+                        <select name="class">
+                            {% for fundraise in groups %}
+                                <option value={{ fundraise.name }}>
+                                    {{ fundraise.name }}
+                                </option>
+                            {% endfor %}
+                    </fieldset>
                     <input type="submit" value="Submit">
                 </fieldset>
             </form>
