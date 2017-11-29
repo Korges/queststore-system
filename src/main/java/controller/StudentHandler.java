@@ -66,7 +66,6 @@ public class StudentHandler implements HttpHandler {
             response = ResponseGenerator.generateModelResponse(fundraise.getMagicItemList(), "magicItemList", "templates/student/create-fundraise.twig");
         }
         else if (path.equals("/student/join-fundraise")) {
-
             response = ResponseGenerator.generateModelResponse(fundraise.getFundraiseList(), "fundraiseList", "templates/student/join-fundraise.twig");
         }
         else if (path.equals("/student/leave-fundraise")) {
@@ -87,6 +86,12 @@ public class StudentHandler implements HttpHandler {
         else if(path.equals("/student/view-quest")) {
             response = ResponseGenerator.generateModelResponse(quest.getQuestList(), "questList", "templates/student/view-quest.twig");
         }
+        else if(path.equals("/student/create-submission")) {
+            response = ResponseGenerator.generateModelResponse(quest.getQuestList(), "questList", "templates/student/complete-quest.twig");
+        }
+        else if(path.equals("/student/view-student-submission")) {
+            response = ResponseGenerator.generateModelResponse(quest.getSubmissionList(student), "submissionList", "templates/student/view-student-submission.twig");
+        }
 
 
 
@@ -96,6 +101,7 @@ public class StudentHandler implements HttpHandler {
     public String handleParsedPostResponse(String path, Map<String, String> parsedForm, Student student) {
         FundraisePanel fundraise = new FundraisePanel();
         StorePanel store = new StorePanel();
+        QuestPanel quest = new QuestPanel();
         String response = "";
 
         if (path.equals("/student/create-fundraise")) {
@@ -107,11 +113,13 @@ public class StudentHandler implements HttpHandler {
         }
         else if (path.equals("/student/leave-fundraise")) {
             response = getHandleResponse(fundraise.leaveFundraise(parsedForm, student));
-
-        } else if (path.equals("/student/buy-artifact")) {
+        }
+        else if (path.equals("/student/buy-artifact")) {
             response = getHandleResponse(store.buyArtifact(parsedForm, student));
         }
-
+        else if (path.equals("/student/create-submission")) {
+            response = getHandleResponse(quest.createSubmission(parsedForm, student));
+        }
             return response;
         }
 

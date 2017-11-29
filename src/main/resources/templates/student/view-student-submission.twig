@@ -2,23 +2,23 @@
 
 {% block content %}
     <div class="table-container">
-        <h1>List Basic Items</h1>
+        <h1>Student Submission List</h1>
         <table class="table">
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>Quest ID</th>
+                <th>Is Marked</th>
                 <th>Description</th>
-                <th>Price</th>
             </tr>
             </thead>
             <tbody>
-                {% for artifact in basicItemList %}
+                {% for submission in submissionList %}
                     <tr>
-                        <td>{{ artifact.id }}</td>
-                        <td>{{ artifact.name }}</td>
-                        <td>{{ artifact.description }}</td>
-                        <td>{{ artifact.price }}</td>
+                        <td>{{ submission.id }}</td>
+                        <td>{{ submission.questId }}</td>
+                        <td>{{ submission.isMarked }}</td>
+                        <td>{{ submission.description }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

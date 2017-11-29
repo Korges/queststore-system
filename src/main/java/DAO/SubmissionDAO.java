@@ -1,5 +1,6 @@
 package DAO;
 
+import models.Student;
 import models.Submission;
 
 import java.sql.ResultSet;
@@ -60,6 +61,21 @@ public class SubmissionDAO implements InterfaceDAO<Submission> {
 
         return submissionList;
     }
+
+    public ArrayList<Submission> getStudentSubmissions(Student student) throws SQLException {
+
+        ArrayList<Submission> submissionList = new ArrayList<>();
+        String query = String.format("SELECT * from submissions WHERE student_id = '%d';", student.getID());
+        ResultSet result = connect.getResult(query);
+        while (result.next()) {
+            Submission submission = createSubmission(result);
+            submissionList.add(submission);
+
+        }
+
+        return submissionList;
+    }
+
 
 
     public void set(Submission submission) throws SQLException{

@@ -1,0 +1,26 @@
+{% extends "classpath:/templates/student/nav.twig" %}
+
+{% block content %}
+<div class="main-container">
+    <div class="header-container">
+        <h1>Create Submission</h1>
+    </div>
+    <div class="container">
+        <form method="POST">
+            <fieldset>
+                Choose quest to create submission:<br>
+                <select name="id" required>
+                    {% for quest in questList %}
+                        <option value={{ quest.id  }}>
+                            {{ quest.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                Description:<br>
+                <textarea name="description" placeholer="Description"></textarea>
+                <input type="submit" value="Submit">
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}
