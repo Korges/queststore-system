@@ -25,16 +25,16 @@ public class FundraiseDAO {
         connect.addRecord(sql);
     }
 
-    public void joinFundraise(String fundraiseID, String userID) throws SQLException{
+    public void joinFundraise(Integer fundraiseID, Integer userID) throws SQLException{
 
         String sql = String.format("INSERT INTO fundraises_students" +
                 "(fundraise_id, student_id)" +
-                "VALUES ('%s', '%s')", fundraiseID, userID);
+                "VALUES ('%d', '%d')", fundraiseID, userID);
         connect.addRecord(sql);
     }
-    public void leaveFundraise(String fundraiseID, String userID) {
+    public void leaveFundraise(Integer fundraiseID, Integer userID) {
 
-         String sql = String.format("DELETE FROM fundraises_students WHERE (fundraise_id = '%s' and student_id = '%s')", fundraiseID, userID);
+         String sql = String.format("DELETE FROM fundraises_students WHERE (fundraise_id = '%d' and student_id = '%d')", fundraiseID, userID);
          try {
              connect.addRecord(sql);
          } catch (SQLException e) {
@@ -138,12 +138,12 @@ public class FundraiseDAO {
 
 
 
-    public ArrayList<Fundraise> getJoinedFundraiseList(String userID) {
+    public ArrayList<Fundraise> getJoinedFundraiseList(Integer userID) {
 
         ArrayList<Fundraise> fundraiseStudentList = new ArrayList<>();
         try {
 
-            ResultSet result = connect.getResult(String.format("SELECT * FROM fundraises_students JOIN fundraises ON fundraises_students.fundraise_id = fundraises.id JOIN artifacts ON fundraises.artifact_id = artifacts.id WHERE student_id = '%s'", userID));
+            ResultSet result = connect.getResult(String.format("SELECT * FROM fundraises_students JOIN fundraises ON fundraises_students.fundraise_id = fundraises.id JOIN artifacts ON fundraises.artifact_id = artifacts.id WHERE student_id = '%d'", userID));
 
             while (result.next()) {
                 Integer fundraiseID = result.getInt("fundraise_id");

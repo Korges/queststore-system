@@ -1,21 +1,20 @@
-package controller.Student.Store;
+package controller.Mentor.Quest;
 
-import DAO.ArtifactDAO;
 import DAO.FundraiseDAO;
+import DAO.QuestDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import models.Artifact;
 import models.Fundraise;
+import models.Quest;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
-import UI.UI;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ListBasicItems implements HttpHandler {
+public class ListAllQuestMentor implements HttpHandler {
 
 
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -26,7 +25,7 @@ public class ListBasicItems implements HttpHandler {
 
             if (method.equals("GET")) {
 
-                response = listAllBasicItems();
+                response = listAllQuest();
 
             }
 
@@ -36,21 +35,19 @@ public class ListBasicItems implements HttpHandler {
 
         }
 
-
-
         httpExchange.sendResponseHeaders(200, 0);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
     }
 
-    public String listAllBasicItems() throws SQLException{
+    public String listAllQuest() throws SQLException{
 
-        ArrayList<Artifact> basicItemList = getBasicItemList();
-        ArrayList<ArrayList<String>> data = createJtwigData(basicItemList);
+        ArrayList<Quest> questList = getQuestList();
+        ArrayList<ArrayList<String>> data = createJtwigData(questList);
 
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student/view-basic-item.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/view-all-quest.twig");
         JtwigModel model = JtwigModel.newModel();
 
         String response = "";
@@ -63,24 +60,26 @@ public class ListBasicItems implements HttpHandler {
         return response;
     }
 
-    private ArrayList<Artifact> getBasicItemList() throws SQLException {
+    private ArrayList<Quest> getQuestList() throws SQLException {
 
-        ArtifactDAO fundraiseDAO = new ArtifactDAO();
-        ArrayList<Artifact> basicItemList = fundraiseDAO.getBasicItems();
+        QuestDAO questDAO = new QuestDAO();
+        ArrayList<Quest> questList = questDAO.get();
 
-        return basicItemList;
+        return questList;
     }
 
-    private ArrayList<ArrayList<String>> createJtwigData(ArrayList<Artifact> basicItemList) {
+    private ArrayList<ArrayList<String>> createJtwigData(ArrayList<Quest> questList) {
 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> record = new ArrayList<>();
 
-        for(Artifact artifact: basicItemList){
-            record.add(artifact.getID().toString());
-            record.add(artifact.getName());
-            record.add(artifact.getDescription());
-            record.add(artifact.getPrice().toString());
+        for(Quest quest: questList){
+            record.add(quest.getId().toString());
+            record.add(quest.getName());
+            record.add(quest.getDescription());
+            record.add(quest.getValue().toString());
+            record.add(quest.getExperience().toString());
+            record.add(quest.getCategory().toString());
             data.add(record);
             record = new ArrayList<>();
         }

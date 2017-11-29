@@ -1,4 +1,4 @@
-{% extends "classpath:/templates/student/student-menu.twig" %}
+{% extends "classpath:/templates/student/nav.twig" %}
 
 {% block content %}
     <div class="table-container">
@@ -13,11 +13,12 @@
             </tr>
             </thead>
             <tbody>
-                {% for element in data %}
+                {% for artifact in basicItemList %}
                     <tr>
-                        {% for record in element %}
-                        <td>{{ record }}</td>
-                        {% endfor %}
+                        <td>{{ artifact.id }}</td>
+                        <td>{{ artifact.name }}</td>
+                        <td>{{ artifact.description }}</td>
+                        <td>{{ artifact.price }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

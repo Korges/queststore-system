@@ -1,4 +1,4 @@
-{% extends "classpath:/templates/student/student-menu.twig" %}
+{% extends "classpath:/templates/student/nav.twig" %}
 
 {% block content %}
     <div class="table-container">
@@ -15,11 +15,12 @@
             </tr>
             </thead>
             <tbody>
-                {% for element in data %}
+                {% for fundraise in fundraiseList %}
                     <tr>
-                        {% for record in element %}
-                        <td>{{ record }}</td>
-                        {% endfor %}
+                        <td>{{ fundraise.fundraiseID }}</td>
+                        <td>{{ fundraise.title }}</td>
+                        <td>{{ fundraise.name }}</td>
+                        <td>{{ fundraise.price }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

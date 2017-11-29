@@ -106,7 +106,7 @@ public class ArtifactDAO implements InterfaceDAO<Artifact> {
         ResultSet result = connect.getResult("SELECT * FROM artifacts WHERE is_magic = 1");
         while (result.next()) {
 
-            Integer  id = result.getInt("id");
+            Integer id = result.getInt("id");
             String name = result.getString("name");
             String description = result.getString("description");
             Integer price = result.getInt("price");

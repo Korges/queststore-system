@@ -1,4 +1,4 @@
-{% extends "classpath:/templates/student/student-menu.twig" %}
+{% extends "classpath:/templates/student/nav.twig" %}
 
 {% block content %}
 <div class="main-container">
@@ -8,10 +8,10 @@
     <div class="container">
         <form method="POST">
             <fieldset>
-                <select name="id">
-                    {% for element in data %}
-                        <option value={{ element[0] }}>
-                            {{ element[1] }}
+                <select name="id" required>
+                    {% for fundraise in fundraiseList %}
+                        <option value={{ fundraise.fundraiseID  }}>
+                            {{ fundraise.title }}
                         </option>
                     {% endfor %}
                     <input type="submit" value="Submit">

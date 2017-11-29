@@ -1,0 +1,27 @@
+{% extends "classpath:/templates/student/nav.twig" %}
+
+{% block content %}
+    <div class="table-container">
+        <h1>Student Submission List</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Quest ID</th>
+                <th>Is Marked</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for submission in submissionList %}
+                    <tr>
+                        <td>{{ submission.id }}</td>
+                        <td>{{ submission.questId }}</td>
+                        <td>{{ submission.isMarked }}</td>
+                        <td>{{ submission.description }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

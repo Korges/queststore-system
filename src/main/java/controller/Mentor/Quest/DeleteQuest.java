@@ -1,9 +1,11 @@
-package controller.Mentor.Fundraise;
+package controller.Mentor.Quest;
 
 import DAO.FundraiseDAO;
+import DAO.QuestDAO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import models.Fundraise;
+import models.Quest;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -17,7 +19,7 @@ import java.util.Map;
 
 import static controller.helpers.ParseForm.parseFormData;
 
-public class DeleteFundraise implements HttpHandler {
+public class DeleteQuest implements HttpHandler {
 
 
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -29,7 +31,7 @@ public class DeleteFundraise implements HttpHandler {
             if (method.equals("GET")) {
 
 
-                response = loadFundraiseToSelectForm();
+                response = loadQuestToSelectForm();
             }
 
 
@@ -40,9 +42,8 @@ public class DeleteFundraise implements HttpHandler {
                 String formData = br.readLine();
                 Map<String, String> inputs = parseFormData(formData);
 
-                Integer fundraiseID = Integer.valueOf(inputs.get("id"));
-
-                deleteFundraise(fundraiseID);
+                Integer questID = Integer.valueOf(inputs.get("id"));
+                deleteQuest(questID);
 
 
             }
@@ -57,18 +58,17 @@ public class DeleteFundraise implements HttpHandler {
         os.close();
     }
 
-    private void deleteFundraise(Integer fundraiseID) throws SQLException {
+    private void deleteQuest(Integer questID) throws SQLException {
 
-        FundraiseDAO fundraiseDAO = new FundraiseDAO();
-        fundraiseDAO.deleteFundraise(fundraiseID);
-        fundraiseDAO.deleteFundraiseStudents(fundraiseID);
+        QuestDAO questDAO = new QuestDAO();
+        questDAO.deleteQuest(questID);
     }
 
-    private String loadFundraiseToSelectForm() throws SQLException {
+    private String loadQuestToSelectForm() throws SQLException {
 
-        ArrayList<Fundraise> fundraiseList = getFullFundraiseList();
-        ArrayList<ArrayList<String>> data = createJtwigData(fundraiseList);
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/delete-fundraise.twig");
+        ArrayList<Quest> questList = getFullQuestList();
+        ArrayList<ArrayList<String>> data = createJtwigData(questList);
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor/delete-quest.twig");
         JtwigModel model = JtwigModel.newModel();
 
         String response = "";
@@ -82,23 +82,23 @@ public class DeleteFundraise implements HttpHandler {
         return response;
     }
 
-    private ArrayList<Fundraise> getFullFundraiseList() throws SQLException {
+    private ArrayList<Quest> getFullQuestList() throws SQLException {
 
-        FundraiseDAO fundraiseDAO = new FundraiseDAO();
+        QuestDAO questDAO = new QuestDAO();
 
-        ArrayList<Fundraise> fundraiseList = fundraiseDAO.getFundraiseList();
+        ArrayList<Quest> questList = questDAO.get();
 
-        return fundraiseList;
+        return questList;
     }
 
-    private ArrayList<ArrayList<String>> createJtwigData(ArrayList<Fundraise> fundraiseList) {
+    private ArrayList<ArrayList<String>> createJtwigData(ArrayList<Quest> questList) {
 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> record = new ArrayList<>();
 
-        for(Fundraise fundraise: fundraiseList){
-            record.add(fundraise.getFundraiseID().toString());
-            record.add(fundraise.getTitle());
+        for(Quest quest: questList){
+            record.add(quest.getId().toString());
+            record.add(quest.getName());
             data.add(record);
             record = new ArrayList<>();
         }
