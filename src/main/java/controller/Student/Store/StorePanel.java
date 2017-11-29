@@ -19,7 +19,7 @@ public class StorePanel {
         ArtifactDAO artifactDAO = null;
         try {
             artifactDAO = new ArtifactDAO();
-            artifactPrice = artifactDAO.getSingleArtifact(artifactID).getPrice();
+            artifactPrice = artifactDAO.getArtifactById(artifactID).getPrice();
         } catch (SQLException e) {
 
         }
