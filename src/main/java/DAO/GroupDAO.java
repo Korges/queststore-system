@@ -45,12 +45,15 @@ public class GroupDAO implements InterfaceDAO<Group> {
 
     public Group getGroupById(String id) throws SQLException{
         String sql = String.format("SELECT * FROM klasses where id like '%s'",id);
+        System.out.println(sql);
         ResultSet result = connect.getResult(sql);
         Group group = null;
 
         if(result.next()){
             Integer idInt = result.getInt("id");
             String name = result.getString("name");
+            System.out.println(idInt);
+            System.out.println(name);
             group = new Group(idInt, name);
         }
         return group;
