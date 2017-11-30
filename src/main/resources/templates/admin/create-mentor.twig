@@ -1,22 +1,21 @@
 {% extends "classpath:/templates/admin/nav.twig" %}
 
 {% block content %}
-    <div class="main-container">
-        <div class="header-container">
-        </div>
-        <div class="container">
-            <form method="POST">
-                <fieldset>
-                    <legend>Create Mentor</legend>
-                    First name:<br>
+    <div class="main-card">
+    <div class="title">Create Mentor</div>
+    <div class="form-container">
+        <form method="POST">
+            <fieldset>
+                    <div class="input-text">First name:</div>
+                    <br>
                     <input type="text" placeholder="enter first name" name = "first-name"><br>
-                    Last name:<br>
+                    <div class="input-text">Last name:</div><br>
                     <input type="text" placeholder="enter last name" name = "last-name"><br>
-                    email:<br>
+                    <div class="input-text">email:</div><br>
                     <input type="email" placeholder="enter email" name = "email"><br>
-                    password:<br>
+                    <div class="input-text">password:</div><br>
                     <input type="password" placeholder="enter password" name = password><br>
-                    Class:
+                    <div class="input-text">Class:</div>
                     <fieldset>
                         <select name="class">
                             {% for fundraise in groups %}
@@ -29,5 +28,5 @@
                 </fieldset>
             </form>
         </div>
-    </div>
+        </div>
 {% endblock %}

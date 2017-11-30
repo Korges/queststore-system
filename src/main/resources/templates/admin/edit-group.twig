@@ -1,14 +1,12 @@
 {% extends "classpath:/templates/admin/nav.twig" %}
 
 {% block content %}
-<div class="main-container">
-    <div class="header-container">
-    </div>
-    <div class="container">
-        <form method="POST">
-            <fieldset>
-                <legend>Edit Group</legend>
-                Group Name:<br>
+    <div class="main-card">
+        <div class="title">Create Group</div>
+        <div class="form-container">
+            <form method="POST">
+                <fieldset>
+                    <div class = "input-text">Group Name:</div><br>
                 <input type="text" placeholder="enter group name" name="group-name" value="{{ group.name }}"><br>
                 <input type="hidden" name="id" value="{{group.id}}"/>
                 <input type="submit" value="Submit">

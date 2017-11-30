@@ -1,16 +1,14 @@
 {% extends "classpath:/templates/admin/nav.twig" %}
 
 {% block content %}
-    <div class="main-container">
-        <div class="header-container">
-        </div>
-        <div class="container">
+    <div class="main-card">
+        <div class="title">Create level experience</div>
+        <div class="form-container">
             <form method="POST">
                 <fieldset>
-                    <legend>Edit Level</legend>
-                    Level<br>
+                    <div class = "input-text">Level</div><br>
                     <input type="text" placeholder="enter level" name = "level" value="{{level.level}}"><br>
-                    Experience<br>
+                    <div class = "input-text">Experience</div><br>
                     <input type="text" placeholder="enter experience" name = "experience" value="{{level.experience}}"><br>
                     <input type="submit" value="Submit">
                     <input type="hidden" name="id" value="{{level.id}}"/>

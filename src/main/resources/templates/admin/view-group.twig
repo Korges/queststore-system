@@ -1,13 +1,14 @@
 {% extends "classpath:/templates/admin/nav.twig" %}
 
 {% block content %}
-    <div class="table-container">
-        <table class="table">
+    <div class="title">View group</div>
+        <table>
             <thead>
             <tr>
                 <th>#</th>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Edit</th>
             </tr>
             </thead>
             <tbody>
@@ -17,17 +18,15 @@
                 <td>{{ID}}</td>
                 <td>{{group.id}}</td>
                 <td>{{group.name}}</td>
-                <td>
-                    <form action = "" method = "post">
+                <td><form action = "" method = "post">
                         <button type="submit" name="id" value="{{group.id}}" class="btn btn-default btn-sm">
-                        <span class="glyphicon glyphicon-cog">edit</span>
+                            <span class="glyphicon glyphicon-cog">edit</span>
                         </button>
                     </form>
-                <td>
+                </td>
             <tr>
                 {% set ID = ID + 1 %}
                 {% endfor %}
             </tbody>
         </table>
-    </div>
 {% endblock %}
