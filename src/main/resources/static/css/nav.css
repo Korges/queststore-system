@@ -1,0 +1,13 @@
+.nav-panel li{
+    list-style-type: none;
+    text-decoration: none;
+
+    font-size: 20px;
+    line-height: 40px;
+}
+.nav-panel a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    transition: .3s background-color;
+}
