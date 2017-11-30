@@ -1,19 +1,17 @@
 {% extends "classpath:/templates/mentor/nav.twig" %}
 
 {% block content %}
-    <div class="main-container">
-        <div class="header-container">
-            <h1>Edit Student</h1>
-        </div>
-        <div class="container">
+    <div class="main-card">
+        <div class="title">Edit student</div>
+        <div class="form-container">
             <form method="POST">
                 <fieldset>
-                    <legend>Legend:</legend>
-                    First name:<br>
+                    <div class="input-text">First name:</div>
+                    <br>
                     <input type="text" placeholder="enter first name" name = "first-name" value="{{student.firstName}}"><br>
-                    Last name:<br>
+                    <div class="input-text">Last name:</div><br>
                     <input type="text" placeholder="enter last name" name = "last-name" value="{{student.lastName}}"><br>
-                    email:<br>
+                    <div class="input-text">email:</div><br>
                     <input type="email" placeholder="enter email"name = "email" value="{{student.email}}"><br>
                     <input type="hidden" name="class" value="2016"/>
                     <input type="hidden" name="password" value="{{student.password}}"/>

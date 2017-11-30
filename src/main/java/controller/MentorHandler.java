@@ -57,7 +57,7 @@ public class MentorHandler implements HttpHandler {
             response = ResponseGenerator.generateModelResponse(mentor,"user","templates/mentor/create-artifact.twig");
         }
         else if(path.equals("/mentor/create-student")){
-            response = ResponseGenerator.generateModelResponse(mentor,"user","templates/mentor/create-student.twig");
+            response = ResponseGenerator.generateModelResponse(getKlasses(), "groups", mentor,"user","templates/mentor/create-student.twig");
         }
         else if(path.equals("/mentor/create-quest")){
             response = ResponseGenerator.generateModelResponse(mentor,"user","templates/mentor/create-quest.twig");
@@ -164,7 +164,16 @@ public class MentorHandler implements HttpHandler {
         }
     }
 
-
+    private List<Group> getKlasses(){
+        List<Group> klasses = null;
+        try {
+            GroupDAO dao = new GroupDAO();
+            klasses = dao.get();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return klasses;
+    }
 
     private boolean createArtifact(Map<String, String> parsedForm) {
         System.out.println(parsedForm);

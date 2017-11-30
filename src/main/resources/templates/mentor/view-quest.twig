@@ -1,7 +1,7 @@
 {% extends "classpath:/templates/mentor/nav.twig" %}
 
 {% block content %}
-    <div class="table-container">
+    <div class="title">View quest</div>
         <table class="table">
             <thead>
             <tr>
@@ -12,6 +12,7 @@
                 <th>Description</th>
                 <th>Value</th>
                 <th>Experience</th>
+                <th>Edit</th>
             </tr>
             </thead>
             <tbody>
@@ -31,7 +32,7 @@
                             <span class="glyphicon glyphicon-cog">edit</span>
                         </button>
                     </form>
-                <td>
+                </td>
             <tr>
                 {% set ID = ID + 1 %}
                 {% endfor %}
