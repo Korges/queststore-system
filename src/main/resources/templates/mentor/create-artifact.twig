@@ -13,9 +13,14 @@
                     Artifact description<br>
                     <input type="text" placeholder="description" name="description"><br>
                     Artifact value<br>
-                    <input type="text" placeholder="price" name="price"><br>
+                    <input type="number" placeholder="price" name="price"><br>
                     Artifact type<br>
-                    <input type="text" placeholder="is magic" name="isMagic"><br>
+                    <label>
+                        <select name="isMagic">
+                            <option value="yes">Magic</option>
+                            <option value="not">Not Magic</option>
+                        </select>
+                    </label>
                     <input type="submit" value="Submit">
                 </fieldset>
             </form>

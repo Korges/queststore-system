@@ -167,7 +167,19 @@ public class MentorHandler implements HttpHandler {
 
 
     private boolean createArtifact(Map<String, String> parsedForm) {
-        //todo
+        System.out.println(parsedForm);
+        try{
+            ArtifactDAO artifactDAO = new ArtifactDAO();
+            String name = parsedForm.get("name");
+            String description = parsedForm.get("description");
+            Integer price = Integer.parseInt(parsedForm.get("price"));
+            Boolean isMagic = parseArtifactType(parsedForm.get("isMagic"));
+            Artifact artifact = new MagicItem(name, description, price, isMagic) {
+            };
+            artifactDAO.add(artifact);
+        } catch (SQLException e) {
+            return false;
+        }
         return true;
     }
 
