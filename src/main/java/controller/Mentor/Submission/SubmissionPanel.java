@@ -54,20 +54,11 @@ public class SubmissionPanel {
             submissionDAO = new SubmissionDAO();
             questDAO = new QuestDAO();
             studentDAO = new StudentDAO();
-
             Integer studentID = submissionDAO.getStudentIdBySubmissionId(submissionID);
-
             Integer questID = submissionDAO.getQuestIdBySubmissionId(submissionID);
-
             Student student = studentDAO.getStudentById(studentID);
-
             Quest quest = questDAO.getQuestById(questID);
-
             Integer questValue = quest.getValue();
-            System.out.println(student.getWallet());
-            System.out.println(questValue);
-
-
             student.wallet.add(questValue);
             studentDAO.editWalletValue(student);
 
