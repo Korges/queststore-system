@@ -116,3 +116,6 @@ input[type=submit]:hover
     flex-direction: column;
     height: 200px;
 }
+select{
+    margin-bottom: 30px;
+}
