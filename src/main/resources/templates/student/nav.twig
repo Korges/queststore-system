@@ -9,21 +9,30 @@
     </div>
 {% endblock %}
 {% block menu %}
-    <ul>
-        <li class="list-header" target = "main-frame">Fundraise Panel</li>
-        <li><a href="/student/view-fundraise">Show avalible fundraises</a></li>
-        <li><a href="/student/create-fundraise">Create new Fundraise</a></li>
-        <li><a href="/student/join-fundraise">Join Fundraise</a></li>
-        <li><a href="/student/leave-fundraise">Leave Fundraise</a></li>
-        <li class="list-header" target = "main-frame">Store Panel</li>
-        <li><a href="/student/view-basic-items">View avalible artifacts</a></li>
-        <li><a href="/student/buy-artifact">Buy artifact</a></li>
-        <li><a href="/student/view-inventory">View purchase History</a></li>
-        <li class="list-header" target = "main-frame">Quest Panel</li>
-        <li><a href="/student/view-quest">View avalible Quests</a></li>
-        <li><a href="/student/create-submission">Complete Quest</a></li>
-        <li><a href="/student/view-student-submission">View Student Submission</a></li>
-
+    <ul class = "nav-panel-ul">
+        <li><a href="">Home</a></li>
+        <li class="has-sub"><a>Fundraise Panel<span class="sub-arrow"></span></a>
+            <ul>
+                <li><a href="/student/view-fundraise">Show avalible fundraises</a></li>
+                <li><a href="/student/create-fundraise">Create new Fundraise</a></li>
+                <li><a href="/student/join-fundraise">Join Fundraise</a></li>
+                <li><a href="/student/leave-fundraise">Leave Fundraise</a></li>
+            </ul>
+        </li>
+        <li class="has-sub"><a>Store Panel<span class="sub-arrow"></span></a>
+            <ul>
+                <li><a href="/student/view-basic-items">View avalible artifacts</a></li>
+                <li><a href="/student/buy-artifact">Buy artifact</a></li>
+                <li><a href="/student/view-inventory">View purchase History</a></li>
+            </ul>
+        </li>
+        <li class="has-sub"><a>Quest Panel<span class="sub-arrow"></span></a>
+            <ul>
+                <li><a href="/student/view-quest">View avalible Quests</a></li>
+                <li><a href="/student/create-submission">Complete Quest</a></li>
+                <li><a href="/student/view-student-submission">View Student Submission</a></li>
+            </ul>
+        </li>
     </ul>
 {% endblock %}
 
