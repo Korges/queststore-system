@@ -8,21 +8,34 @@
     </div>
 {% endblock %}
 {% block menu %}
-    <ul>
-        <li class="list-header">Student Panel</li>
-        <li><a href="/mentor/create-student">Create new Student</a></li>
-        <li><a href="/mentor/view-student">View/Edit Student</a></li>
-        <li class="list-header">Artifact Panel</li>
-        <li><a href="/mentor/create-artifact">Create new Artifact</a></li>
-        <li><a href="/mentor/view-artifact">View/Edit Artifact</a></li>
-        <li class="list-header">Quest Panel</li>
-        <li><a href="/mentor/create-quest">Create new Quest</a></li>
-        <li><a href="/mentor/view-quest">View/Edit Quest</a></li>
-        <li><a href="/mentor/delete-quest">Delete Quest</a></li>
-        <li><a href="/mentor/view-submission">View Submission</a></li>
-        <li class="list-header">Fundraising Panel</li>
-        <li><a href="/mentor/fundraise-list">View Fundraising</a></li>
-        <li><a href="/mentor/finalize-fundraise">Finalize Fundraising</a></li>
-        <li><a href="/mentor/delete-fundraise">Delete Fundraising</a></li>
+    <ul class = "nav-panel-ul">
+    <li><a href="">Home</a></li>
+        <li class="has-sub"><a>Student Panel<span class="sub-arrow"></span></a>
+            <ul>
+                <li><a href="/mentor/create-student">Create new Student</a></li>
+                <li><a href="/mentor/view-student">View/Edit Student</a></li>
+            </ul>
+        </li>
+        <li class="has-sub"><a>Artifact Panel<span class="sub-arrow"></span></a>
+            <ul>
+                <li><a href="/mentor/create-artifact">Create new Artifact</a></li>
+                <li><a href="/mentor/view-artifact">View/Edit Artifact</a></li>
+            </ul>
+        </li>
+        <li class="has-sub"><a>Quest Panel<span class="sub-arrow"></span></a>
+            <ul>
+                <li><a href="/mentor/create-quest">Create new Quest</a></li>
+                <li><a href="/mentor/view-quest">View/Edit Quest</a></li>
+                <li><a href="/mentor/delete-quest">Delete Quest</a></li>
+                <li><a href="/mentor/view-submission">View Submission</a></li>
+            </ul>
+        </li>
+        <li class="has-sub"><a>Fundraise Panel<span class="sub-arrow"></span></a>
+            <ul>
+                <li><a href="/mentor/fundraise-list">View Fundraising</a></li>
+                <li><a href="/mentor/finalize-fundraise">Finalize Fundraising</a></li>
+                <li><a href="/mentor/delete-fundraise">Delete Fundraising</a></li>
+            </ul>
+        </li
     </ul>
 {% endblock %}
