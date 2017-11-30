@@ -1,12 +1,10 @@
 {% extends "classpath:/templates/student/nav.twig" %}
 
 {% block content %}
-<div class="main-container">
-    <div class="header-container">
-        <h1>Buy Artifact</h1>
-    </div>
-    <div class="container">
-        <form method="POST">
+    <div class="main-card">
+        <div class="title">Buy artifact</div>
+        <div class="form-container">
+            <form method="POST">
             <fieldset>
                 <select name="id">
                     {% for artifact in basicItemList %}

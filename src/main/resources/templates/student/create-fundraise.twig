@@ -1,14 +1,12 @@
 {% extends "classpath:/templates/student/nav.twig" %}
 
 {% block content %}
-<div class="main-container">
-    <div class="header-container">
-        <h1>Create Fundraise</h1>
-    </div>
-    <div class="container">
-        <form method="POST">
+    <div class="main-card">
+        <div class="title">Create Fundraise</div>
+        <div class="form-container">
+            <form method="POST">
             <fieldset>
-                Artifact<br>
+                <div class = "input-text">Artifact</div><br>
                     <select name ="id">
                         {% for artifact in magicItemList %}
                             <option value={{ artifact.id }}>
@@ -16,7 +14,7 @@
                             </option>
                         {% endfor %}
                     </select>
-                Fundraise Title<br>
+                <div class = "input-text">Fundraise Title</div><br>
                 <input type="text" placeholder="Enter Title" name = "title"><br>
                 <input type="submit" value="Submit">
             </fieldset>

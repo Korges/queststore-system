@@ -1,12 +1,10 @@
 {% extends "classpath:/templates/student/nav.twig" %}
 
 {% block content %}
-<div class="main-container">
-    <div class="header-container">
-        <h1>Join Fundraise</h1>
-    </div>
-    <div class="container">
-        <form method="POST">
+    <div class="main-card">
+        <div class="title">Join Fundraise</div>
+        <div class="form-container">
+            <form method="POST">
             <fieldset>
                 <select name="id" required>
                     {% for fundraise in fundraiseList %}

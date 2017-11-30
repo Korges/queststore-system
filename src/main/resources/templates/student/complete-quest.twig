@@ -1,14 +1,12 @@
 {% extends "classpath:/templates/student/nav.twig" %}
 
 {% block content %}
-<div class="main-container">
-    <div class="header-container">
-        <h1>Create Submission</h1>
-    </div>
-    <div class="container">
-        <form method="POST">
+    <div class="main-card">
+        <div class="title">Buy artifact</div>
+        <div class="form-container">
+            <form method="POST">
             <fieldset>
-                Choose quest to create submission:<br>
+                <div class = "input-text">Choose quest to create submission:</div><br>
                 <select name="id" required>
                     {% for quest in questList %}
                         <option value={{ quest.id  }}>
@@ -16,7 +14,7 @@
                         </option>
                     {% endfor %}
                 </select>
-                Description:<br>
+                <div class = "input-text">Description:</div><br>
                 <textarea name="description" placeholer="Description"></textarea>
                 <input type="submit" value="Submit">
             </fieldset>
