@@ -27,11 +27,17 @@ public class MentorHandler implements HttpHandler {
         String sessionId = Sessions.getSessionIdFromCookie(httpExchange);
 
         if(method.equals("GET") && Sessions.checkSession(sessionId,"Mentor")){
-            response = getResponse(path);
+            Mentor mentor = getMentorModel(sessionId);
+            response = getResponse(path,mentor);
         } else if (method.equals("POST")){
+            Mentor mentor = getMentorModel(sessionId);
             Map<String,String> parsedPost = ParseForm.parsePost(httpExchange);
-            response = handleParsedPostResponse(path,parsedPost);
+            response = handleParsedPostResponse(path,parsedPost, mentor);
         } else {
+            Sessions.redirect(httpExchange);
+        }
+
+        if(!Sessions.checkSession(sessionId, "Mentor")){
             Sessions.redirect(httpExchange);
         }
         httpExchange.sendResponseHeaders(200, 0);
@@ -40,45 +46,45 @@ public class MentorHandler implements HttpHandler {
         os.close();
     }
 
-    private String getResponse(String path) {
+    private String getResponse(String path, Mentor mentor) {
         String response = "";
         QuestPanel quest = new QuestPanel();
         SubmissionPanel submission = new SubmissionPanel();
         if(path.equals("/mentor")){
-            response = ResponseGenerator.generateModelResponse("templates/mentor/nav.twig");
+            response = ResponseGenerator.generateModelResponse(mentor,"user","templates/mentor/nav.twig");
         }
         else if(path.equals("/mentor/create-artifact")){
-            response = ResponseGenerator.generateModelResponse("templates/mentor/create-artifact.twig");
+            response = ResponseGenerator.generateModelResponse(mentor,"user","templates/mentor/create-artifact.twig");
         }
         else if(path.equals("/mentor/create-student")){
-            response = ResponseGenerator.generateModelResponse("templates/mentor/create-student.twig");
+            response = ResponseGenerator.generateModelResponse(mentor,"user","templates/mentor/create-student.twig");
         }
         else if(path.equals("/mentor/create-quest")){
-            response = ResponseGenerator.generateModelResponse("templates/mentor/create-quest.twig");
+            response = ResponseGenerator.generateModelResponse(mentor,"user","templates/mentor/create-quest.twig");
         }
         else if (path.equals("/mentor/view-artifact")) {
-            response = ResponseGenerator.generateModelResponse(getArtifacts(),"artifacts","templates/mentor/view-artifact.twig");
+            response = ResponseGenerator.generateModelResponse(mentor,"user",getArtifacts(),"artifacts","templates/mentor/view-artifact.twig");
         }
         else if (path.equals("/mentor/view-student")) {
-            response = ResponseGenerator.generateModelResponse(getStudentList(),"students","templates/mentor/view-student.twig");
+            response = ResponseGenerator.generateModelResponse(mentor,"user",getStudentList(),"students","templates/mentor/view-student.twig");
         }
         else if (path.equals("/mentor/view-quest")) {
-            response = ResponseGenerator.generateModelResponse(quest.getQuests(),"quests","templates/mentor/view-quest.twig");
+            response = ResponseGenerator.generateModelResponse(mentor,"user",quest.getQuests(),"quests","templates/mentor/view-quest.twig");
         }
         else if(path.equals("/mentor/fundraise-list")){
-            response = ResponseGenerator.generateModelResponse(getFundraiseList(),"fundraises","templates/mentor/view-all-fundraise.twig");
+            response = ResponseGenerator.generateModelResponse(mentor,"user",getFundraiseList(),"fundraises","templates/mentor/view-all-fundraise.twig");
         }
         else if(path.equals("/mentor/delete-fundraise")){
-            response = ResponseGenerator.generateModelResponse(getFundraiseList(),"fundraises","templates/mentor/delete-fundraise.twig");
+            response = ResponseGenerator.generateModelResponse(mentor,"user",getFundraiseList(),"fundraises","templates/mentor/delete-fundraise.twig");
         }
         else if(path.equals("/mentor/delete-quest")) {
-            response = ResponseGenerator.generateModelResponse(quest.getFullQuestList(),"questList","templates/mentor/delete-quest.twig");
+            response = ResponseGenerator.generateModelResponse(mentor,"user",quest.getFullQuestList(),"questList","templates/mentor/delete-quest.twig");
         }
         else if(path.equals("/mentor/finalize-fundraise")){
-            response = ResponseGenerator.generateModelResponse(getFundraiseList(),"fundraises","templates/mentor/finalize-fundraise.twig");
+            response = ResponseGenerator.generateModelResponse(mentor,"user",getFundraiseList(),"fundraises","templates/mentor/finalize-fundraise.twig");
         }
         else if(path.equals("/mentor/view-submission")) {
-            response = ResponseGenerator.generateModelResponse(submission.getUnfinishedSubmissionList(), "unfinishedSubmissionList", "templates/mentor/view-submission.twig");
+            response = ResponseGenerator.generateModelResponse(mentor,"user",submission.getUnfinishedSubmissionList(), "unfinishedSubmissionList", "templates/mentor/view-submission.twig");
         }
 
         return response;
@@ -98,12 +104,15 @@ public class MentorHandler implements HttpHandler {
 
     }
 
-    private String handleParsedPostResponse(String path, Map<String, String> parsedForm) {
+    private String handleParsedPostResponse(String path, Map<String, String> parsedForm,Mentor mentor) {
         String response = "sss";
         FundraiseHelper fundraiseHelper = new FundraiseHelper();
         QuestPanel quest = new QuestPanel();
         SubmissionPanel submission = new SubmissionPanel();
-        if(path.equals("/mentor/create-student")){
+        if(parsedForm.containsKey("logout")){
+            logout(mentor);
+        }
+        else if(path.equals("/mentor/create-student")){
             response = getHandleResponse(createStudent(parsedForm));
         }
         else if(path.equals("/mentor/create-artifact")){
@@ -244,13 +253,10 @@ public class MentorHandler implements HttpHandler {
             String lastName = parsedForm.get("last-name");
             String email = parsedForm.get("email");
             String password = parsedForm.get("password");
-            String passwordHash = HashSystem.getStringFromSHA256(password);
             String klass = parsedForm.get("class");
-            Student student = new Student(id,firstName,lastName,email,passwordHash,klass);
+            Student student = new Student(id,firstName,lastName,email,password,klass);
             studentDAO.set(student);
         } catch (SQLException e) {
-            return false;
-        } catch (NoSuchAlgorithmException e) {
             return false;
         }
         return true;
@@ -333,5 +339,25 @@ public class MentorHandler implements HttpHandler {
             return false;
         }
         return true;
+    }
+
+    private Mentor getMentorModel(String session) {
+        Mentor mentor = null;
+        try {
+            MentorDAO mentorDAO = new MentorDAO();
+            mentor = mentorDAO.getMentorById(Sessions.getIdBySession(session));
+        } catch (SQLException e) {
+            return mentor;
+        }
+        return mentor;
+    }
+
+    public void logout(Mentor mentor){
+        try {
+            ConnectDB connectDB = ConnectDB.getInstance();
+            String sql = String.format("DELETE FROM sessions WHERE user_id like '%s'",mentor.getID());
+            connectDB.addRecord(sql);
+        } catch (Exception e) {
+        }
     }
 }

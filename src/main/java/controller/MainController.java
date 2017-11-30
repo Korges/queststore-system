@@ -55,6 +55,14 @@ public class MainController implements HttpHandler {
                 httpExchange.getResponseHeaders().set("Location", "/student");
                 httpExchange.sendResponseHeaders(302, -1);
             }
+
+            else{
+                response = webTemplateDao.getSiteTemplate("static/login-page2.html");
+                httpExchange.sendResponseHeaders(200, response.length());
+                OutputStream os = httpExchange.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+            }
           
         }
     }

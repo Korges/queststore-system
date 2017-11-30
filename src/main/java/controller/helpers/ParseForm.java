@@ -32,7 +32,6 @@ public class ParseForm {
                     "utf-8");
             BufferedReader br = new BufferedReader(inputStreamReader);
             String formData = br.readLine();
-            System.out.println(formData);
             inputs = ParseForm.parseFormData(formData);
         } catch (UnsupportedEncodingException e) {
             return inputs;
