@@ -5,7 +5,7 @@
 .nav-panel {
     font-size: 15px;
     width: 350px;
-    background: #005f5f;
+    background: #504940;
     flex-direction: column;
 
 }.nav-panel li {
@@ -21,10 +21,10 @@
     padding: 10px 0 10px 20px;
     }
 .nav-panel a:hover {
-    background: rgba(118,166, 174, 1.00);
+    background: #565b5d;
 }
 .nav-panel-ul ul {
-    background: rgba(160, 193, 199, 1.0);
+    background: #a3a3c2;
     display: none;
 }
 .nav-panel-ul li.tap ul {
