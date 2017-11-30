@@ -94,23 +94,16 @@ input[type="email"], input[type="password"], select {
 }
 input[type=submit]
 {
-    display: block;
-    width: 70%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    border: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 30px;
-}
-
-.button-logout {
-    background-color: deepskyblue;
+    background-color: rgb(153, 51, 255);
     border: none;
     color: white;
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
     cursor:pointer;
 }
-.button-logout:hover {
+input[type=submit]:hover
+{
     background-color: black;
 }
