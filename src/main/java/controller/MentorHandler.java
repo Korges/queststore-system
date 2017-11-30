@@ -51,7 +51,7 @@ public class MentorHandler implements HttpHandler {
         QuestPanel quest = new QuestPanel();
         SubmissionPanel submission = new SubmissionPanel();
         if(path.equals("/mentor")){
-            response = ResponseGenerator.generateModelResponse(mentor,"user","templates/mentor/nav.twig");
+            response = ResponseGenerator.generateModelResponse(mentor,"user","templates/mentor/profile.twig");
         }
         else if(path.equals("/mentor/create-artifact")){
             response = ResponseGenerator.generateModelResponse(mentor,"user","templates/mentor/create-artifact.twig");

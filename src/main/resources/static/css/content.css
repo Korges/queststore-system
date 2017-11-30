@@ -53,7 +53,6 @@ fieldset{
 .logo-bb {
     text-align: left;
     width: 20%;
-    color: #d77d16;
     font-size: larger;
     font-weight: bold;
 
@@ -63,13 +62,11 @@ fieldset{
 .status-page {
     width: 20%;
 
-    color: coral;
     font-size: x-large;
     font-weight: bolder;
 }
 
 .status-user{
-    color: orange;
     width: 20%;
 
 
@@ -113,4 +110,16 @@ input[type=submit]
 }
 .button-logout:hover {
     background-color: black;
+}
+
+.profile{
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    padding-left: 150px;
+}
+.profile2{
+    display: flex;
+    flex-direction: column;
+    height: 200px;
 }

@@ -60,7 +60,7 @@ public class AdminHandler  implements HttpHandler {
     public String getResponse(String path,Admin admin) {
         String response = "";
         if(path.equals("/admin")){
-            response = ResponseGenerator.generateModelResponse(admin,"user","templates/admin/nav.twig");
+            response = ResponseGenerator.generateModelResponse(admin,"user","templates/admin/profile.twig");
         }
         else if (path.equals("/admin/create-group")){
             response = ResponseGenerator.generateModelResponse(admin,"user", getKlasses(), "groups", "templates/admin/create-group.twig");
