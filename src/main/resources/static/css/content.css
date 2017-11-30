@@ -2,13 +2,12 @@
     height: auto;
     margin: auto;
     width: 50%;
-    padding: 10px;
+
 }
 .form-container{
     min-height: 300px;
     border-radius: 5px;
     background: rgba(255, 255, 255, .4);
-    padding: 20px;
     display: flex;
 }
 
