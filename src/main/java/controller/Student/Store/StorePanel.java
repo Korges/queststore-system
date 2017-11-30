@@ -2,6 +2,7 @@ package controller.Student.Store;
 
 import DAO.ArtifactDAO;
 import DAO.InventoryDAO;
+import DAO.StudentDAO;
 import models.Artifact;
 import models.Inventory;
 import models.Student;
@@ -40,12 +41,20 @@ public class StorePanel {
             Inventory inventory = new Inventory(student.getID(), artifactID, date, artifactPrice);
             inventoryDAO = new InventoryDAO();
             inventoryDAO.add(inventory);
+            changeSaldo(student, artifactPrice);
             status = true;
 
         } catch (SQLException e) {
             return status;
         }
         return status;
+    }
+
+    public void changeSaldo(Student student, Integer artifactPrice) throws SQLException {
+        StudentDAO studentDAO = new StudentDAO();
+        student.wallet.substract(artifactPrice);
+        studentDAO.editWalletValue(student);
+
     }
 
 

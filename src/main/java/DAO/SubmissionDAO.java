@@ -76,6 +76,30 @@ public class SubmissionDAO implements InterfaceDAO<Submission> {
         return submissionList;
     }
 
+    public Integer getStudentIdBySubmissionId(Integer submissionID) throws SQLException {
+
+        String query = String.format("SELECT student_id from submissions WHERE id = '%d';", submissionID);
+        ResultSet result = connect.getResult(query);
+        Integer studentID = result.getInt("student_id");
+
+
+
+        return studentID;
+
+
+    }
+
+    public Integer getQuestIdBySubmissionId(Integer submissionID) throws SQLException {
+
+        String query = String.format("SELECT quest_id from submissions WHERE id = '%d';", submissionID);
+        ResultSet result = connect.getResult(query);
+        Integer questID = result.getInt("quest_id");
+
+
+
+        return questID;
+    }
+
     public ArrayList<Submission> getUnfinishedSubmission() throws SQLException {
 
         ArrayList<Submission> unfinishedSubmissionList = new ArrayList<>();
