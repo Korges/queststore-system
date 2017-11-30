@@ -3,11 +3,10 @@
     margin:0;
 }
 .nav-panel {
-    width: 300px;
+    font-size: 15px;
+    width: 350px;
     background: #005f5f;
-    /*display: flex;*/
     flex-direction: column;
-    /*align-content: flex-start;*/
 
 }.nav-panel li {
     list-style: none;
