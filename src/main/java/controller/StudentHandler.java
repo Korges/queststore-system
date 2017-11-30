@@ -134,6 +134,5 @@ public class StudentHandler implements HttpHandler {
              connectDB.addRecord(sql);
         } catch (Exception e) {
         }
-
     }
 }

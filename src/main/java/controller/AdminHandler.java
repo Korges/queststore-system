@@ -47,12 +47,12 @@ public class AdminHandler  implements HttpHandler {
 
     }
 
-    private String getHandleResponse(boolean handleStatus) {
+    private String getHandleResponse(Admin admin,boolean handleStatus) {
         if(handleStatus){
-            return WebTemplate.getSiteContent("templates/success.twig");
+            return ResponseGenerator.generateModelResponse(admin,"user","templates/success.twig");
         }
         else{
-            return WebTemplate.getSiteContent("templates/error-sql.twig");
+            return ResponseGenerator.generateModelResponse(admin,"user","templates/error-sql.twig");
         }
     }
 
@@ -92,31 +92,31 @@ public class AdminHandler  implements HttpHandler {
         }
 
         else if(path.equals("/admin/create-mentor")){
-            response = getHandleResponse(createMentor(parsedForm));
+            response = getHandleResponse(admin, createMentor(parsedForm));
         }
         else if(path.equals("/admin/view-group") && !parsedForm.containsKey("group-name")){
             response = getEditGroupResponse(parsedForm.get("id"));
         }
         else if(path.equals("/admin/view-group") && parsedForm.containsKey("group-name")){
-            response = getHandleResponse(submitEditGroup(parsedForm));
+            response = getHandleResponse(admin, submitEditGroup(parsedForm));
         }
         else if(path.equals("/admin/view-mentor") && !parsedForm.containsKey("first-name")){
             response = getEditMentorResponse(parsedForm.get("id"));
         }
         else if(path.equals("/admin/view-mentor") && parsedForm.containsKey("first-name")){
-            response = getHandleResponse(submitEditMentor(parsedForm));
+            response = getHandleResponse(admin, submitEditMentor(parsedForm));
         }
         else if(path.equals("/admin/create-group")){
-            response = getHandleResponse(createGroup(parsedForm));
+            response = getHandleResponse(admin, createGroup(parsedForm));
         }
         else if(path.equals("/admin/create-level")){
-            response = getHandleResponse(createLevel(parsedForm));
+            response = getHandleResponse(admin, createLevel(parsedForm));
         }
         else if(path.equals("/admin/view-level") && !parsedForm.containsKey("level")){
             response = getEditLevelResponse(parsedForm.get("id"));
         }
         else if(path.equals("/admin/view-level") && parsedForm.containsKey("level")){
-            response = getHandleResponse(submitEditLevel(parsedForm));
+            response = getHandleResponse(admin, submitEditLevel(parsedForm));
         }
         return response;
     }
