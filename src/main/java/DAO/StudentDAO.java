@@ -94,6 +94,7 @@ public class StudentDAO implements InterfaceDAO<Student> {
         }
     }
 
+
     public Student getStudentById(Integer id) {
         Student student = null;
         try {
@@ -107,6 +108,7 @@ public class StudentDAO implements InterfaceDAO<Student> {
         }
         return student;
     }
+
 
     private void setLevelExperience(Student student){
 
@@ -123,12 +125,11 @@ public class StudentDAO implements InterfaceDAO<Student> {
 
     }
 
+
     public void setWalletDetail(Integer studentId, Integer experience){
         Student student = getStudentById(studentId);
         student.wallet.add(experience); //todo
         setLevelExperience(student);
         editWalletValue(student);
     }
-
-
 }

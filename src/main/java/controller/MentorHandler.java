@@ -134,7 +134,8 @@ public class MentorHandler implements HttpHandler {
             response = getHandleResponse(deleteFundraise(Integer.parseInt(parsedForm.get("id"))));
         }
         else if(path.equals("/mentor/finalize-fundraise")){
-            response = getHandleResponse(fundraiseHelper.finalizeFundraise(parsedForm));
+            response = getFinalizeRespone(fundraiseHelper.finalizeFundraise(parsedForm));
+//            response = getHandleResponse(fundraiseHelper.finalizeFundraise(parsedForm));
         }
         else if(path.equals("/mentor/delete-quest")) {
             response = getHandleResponse(quest.deleteQuest(parsedForm));
@@ -144,6 +145,16 @@ public class MentorHandler implements HttpHandler {
         }
         return response;
     }
+
+    private String getFinalizeRespone(boolean handleStatus) {
+        if(handleStatus){
+            return WebTemplate.getSiteContent("templates/mentor/success.twig");
+        }
+        else{
+            return WebTemplate.getSiteContent("templates/error-finalize.twig");
+        }
+    }
+
 
 
     private boolean createArtifact(Map<String, String> parsedForm) {

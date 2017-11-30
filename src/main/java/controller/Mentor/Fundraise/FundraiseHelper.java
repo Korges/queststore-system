@@ -7,6 +7,7 @@ import DAO.StudentDAO;
 import UI.UI;
 import models.Fundraise;
 import models.Inventory;
+import models.Student;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,13 +25,27 @@ public class FundraiseHelper {
         try {
             if (checkSaldo(fundraiseID)) {
                 addFundraiseToInventory(fundraiseID);
+                changeSaldo(fundraiseID);
                 deleteFinalizedFundraise(fundraiseID);
                 status = true;
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return status;
+    }
+
+    public void changeSaldo(Integer fundraiseID) throws SQLException {
+
+        StudentDAO studentDAO = new StudentDAO();
+        Integer pricePerStudent = countPricePerStudent(fundraiseID);
+        ArrayList<Fundraise> fundraiseStudentList = getFundraiseStudentList(fundraiseID);
+        for (Fundraise fundraise : fundraiseStudentList) {
+            Student student = studentDAO.getStudentById(fundraise.getStudentID());
+            student.wallet.substract(pricePerStudent);
+            studentDAO.editWalletValue(student);
+        }
     }
 
 
@@ -40,6 +55,7 @@ public class FundraiseHelper {
         Integer pricePerStudent = countPricePerStudent(fundraiseID);
         ArrayList<Fundraise> fundraiseStudentList = getFundraiseStudentList(fundraiseID);
         for(Fundraise fundraise: fundraiseStudentList) {
+
             Integer studentID = fundraise.getStudentID();
             if(studentDAO.getStudentById(studentID).getWallet().getBalance() < pricePerStudent) {
                 return false;
@@ -70,7 +86,6 @@ public class FundraiseHelper {
         Integer artifactID = getArtifactID(fundraiseID);
 
         ArrayList<Fundraise> fundraiseStudentList = getFundraiseStudentList(fundraiseID);
-
         for(Fundraise fundraise: fundraiseStudentList) {
             Integer studentID = fundraise.getStudentID();
             Inventory inventory = new Inventory(studentID, artifactID, date, price);

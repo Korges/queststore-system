@@ -123,10 +123,11 @@ public class FundraiseDAO {
 
             while (result.next()) {
                 Integer studentID = result.getInt("student_id");
+                System.out.println(studentID);
 
                 Fundraise fundraise = new Fundraise(studentID);
                 fundraiseStudentList.add(fundraise);
-                System.out.println(fundraiseStudentList);
+                System.out.println("size " + fundraiseStudentList.size());
             }
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ":dupa " + e.getMessage());
