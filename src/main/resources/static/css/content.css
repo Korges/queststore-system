@@ -70,3 +70,13 @@ input[type=submit]
     cursor: pointer;
     margin-top: 30px;
 }
+
+.button-logout {
+    background-color: deepskyblue;
+    border: none;
+    color: white;
+    cursor:pointer;
+}
+.button-logout:hover {
+    background-color: black;
+}
