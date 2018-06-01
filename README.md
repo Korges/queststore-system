@@ -10,9 +10,6 @@ Project touches such technologies as:
 * HTML/CSS
 * JTwig
 
-Game is designed for two people. One person is Server, another is Client.  
-The goal of Pac-Man is to collect all the coins, Ghost is to catch Pac-Man.  
-
 ![Alt text](index.jpg?raw=true "Index Window")  
 *index*
 
